@@ -68,7 +68,7 @@ export const Pipeline = {
             card.classList.remove('dragging');
         });
 
-        card.addEventListener('dblclick', () => {
+        card.addEventListener('click', () => {
             const event = new CustomEvent('loadDeal', { detail: { id: deal.id } });
             document.dispatchEvent(event);
         });

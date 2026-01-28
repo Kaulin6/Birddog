@@ -648,6 +648,34 @@ export const Store = {
         };
     },
 
+    // ========================================
+    // CONTACT FULL TIMELINE
+    // ========================================
+    getContactFullTimeline(contactName) {
+        const deals = this.getDeals();
+        const timeline = [];
+        const nameLower = (contactName || '').toLowerCase().trim();
+
+        deals.forEach(deal => {
+            const hasContact = (deal.contacts || []).some(c =>
+                (c.name || '').toLowerCase().trim() === nameLower
+            );
+            if (!hasContact) return;
+
+            // Include all timeline entries for deals this contact is on
+            (deal.timeline || []).forEach(entry => {
+                timeline.push({
+                    ...entry,
+                    dealId: deal.id,
+                    dealAddress: deal.propertyAddress || 'Untitled',
+                    dealStatus: deal.status
+                });
+            });
+        });
+
+        return timeline.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    },
+
     // CSV Import with dedup
     importDealsFromCSV(rows, columnMap) {
         const deals = this.getDeals();

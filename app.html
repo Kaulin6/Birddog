@@ -19,10 +19,9 @@
             </div>
 
             <nav class="main-nav">
-                <button id="navCalculator" class="nav-btn active">Details</button>
+                <button id="navCalculator" class="nav-btn active">Property</button>
                 <button id="navPipeline" class="nav-btn">Pipeline</button>
                 <button id="navCrm" class="nav-btn">CRM</button>
-                <button id="navContacts" class="nav-btn">Contacts</button>
                 <button id="navDashboard" class="nav-btn">Dashboard</button>
                 <a href="data_explorer.html" class="nav-btn" target="_blank">Data</a>
             </nav>
@@ -62,138 +61,138 @@
                     </div>
                 </div>
 
-                <div class="accordion-item open">
-                    <div class="accordion-header">
-                        <h2>Property Details</h2>
-                        <span class="accordion-toggle">−</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="field">
-                            <label for="source">Lead Source</label>
-                            <select id="source">
-                                <option value="mls">MLS</option>
-                                <option value="direct_mail">Direct Mail</option>
-                                <option value="cold_call">Cold Call</option>
-                                <option value="referral">Referral</option>
-                                <option value="driving_dollars">Driving for Dollars</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="sellerName">Seller Name</label>
-                            <input type="text" id="sellerName" placeholder="Jane Smith">
-                        </div>
-                        <div class="field">
-                            <label for="propertyAddress">Property Address</label>
-                            <div class="autocomplete-wrapper">
-                                <input type="text" id="propertyAddress" placeholder="123 Main St" autocomplete="off">
-                                <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
-                            </div>
-                            <div style="display: flex; gap: 8px; margin-top: 8px;">
-                                <button id="fetchDataBtn" class="btn-small" style="flex: 1;">Auto-Fill
-                                    (RentCast)</button>
-                                <button id="fetchOfficialBtn" class="btn-secondary" style="flex: 1;"
-                                    title="Fetch from County Property Appraiser">Official Data</button>
-                            </div>
-                            <div id="permitHistoryContainer" style="margin-top: 15px; display: none;">
-                                <h4 style="margin-bottom: 10px; color: #a0a0a0;">Permit History</h4>
-                                <ul id="permitList"
-                                    style="list-style: none; padding: 0; max-height: 200px; overflow-y: auto;"></ul>
-                            </div>
-                        </div>
-                        <div class="field-row">
-                            <div class="field">
-                                <label for="beds">Beds</label>
-                                <input type="number" id="beds" placeholder="3">
-                            </div>
-                            <div class="field">
-                                <label for="baths">Baths</label>
-                                <input type="number" id="baths" placeholder="2">
-                            </div>
-                            <div class="field">
-                                <label for="yearBuilt">Year</label>
-                                <input type="number" id="yearBuilt" placeholder="1980">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="ownerOccupied">Owner Occupied</label>
-                            <select id="ownerOccupied">
-                                <option value="">Unknown</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-                        <div class="field-row">
-                            <div class="field">
-                                <label for="hoaFee">HOA Fee ($/mo)</label>
-                                <input type="number" id="hoaFee" placeholder="0">
-                            </div>
-                            <div class="field">
-                                <label for="propertyTax">Property Tax ($/yr)</label>
-                                <input type="number" id="propertyTax" placeholder="0">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <h2>Property Condition</h2>
-                        <span class="accordion-toggle">+</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="field">
-                            <label for="sqft">Square Footage</label>
-                            <input type="number" id="sqft" placeholder="e.g. 1500">
-                        </div>
-                        <div class="field">
-                            <label for="condition">Condition (Est. Repairs)</label>
-                            <div style="display: flex; gap: 8px;">
-                                <select id="condition" style="flex: 1;">
-                                    <option value="custom">Custom Amount</option>
-                                    <option value="light">Light ($15/sqft)</option>
-                                    <option value="medium">Medium ($30/sqft)</option>
-                                    <option value="heavy">Heavy ($60/sqft)</option>
-                                </select>
-                                <button id="openRepairModalBtn" class="btn-ghost"
-                                    title="Advanced Repair Estimator">Settings</button>
-                            </div>
-                            <div id="repairHelperText" class="helper-text"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item" style="margin-top: auto; border-top: 1px solid #333; padding-top: 10px;">
-                    <div class="accordion-header">
-                        <h2>Offer Details</h2>
-                        <span class="accordion-toggle">+</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="field">
-                            <label for="earnestMoney">Earnest Money Deposit ($)</label>
-                            <input type="number" id="earnestMoney" value="100">
-                        </div>
-                        <div class="field">
-                            <label for="daysToClose">Days Until Close</label>
-                            <input type="number" id="daysToClose" value="30">
-                        </div>
-                        <div class="field">
-                            <label for="contingency">Contingency</label>
-                            <textarea id="contingency" rows="3">Inspection and financing contingency...</textarea>
-                        </div>
-                        <div class="field checkbox-field">
-                            <label for="includeContingency">Include in offer</label>
-                            <input type="checkbox" id="includeContingency">
-                        </div>
-                    </div>
-                </div>
             </div>
         </aside>
 
         <!-- Main Dashboard -->
         <main id="mainDashboard" class="dashboard">
+            <!-- Active Deal Context Bar -->
+            <div id="activeDealBar" class="active-deal-bar hidden">
+                <div class="deal-bar-content">
+                    <span class="deal-bar-label">Active Deal:</span>
+                    <span id="dealBarAddress" class="deal-bar-address">--</span>
+                    <span id="dealBarStatus" class="deal-bar-status status-pill">--</span>
+                    <span id="dealBarProfit" class="deal-bar-profit">--</span>
+                </div>
+                <div class="deal-bar-actions">
+                    <button id="dealBarDetails" class="btn-small">Property</button>
+                    <button id="dealBarCrm" class="btn-small">CRM</button>
+                    <button id="dealBarClear" class="btn-ghost btn-small">Clear</button>
+                </div>
+            </div>
+
             <!-- Calculator View -->
             <div id="calculatorView">
+                <!-- Property Input Panel (moved from sidebar) -->
+                <div class="property-input-panel">
+                    <div class="input-panel-grid">
+                        <section class="card input-card">
+                            <h3>Property Details</h3>
+                            <div class="field">
+                                <label for="propertyAddress">Property Address</label>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" id="propertyAddress" placeholder="123 Main St" autocomplete="off">
+                                    <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
+                                </div>
+                                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                                    <button id="fetchDataBtn" class="btn-small" style="flex: 1;">Auto-Fill (RentCast)</button>
+                                    <button id="fetchOfficialBtn" class="btn-secondary" style="flex: 1;" title="Fetch from County Property Appraiser">Official Data</button>
+                                </div>
+                                <div id="permitHistoryContainer" style="margin-top: 15px; display: none;">
+                                    <h4 style="margin-bottom: 10px; color: #a0a0a0;">Permit History</h4>
+                                    <ul id="permitList" style="list-style: none; padding: 0; max-height: 200px; overflow-y: auto;"></ul>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="sellerName">Seller Name</label>
+                                <input type="text" id="sellerName" placeholder="Jane Smith">
+                            </div>
+                            <div class="field">
+                                <label for="source">Lead Source</label>
+                                <select id="source">
+                                    <option value="mls">MLS</option>
+                                    <option value="direct_mail">Direct Mail</option>
+                                    <option value="cold_call">Cold Call</option>
+                                    <option value="referral">Referral</option>
+                                    <option value="driving_dollars">Driving for Dollars</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="field-row">
+                                <div class="field">
+                                    <label for="beds">Beds</label>
+                                    <input type="number" id="beds" placeholder="3">
+                                </div>
+                                <div class="field">
+                                    <label for="baths">Baths</label>
+                                    <input type="number" id="baths" placeholder="2">
+                                </div>
+                                <div class="field">
+                                    <label for="yearBuilt">Year</label>
+                                    <input type="number" id="yearBuilt" placeholder="1980">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="ownerOccupied">Owner Occupied</label>
+                                <select id="ownerOccupied">
+                                    <option value="">Unknown</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="field-row">
+                                <div class="field">
+                                    <label for="hoaFee">HOA Fee ($/mo)</label>
+                                    <input type="number" id="hoaFee" placeholder="0">
+                                </div>
+                                <div class="field">
+                                    <label for="propertyTax">Property Tax ($/yr)</label>
+                                    <input type="number" id="propertyTax" placeholder="0">
+                                </div>
+                            </div>
+                        </section>
+                        <section class="card input-card">
+                            <h3>Property Condition</h3>
+                            <div class="field">
+                                <label for="sqft">Square Footage</label>
+                                <input type="number" id="sqft" placeholder="e.g. 1500">
+                            </div>
+                            <div class="field">
+                                <label for="condition">Condition (Est. Repairs)</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <select id="condition" style="flex: 1;">
+                                        <option value="custom">Custom Amount</option>
+                                        <option value="light">Light ($15/sqft)</option>
+                                        <option value="medium">Medium ($30/sqft)</option>
+                                        <option value="heavy">Heavy ($60/sqft)</option>
+                                    </select>
+                                    <button id="openRepairModalBtn" class="btn-ghost" title="Advanced Repair Estimator">Settings</button>
+                                </div>
+                                <div id="repairHelperText" class="helper-text"></div>
+                            </div>
+                        </section>
+                        <section class="card input-card">
+                            <h3>Offer Details</h3>
+                            <div class="field">
+                                <label for="earnestMoney">Earnest Money Deposit ($)</label>
+                                <input type="number" id="earnestMoney" value="100">
+                            </div>
+                            <div class="field">
+                                <label for="daysToClose">Days Until Close</label>
+                                <input type="number" id="daysToClose" value="30">
+                            </div>
+                            <div class="field">
+                                <label for="contingency">Contingency</label>
+                                <textarea id="contingency" rows="3">Inspection and financing contingency...</textarea>
+                            </div>
+                            <div class="field checkbox-field">
+                                <label for="includeContingency">Include in offer</label>
+                                <input type="checkbox" id="includeContingency">
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
                 <header class="top-bar">
                     <div class="actions">
                         <button id="saveDealBtn" class="btn-primary">Save Deal</button>
@@ -481,18 +480,15 @@
                 </div>
             </div>
 
-            <!-- CRM View (New) -->
+            <!-- CRM View -->
             <div id="crmView" class="crm-view hidden">
                 <header class="top-bar">
                     <div style="flex: 1;">
-                        <h2>CRM & Call Center</h2>
-
-                        <!-- CRM Sub-Navigation -->
-                        <div class="crm-nav"
-                            style="display: flex; gap: 10px; margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 1px;">
-                            <button id="tabCurrentDeal" class="nav-btn active">📍 Current Property</button>
-                            <button id="tabAllContacts" class="nav-btn">👥 All Contacts</button>
-                            <button id="tabCallQueue" class="nav-btn">📞 Call Queue</button>
+                        <h2>CRM & Contacts</h2>
+                        <div class="crm-nav">
+                            <button id="tabCurrentDeal" class="crm-tab active">Current Property</button>
+                            <button id="tabContactDirectory" class="crm-tab">Contact Directory</button>
+                            <button id="tabCallQueue" class="crm-tab">Call Queue</button>
                         </div>
                     </div>
                 </header>
@@ -608,35 +604,65 @@
                     </div>
                 </div> <!-- End viewCurrentDeal -->
 
-                <!-- 2. All Contacts View -->
-                <div id="viewAllContacts" class="crm-subview hidden">
+                <!-- 2. Contact Directory (merged from old Contacts view) -->
+                <div id="viewContactDirectory" class="crm-subview hidden">
                     <div class="card full-width-card">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <h2>Global Contact List</h2>
-                            <div style="display: flex; gap: 10px;">
-                                <input type="text" id="globalContactSearch" placeholder="Search contacts..."
-                                    class="filter-input" style="width: 250px;">
-                                <button class="btn-primary" onclick="CRM.renderAllContacts()">Refresh</button>
+                        <div class="contacts-toolbar" style="margin-bottom: 20px;">
+                            <div class="input-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                                <input type="text" id="crmContactSearch" placeholder="Search contacts...">
                             </div>
+                            <div class="input-group" style="min-width: 140px; margin-bottom: 0;">
+                                <select id="crmContactRoleFilter">
+                                    <option value="all">All Roles</option>
+                                    <option value="seller">Sellers</option>
+                                    <option value="agent">Agents</option>
+                                    <option value="contractor">Contractors</option>
+                                    <option value="buyer">Buyers</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <button id="crmAddContactBtn" class="btn-primary">Add Contact</button>
                         </div>
-                        <div class="table-container" style="max-height: 600px; overflow-y: auto;">
-                            <table class="data-grid" style="width: 100%;">
+                        <div style="overflow-x: auto;">
+                            <table class="contacts-directory">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
                                         <th>Role</th>
                                         <th>Phone</th>
                                         <th>Email</th>
-                                        <th>Associated Property</th>
+                                        <th>Deals</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="globalContactsBody">
+                                <tbody id="crmContactsTableBody">
                                     <!-- Populated by JS -->
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- 2b. Contact Detail View (shown when clicking a contact) -->
+                <div id="viewContactDetail" class="crm-subview hidden">
+                    <div class="contact-detail-header">
+                        <button id="backToDirectoryBtn" class="btn-ghost" style="margin-bottom: 12px;">← Back to Directory</button>
+                        <h2 id="contactDetailName" style="margin-bottom: 4px; border: none; padding: 0;">--</h2>
+                        <div class="contact-detail-meta">
+                            <span id="contactDetailRole" class="role-badge">--</span>
+                            <span id="contactDetailPhone">--</span>
+                            <span id="contactDetailEmail">--</span>
+                        </div>
+                    </div>
+                    <div class="contact-detail-grid">
+                        <section class="card">
+                            <h2>Associated Deals</h2>
+                            <ul id="contactDealsList" class="contact-deals-items"></ul>
+                        </section>
+                        <section class="card">
+                            <h2>Full Interaction Timeline</h2>
+                            <ul id="contactFullTimeline" class="timeline-list"></ul>
+                        </section>
                     </div>
                 </div>
 
@@ -660,57 +686,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Contacts Directory View -->
-                <div id="contactsView" class="contacts-view hidden">
-                    <header class="top-bar">
-                        <div class="view-header-left">
-                            <h2>Contacts Directory</h2>
-                        </div>
-                        <div class="actions">
-                            <button id="addGlobalContactBtn" class="btn-primary">Add Contact</button>
-                        </div>
-                    </header>
-
-                    <div class="card" style="margin-bottom: 20px;">
-                        <div class="contacts-toolbar">
-                            <div class="input-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
-                                <input type="text" id="contactSearchInput" placeholder="Search contacts...">
-                            </div>
-                            <div class="input-group" style="min-width: 140px; margin-bottom: 0;">
-                                <select id="contactRoleFilter">
-                                    <option value="all">All Roles</option>
-                                    <option value="seller">Sellers</option>
-                                    <option value="agent">Agents</option>
-                                    <option value="contractor">Contractors</option>
-                                    <option value="buyer">Buyers</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card" style="overflow-x: auto;">
-                        <table class="contacts-directory" id="contactsTable">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    <th>Deals</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contactsTableBody">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="contactHistoryPanel" class="contact-history-panel hidden">
-                        <h3 id="contactHistoryName">Contact History</h3>
-                        <div id="contactHistoryList"></div>
-                    </div>
-                </div>
+                <!-- (Contacts view merged into CRM above) -->
 
                 <!-- Dashboard View -->
                 <div id="dashboardView" class="dashboard-view hidden">

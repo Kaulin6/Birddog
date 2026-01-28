@@ -115,10 +115,10 @@ body {
 }
 
 .main-nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.03);
     padding: 6px;
     border-radius: 10px;
 }
@@ -127,17 +127,17 @@ body {
     background: none;
     border: none;
     color: var(--text-secondary);
-    padding: 8px 4px;
+    padding: 10px 12px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     transition: all 0.2s;
-    text-align: center;
+    text-align: left;
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-family: inherit;
 }
 
@@ -633,12 +633,6 @@ body {
     /* Span full width */
 }
 
-.financials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-}
-
 .formula-display {
     display: flex;
     flex-direction: column;
@@ -1132,40 +1126,6 @@ body {
     margin-bottom: 0;
 }
 
-.pipeline-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.stat-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    font-size: 0.9rem;
-    border: 1px solid var(--border-color);
-}
-
-.stat-item h4 {
-    margin: 0;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-}
-
-.stat-item .stat-count {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.stat-item .stat-value {
-    font-size: 0.9rem;
-    color: var(--accent-green);
-}
 
 .contacts-list {
     list-style: none;
@@ -1334,25 +1294,6 @@ body {
     background-color: rgba(255, 255, 255, 0.03);
     padding: 10px;
     border-radius: 6px;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-dark);
-}
-
-::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
 }
 
 /* Repair Modal - Segmented Control */
@@ -1831,6 +1772,13 @@ body {
     border-radius: 12px;
     padding: 24px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(12px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+    border-color: var(--border-highlight);
 }
 
 .dashboard-card h3 {
@@ -2444,3 +2392,214 @@ body {
     font-weight: 600;
     color: var(--text-primary);
 }
+
+/* ========================================
+   ACTIVE DEAL BAR
+   ======================================== */
+.active-deal-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 24px;
+    background: rgba(0, 242, 170, 0.06);
+    border-bottom: 1px solid rgba(0, 242, 170, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin-bottom: 0;
+}
+
+.deal-bar-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+}
+
+.deal-bar-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.deal-bar-address {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.deal-bar-profit {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.deal-bar-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ========================================
+   PROPERTY INPUT PANEL
+   ======================================== */
+.property-input-panel {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.input-panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.input-card {
+    padding: 20px;
+}
+
+.input-card h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ========================================
+   CRM TABS
+   ======================================== */
+.crm-nav {
+    display: flex;
+    gap: 0;
+    margin-top: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.crm-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+}
+
+.crm-tab:hover {
+    color: var(--text-primary);
+}
+
+.crm-tab.active {
+    color: var(--accent-green);
+    border-bottom-color: var(--accent-green);
+}
+
+/* ========================================
+   CONTACT DETAIL VIEW
+   ======================================== */
+.contact-detail-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contact-detail-meta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.contact-detail-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.contact-deals-items {
+    list-style: none;
+}
+
+.contact-deal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.contact-deal-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(4px);
+}
+
+.contact-deal-item .deal-address {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.contact-deal-item .deal-profit {
+    color: var(--accent-green);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Timeline entries in contact detail */
+.timeline-entry {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.timeline-entry:last-child {
+    border-bottom: none;
+}
+
+.timeline-icon {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.timeline-body {
+    flex: 1;
+}
+
+.timeline-deal-label {
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.timeline-text {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.timeline-entry .timeline-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ========================================
+   STATUS PILL COLORS
+   ======================================== */
+.status-pill.status-lead { background: rgba(59, 158, 255, 0.15); color: var(--accent-blue); }
+.status-pill.status-analyzed { background: rgba(178, 107, 245, 0.15); color: var(--accent-purple); }
+.status-pill.status-offer_sent { background: rgba(255, 171, 64, 0.15); color: var(--accent-orange); }
+.status-pill.status-under_contract { background: rgba(0, 242, 170, 0.15); color: var(--accent-green); }
+.status-pill.status-closed { background: rgba(0, 242, 170, 0.3); color: var(--accent-green); }
+.status-pill.status-dead { background: rgba(255, 82, 82, 0.15); color: var(--accent-red); }

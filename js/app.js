@@ -8,7 +8,6 @@ import { UI } from './ui.js';
 import { Calculator } from './calculator.js';
 import { Pipeline } from './pipeline.js';
 import { CRM } from './crm.js';
-import { Contacts } from './contacts.js';
 import { Dashboard } from './dashboard.js';
 import { PropertyService } from './PropertyService.js';
 import { PermitService } from './PermitService.js';
@@ -57,8 +56,15 @@ const App = {
         document.getElementById('navCalculator').addEventListener('click', () => this.switchView('calculator'));
         document.getElementById('navPipeline').addEventListener('click', () => this.switchView('pipeline'));
         document.getElementById('navCrm').addEventListener('click', () => this.switchView('crm'));
-        document.getElementById('navContacts').addEventListener('click', () => this.switchView('contacts'));
         document.getElementById('navDashboard').addEventListener('click', () => this.switchView('dashboard'));
+
+        // Deal bar actions
+        const dealBarDetails = document.getElementById('dealBarDetails');
+        const dealBarCrm = document.getElementById('dealBarCrm');
+        const dealBarClear = document.getElementById('dealBarClear');
+        if (dealBarDetails) dealBarDetails.addEventListener('click', () => this.switchView('calculator'));
+        if (dealBarCrm) dealBarCrm.addEventListener('click', () => this.switchView('crm'));
+        if (dealBarClear) dealBarClear.addEventListener('click', () => this.clearForm());
 
         const backBtn = document.getElementById('backToCalcBtn');
         if (backBtn) backBtn.addEventListener('click', () => this.switchView('calculator'));
@@ -78,7 +84,7 @@ const App = {
 
     switchView(viewName) {
         // Hide all views
-        const views = ['calculatorView', 'pipelineView', 'crmView', 'contactsView', 'dashboardView'];
+        const views = ['calculatorView', 'pipelineView', 'crmView', 'dashboardView'];
         views.forEach(v => {
             const el = document.getElementById(v);
             if (el) el.classList.add('hidden');
@@ -86,7 +92,7 @@ const App = {
         document.getElementById('calculatorSidebar').classList.add('hidden');
 
         // Deactivate Nav
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
 
         // Show Selected
         if (viewName === 'calculator') {
@@ -101,10 +107,6 @@ const App = {
             document.getElementById('crmView').classList.remove('hidden');
             document.getElementById('navCrm').classList.add('active');
             CRM.init(this.currentDealId);
-        } else if (viewName === 'contacts') {
-            document.getElementById('contactsView').classList.remove('hidden');
-            document.getElementById('navContacts').classList.add('active');
-            Contacts.init();
         } else if (viewName === 'dashboard') {
             document.getElementById('dashboardView').classList.remove('hidden');
             document.getElementById('navDashboard').classList.add('active');
@@ -796,6 +798,12 @@ const App = {
     // --- Deal Management ---
     saveDeal() {
         const address = document.getElementById('propertyAddress').value || 'Untitled Deal';
+        if (address === 'Untitled Deal') {
+            alert('Please enter a property address first.');
+            return;
+        }
+
+        const isNew = !this.currentDealId;
 
         const dealData = {
             id: this.currentDealId,
@@ -819,8 +827,14 @@ const App = {
         }
 
         this.renderSavedDeals();
+        this.updateDealBar();
         Pipeline.render();
-        alert('Deal saved!');
+
+        if (isNew) {
+            alert(`Deal saved! "${address}" has been added to your Pipeline as a Lead.`);
+        } else {
+            alert('Deal updated!');
+        }
     },
 
     loadDeal(id) {
@@ -835,6 +849,7 @@ const App = {
         if (deal.assignmentFee) document.getElementById('assignmentFee').value = deal.assignmentFee;
 
         this.runCalculator();
+        this.updateDealBar();
         this.switchView('calculator');
     },
 
@@ -842,6 +857,30 @@ const App = {
         this.currentDealId = null;
         document.querySelectorAll('input').forEach(i => i.value = '');
         this.runCalculator();
+        this.updateDealBar();
+    },
+
+    updateDealBar() {
+        const bar = document.getElementById('activeDealBar');
+        if (!bar) return;
+
+        if (!this.currentDealId) {
+            bar.classList.add('hidden');
+            return;
+        }
+
+        const deal = Store.getDeal(this.currentDealId);
+        if (!deal) {
+            bar.classList.add('hidden');
+            return;
+        }
+
+        bar.classList.remove('hidden');
+        document.getElementById('dealBarAddress').textContent = deal.propertyAddress || 'Untitled';
+        const statusEl = document.getElementById('dealBarStatus');
+        statusEl.textContent = (deal.status || 'lead').replace(/_/g, ' ');
+        statusEl.className = `deal-bar-status status-pill status-${deal.status || 'lead'}`;
+        document.getElementById('dealBarProfit').textContent = deal.profit || '$0';
     },
 
     renderSavedDeals() {
@@ -912,6 +951,11 @@ const App = {
     setupGlobalEvents() {
         document.addEventListener('loadDeal', (e) => {
             this.loadDeal(e.detail.id);
+        });
+
+        document.addEventListener('dealStatusChanged', () => {
+            this.updateDealBar();
+            this.renderSavedDeals();
         });
     },
 

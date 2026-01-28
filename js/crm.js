@@ -2,6 +2,7 @@
 /**
  * crm.js
  * Manages Deal CRM: Contacts, Interaction Logs, Timeline
+ * Also handles Contact Directory and Contact Detail views (merged from contacts.js)
  */
 
 import { Store } from './store.js';
@@ -13,12 +14,10 @@ export const CRM = {
     init(dealId) {
         this.currentDealId = dealId;
 
-        // If init with a deal ID, default to "Current Property" tab
-        // If init without (null), default to "All Contacts" or last used
         if (dealId) {
             this.switchTab('viewCurrentDeal');
         } else {
-            this.switchTab('viewAllContacts');
+            this.switchTab('viewContactDirectory');
         }
 
         this.setupListeners();
@@ -26,244 +25,61 @@ export const CRM = {
     },
 
     render() {
-        // Render sub-views based on what's active (or all for simplicity)
         if (this.currentDealId) {
             this.renderDealView();
         } else {
-            // If no deal selected, show empty state in Current Deal tab if user clicks it
             const container = document.getElementById('viewCurrentDeal');
-            if (container) {
-                container.innerHTML = '<div class="card"><p class="empty-state" style="padding:40px;">No deal selected. Use the "All Contacts" or "Call Queue" tabs.</p></div>';
+            if (container && container.querySelector('.content-grid')) {
+                // Don't destroy DOM, just show empty state message
             }
         }
 
-        this.renderAllContacts();
+        this.renderContactDirectory();
         this.renderCallQueue();
     },
 
     switchTab(viewId) {
-        // Hide all views
-        ['viewCurrentDeal', 'viewAllContacts', 'viewCallQueue'].forEach(id => {
+        ['viewCurrentDeal', 'viewContactDirectory', 'viewContactDetail', 'viewCallQueue'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.add('hidden');
         });
 
-        // Remove active class from tabs
-        ['tabCurrentDeal', 'tabAllContacts', 'tabCallQueue'].forEach(id => {
+        ['tabCurrentDeal', 'tabContactDirectory', 'tabCallQueue'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.remove('active');
         });
 
-        // Show target
         const target = document.getElementById(viewId);
         if (target) target.classList.remove('hidden');
 
-        // Activate Tab Button
         const map = {
             'viewCurrentDeal': 'tabCurrentDeal',
-            'viewAllContacts': 'tabAllContacts',
+            'viewContactDirectory': 'tabContactDirectory',
+            'viewContactDetail': 'tabContactDirectory', // keep directory tab highlighted
             'viewCallQueue': 'tabCallQueue'
         };
         const btn = document.getElementById(map[viewId]);
         if (btn) btn.classList.add('active');
     },
 
-    // --- Sub-View: Current Deal ---
+    // ==========================================
+    // Sub-View: Current Deal
+    // ==========================================
     renderDealView() {
         const deal = Store.getDeal(this.currentDealId);
         if (!deal) return;
-
-        // Restore inner HTML structure if it was overwritten by empty state
-        const container = document.getElementById('viewCurrentDeal');
-        if (container && container.innerHTML.includes('No deal selected')) {
-            // Re-inject the standard layout if missing
-            // In a real app we'd cache this or use a template, but for now we assume app.html static structure persists
-            // or we'd reload the page.
-            // Issue: If I overwrote it with "No deal selected", I lost the forms!
-            // Fix: Don't overwrite the *whole* viewCurrentDeal, just hide/show content?
-            // Or restore it. Since app.html has the structure, better to NOT overwrite it in render() if possible.
-            // Let's just alert user "Go to All Contacts" instead of destroying DOM.
-            // The previous logic was: document.getElementById('viewCurrentDeal').innerHTML = ...
-            // That destroys the forms.
-            // I will fix this logic: Check if children exist.
-        }
 
         this.renderContacts(deal.contacts || []);
         this.renderLogs(deal.timeline || []);
         this.renderTimeline(deal.timeline || []);
         this.updateContactSelect(deal.contacts || []);
-    },
 
-    // --- Sub-View: All Contacts ---
-    renderAllContacts() {
-        const tbody = document.getElementById('globalContactsBody');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        const contacts = Store.getAllContacts();
-        const searchInput = document.getElementById('globalContactSearch');
-        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
-        const filtered = contacts.filter(c =>
-            c.name.toLowerCase().includes(searchTerm) ||
-            (c.role && c.role.toLowerCase().includes(searchTerm)) ||
-            (c.propertyAddress && c.propertyAddress.toLowerCase().includes(searchTerm))
-        );
-
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No contacts found</td></tr>';
-            return;
-        }
-
-        filtered.forEach(c => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${c.name}</td>
-                <td><span class="role-badge">${c.role}</span></td>
-                <td>${c.phone || '-'}</td>
-                <td>${c.email || '-'}</td>
-                <td><a href="#" class="deal-link" data-id="${c.dealId}">${c.propertyAddress}</a></td>
-                <td>
-                    <button class="btn-small" onclick="window.location.href='tel:${c.phone}'">📞 Call</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-
-        // Bind deal links
-        tbody.querySelectorAll('.deal-link').forEach(a => {
-            a.addEventListener('click', (e) => {
-                e.preventDefault();
-                const dealId = parseInt(e.target.dataset.id);
-                // Switch to Deal View
-                this.currentDealId = dealId;
-                this.switchTab('viewCurrentDeal');
-                this.renderDealView();
-            });
+        // Highlight active status button
+        document.querySelectorAll('#statusActions .btn-status').forEach(btn => {
+            btn.classList.toggle('active-status', btn.dataset.status === deal.status);
         });
     },
 
-    // --- Sub-View: Call Queue ---
-    renderCallQueue() {
-        const container = document.getElementById('callQueueContainer');
-        if (!container) return;
-        container.innerHTML = '';
-
-        const filterVal = document.getElementById('callQueueFilter') ? document.getElementById('callQueueFilter').value : 'all_leads';
-        const deals = Store.getDeals();
-        let queue = [];
-
-        // Base Logic: Only active leads
-        const activeDeals = deals.filter(d => d.status === 'lead' || d.status === 'analyzed' || d.status === 'offer_sent');
-
-        // Apply Rules
-        if (filterVal === 'fresh_leads') {
-            // Rule: Created in last 7 days
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-            queue = activeDeals.filter(d => {
-                const created = d.id ? new Date(d.id) : new Date(); // timestamp is in ID usually
-                return created > sevenDaysAgo;
-            });
-        } else if (filterVal === 'follow_up_needed') {
-            // Rule: No logs in > 3 days
-            const threeDaysAgo = new Date();
-            threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-            queue = activeDeals.filter(d => {
-                if (!d.timeline || d.timeline.length === 0) return true; // Never contacted
-                const lastLog = new Date(d.timeline[0].timestamp);
-                return lastLog < threeDaysAgo;
-            });
-        } else {
-            // Default: All active leads
-            queue = activeDeals;
-        }
-
-        if (queue.length === 0) {
-            container.innerHTML = '<p class="empty-state">No deals match this filter criteria.</p>';
-            return;
-        }
-
-        queue.forEach(deal => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.style.display = 'flex';
-            card.style.justifyContent = 'space-between';
-            card.style.alignItems = 'center';
-            card.style.padding = '16px';
-            card.style.marginBottom = '0';
-
-            const seller = (deal.contacts || []).find(c => c.role === 'seller') || { name: 'Unknown', phone: '' };
-
-            // Determine "Last Contact" for context
-            let lastContact = 'Never';
-            if (deal.timeline && deal.timeline.length > 0) {
-                const last = deal.timeline[0];
-                const date = new Date(last.timestamp).toLocaleDateString();
-                lastContact = `${date} (${last.type})`;
-            }
-
-            card.innerHTML = `
-                <div style="flex: 1;">
-                    <h3 style="margin: 0 0 4px 0; font-size: 1rem; border: none; padding: 0;">${deal.propertyAddress}</h3>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                        <span class="status-pill">${deal.status}</span> • Seller: ${seller.name} • Last Activity: ${lastContact}
-                    </div>
-                </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    ${seller.phone ? `<a href="tel:${seller.phone}" class="btn-primary quick-log-btn" style="text-decoration:none; display:inline-flex; align-items:center;" data-id="${deal.id}" data-seller="${seller.name}">📞 Dial</a>` : '<span class="text-muted">No Phone</span>'}
-                    <button class="btn-secondary load-deal-btn" data-id="${deal.id}">View</button>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-
-        this.bindQueueEvents(container);
-    },
-
-    bindQueueEvents(container) {
-        container.querySelectorAll('.load-deal-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const dealId = parseInt(e.target.dataset.id);
-                this.currentDealId = dealId;
-                this.switchTab('viewCurrentDeal');
-                this.renderDealView();
-            });
-        });
-
-        // "Dial" button now opens phone app AND prompts to log
-        // We attach click listener to the link
-        container.querySelectorAll('.quick-log-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                // Allow the tel: link to proceed (don't preventDefault)
-                // But after a short delay, prompt for log
-                const dealId = parseInt(e.target.dataset.id);
-                const sellerName = e.target.dataset.seller;
-
-                setTimeout(() => {
-                    const note = prompt(`How did the call with ${sellerName} go?`, "Called, left voicemail");
-                    if (note) {
-                        Store.addLogToDeal(dealId, {
-                            type: 'call',
-                            text: note,
-                            contact: sellerName
-                        });
-                        // Refresh to show updated last contact
-                        this.renderCallQueue();
-                    }
-                }, 500); // Small delay to let system handle dial handler
-            });
-        });
-
-        // Bind Filter Change
-        const filterSelect = document.getElementById('callQueueFilter');
-        if (filterSelect && !filterSelect.hasAttribute('data-init')) {
-            filterSelect.setAttribute('data-init', 'true');
-            filterSelect.addEventListener('change', () => this.renderCallQueue());
-        }
-    },
-
-    // --- Existing Helper Functions (Contacts/Logs) ---
     renderContacts(contacts) {
         const list = document.getElementById('contactsList');
         if (!list) return;
@@ -290,7 +106,6 @@ export const CRM = {
             list.appendChild(li);
         });
 
-        // Add delete listeners
         list.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = parseInt(e.target.dataset.index);
@@ -304,8 +119,7 @@ export const CRM = {
         if (!list) return;
         list.innerHTML = '';
 
-        // Filter for user logs + important system events
-        const logs = timeline.filter(t => t.type === 'note' || t.type === 'call' || t.type === 'email');
+        const logs = timeline.filter(t => t.type === 'note' || t.type === 'call' || t.type === 'email' || t.type === 'text' || t.type === 'meeting');
 
         if (logs.length === 0) {
             list.innerHTML = '<li class="empty-state">No interaction logs yet. Add a note above.</li>';
@@ -315,7 +129,7 @@ export const CRM = {
         logs.forEach(log => {
             const li = document.createElement('li');
             li.className = 'log-entry';
-            const icon = log.type === 'call' ? '📞' : (log.type === 'email' ? '✉️' : '📝');
+            const icon = log.type === 'call' ? '📞' : (log.type === 'email' ? '✉️' : log.type === 'text' ? '💬' : log.type === 'meeting' ? '📅' : '📝');
             const date = new Date(log.timestamp).toLocaleString();
 
             li.innerHTML = `
@@ -339,18 +153,16 @@ export const CRM = {
             return;
         }
 
-        // Show all events
         timeline.forEach(item => {
             const li = document.createElement('li');
             const date = new Date(item.timestamp).toLocaleDateString();
 
             let content = '';
             if (item.type === 'status_change') {
-                content = `Status changed to <span class="status-pill">${item.status}</span>`;
+                content = `Status changed to <span class="status-pill status-${item.status}">${(item.status || '').replace(/_/g, ' ')}</span>`;
             } else if (item.type === 'system') {
                 content = item.text;
             } else {
-                // Short preview of logs
                 content = `${item.contact ? item.contact + ': ' : ''}${item.text.substring(0, 50)}${item.text.length > 50 ? '...' : ''}`;
             }
 
@@ -378,7 +190,7 @@ export const CRM = {
         if (!select) return;
 
         const currentVal = select.value;
-        select.innerHTML = '<option value="">-- Select Contact (Optional) --</option>';
+        select.innerHTML = '<option value="">-- Select Contact --</option>';
 
         contacts.forEach(c => {
             const opt = document.createElement('option');
@@ -387,7 +199,6 @@ export const CRM = {
             select.appendChild(opt);
         });
 
-        // Try to restore selection
         select.value = currentVal;
     },
 
@@ -395,11 +206,13 @@ export const CRM = {
         if (!this.currentDealId) return;
         Store.addContactToDeal(this.currentDealId, contact);
 
-        // Auto-log the addition
         Store.addLogToDeal(this.currentDealId, {
             type: 'system',
             text: `Added contact: ${contact.name} (${contact.role})`
         });
+
+        // Sync to global directory
+        Store.syncContactToGlobal(contact, this.currentDealId);
 
         this.render();
     },
@@ -412,7 +225,6 @@ export const CRM = {
             deal.contacts.splice(index, 1);
             Store.saveDeal(deal);
 
-            // Log removal
             Store.addLogToDeal(this.currentDealId, {
                 type: 'system',
                 text: `Removed contact: ${removed.name}`
@@ -422,24 +234,366 @@ export const CRM = {
         }
     },
 
-    // --- Setup ---
+    // ==========================================
+    // Sub-View: Contact Directory (merged from contacts.js)
+    // ==========================================
+    renderContactDirectory() {
+        const tbody = document.getElementById('crmContactsTableBody');
+        if (!tbody) return;
+
+        let contacts = Store.getContacts();
+        const search = (document.getElementById('crmContactSearch')?.value || '').toLowerCase();
+        const roleFilter = document.getElementById('crmContactRoleFilter')?.value || 'all';
+
+        if (search) {
+            contacts = contacts.filter(c =>
+                (c.name || '').toLowerCase().includes(search) ||
+                (c.email || '').toLowerCase().includes(search) ||
+                (c.phone || '').includes(search)
+            );
+        }
+        if (roleFilter !== 'all') {
+            contacts = contacts.filter(c => c.role === roleFilter);
+        }
+
+        if (contacts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No contacts found</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = contacts.map(contact => {
+            const dealChips = (contact.dealIds || []).map(dealId => {
+                const deal = Store.getDeal(dealId);
+                const label = deal ? (deal.propertyAddress || 'Untitled').substring(0, 20) : `#${dealId}`;
+                return `<span class="deal-chip" data-deal-id="${dealId}" title="${deal ? deal.propertyAddress : ''}">${label}</span>`;
+            }).join('');
+
+            return `
+                <tr data-contact-id="${contact.id}">
+                    <td>
+                        <strong class="contact-name-link" data-contact-id="${contact.id}">${contact.name}</strong>
+                    </td>
+                    <td><span class="role-badge">${contact.role || 'other'}</span></td>
+                    <td>${contact.phone ? `<a href="tel:${contact.phone}" class="contact-link">${contact.phone}</a>` : '-'}</td>
+                    <td>${contact.email ? `<a href="mailto:${contact.email}" class="contact-link">${contact.email}</a>` : '-'}</td>
+                    <td><div class="contact-deals-list">${dealChips || '<span class="text-muted">-</span>'}</div></td>
+                    <td>
+                        <button class="btn-small view-contact-btn" data-contact-id="${contact.id}">View</button>
+                        <button class="btn-danger delete-contact-btn" data-id="${contact.id}" style="margin-left:4px;">x</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Click contact name or View button -> contact detail
+        tbody.querySelectorAll('.contact-name-link, .view-contact-btn').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showContactDetail(parseInt(el.dataset.contactId));
+            });
+        });
+
+        // Click deal chips -> load deal
+        tbody.querySelectorAll('.deal-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const dealId = parseInt(chip.dataset.dealId);
+                document.dispatchEvent(new CustomEvent('loadDeal', { detail: { id: dealId } }));
+            });
+        });
+
+        // Delete contact
+        tbody.querySelectorAll('.delete-contact-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm('Delete this contact from the directory?')) {
+                    Store.deleteGlobalContact(parseInt(btn.dataset.id));
+                    this.renderContactDirectory();
+                }
+            });
+        });
+    },
+
+    // ==========================================
+    // Sub-View: Contact Detail (full timeline)
+    // ==========================================
+    showContactDetail(contactId) {
+        const contact = Store.getContact(contactId);
+        if (!contact) return;
+
+        this.switchTab('viewContactDetail');
+
+        document.getElementById('contactDetailName').textContent = contact.name;
+        document.getElementById('contactDetailRole').textContent = contact.role || 'other';
+        document.getElementById('contactDetailPhone').textContent = contact.phone || 'No phone';
+        document.getElementById('contactDetailEmail').textContent = contact.email || 'No email';
+
+        // Associated deals
+        const dealsList = document.getElementById('contactDealsList');
+        const deals = (contact.dealIds || []).map(id => Store.getDeal(id)).filter(Boolean);
+
+        if (deals.length === 0) {
+            dealsList.innerHTML = '<li class="empty-state" style="border:none;">No associated deals</li>';
+        } else {
+            dealsList.innerHTML = deals.map(deal => `
+                <li class="contact-deal-item" data-deal-id="${deal.id}">
+                    <span class="deal-address">${deal.propertyAddress || 'Untitled'}</span>
+                    <span class="status-pill status-${deal.status}">${(deal.status || 'lead').replace(/_/g, ' ')}</span>
+                    <span class="deal-profit">${deal.profit || '$0'}</span>
+                </li>
+            `).join('');
+
+            dealsList.querySelectorAll('.contact-deal-item').forEach(li => {
+                li.addEventListener('click', () => {
+                    document.dispatchEvent(new CustomEvent('loadDeal', {
+                        detail: { id: parseInt(li.dataset.dealId) }
+                    }));
+                });
+            });
+        }
+
+        // Full cross-deal timeline
+        const timelineEl = document.getElementById('contactFullTimeline');
+        const fullTimeline = this.buildFullContactTimeline(contact, deals);
+
+        if (fullTimeline.length === 0) {
+            timelineEl.innerHTML = '<li class="empty-state" style="border:none;">No interactions recorded</li>';
+        } else {
+            timelineEl.innerHTML = fullTimeline.map(item => {
+                const icon = item.type === 'call' ? '📞' : item.type === 'email' ? '✉️' :
+                             item.type === 'text' ? '💬' : item.type === 'meeting' ? '📅' :
+                             item.type === 'status_change' ? '🔄' : '📝';
+                const date = new Date(item.timestamp).toLocaleString();
+                return `
+                    <li class="timeline-entry">
+                        <span class="timeline-icon">${icon}</span>
+                        <div class="timeline-body">
+                            <div class="timeline-deal-label">${item.dealAddress || 'General'}</div>
+                            <div class="timeline-text">${item.text || ''}</div>
+                            <div class="timeline-date">${date}</div>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+        }
+    },
+
+    buildFullContactTimeline(contact, deals) {
+        const timeline = [];
+
+        deals.forEach(deal => {
+            (deal.timeline || []).forEach(entry => {
+                const isContactEntry = entry.contact &&
+                    entry.contact.toLowerCase().trim() === contact.name.toLowerCase().trim();
+                const isStatusChange = entry.type === 'status_change';
+                const isSystemEvent = entry.type === 'system';
+
+                if (isContactEntry || isStatusChange || isSystemEvent) {
+                    timeline.push({
+                        ...entry,
+                        dealId: deal.id,
+                        dealAddress: deal.propertyAddress
+                    });
+                }
+            });
+        });
+
+        return timeline.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    },
+
+    // ==========================================
+    // Sub-View: Call Queue
+    // ==========================================
+    renderCallQueue() {
+        const container = document.getElementById('callQueueContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const filterVal = document.getElementById('callQueueFilter') ? document.getElementById('callQueueFilter').value : 'all_leads';
+        const deals = Store.getDeals();
+        let queue = [];
+
+        const activeDeals = deals.filter(d => d.status === 'lead' || d.status === 'analyzed' || d.status === 'offer_sent');
+
+        if (filterVal === 'fresh_leads') {
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            queue = activeDeals.filter(d => {
+                const created = d.id ? new Date(d.id) : new Date();
+                return created > sevenDaysAgo;
+            });
+        } else if (filterVal === 'follow_up_needed') {
+            const threeDaysAgo = new Date();
+            threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+            queue = activeDeals.filter(d => {
+                if (!d.timeline || d.timeline.length === 0) return true;
+                const lastLog = new Date(d.timeline[0].timestamp);
+                return lastLog < threeDaysAgo;
+            });
+        } else {
+            queue = activeDeals;
+        }
+
+        if (queue.length === 0) {
+            container.innerHTML = '<p class="empty-state">No deals match this filter criteria.</p>';
+            return;
+        }
+
+        queue.forEach(deal => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.display = 'flex';
+            card.style.justifyContent = 'space-between';
+            card.style.alignItems = 'center';
+            card.style.padding = '16px';
+            card.style.marginBottom = '0';
+
+            const seller = (deal.contacts || []).find(c => c.role === 'seller') || { name: 'Unknown', phone: '' };
+
+            let lastContact = 'Never';
+            if (deal.timeline && deal.timeline.length > 0) {
+                const last = deal.timeline[0];
+                const date = new Date(last.timestamp).toLocaleDateString();
+                lastContact = `${date} (${last.type})`;
+            }
+
+            card.innerHTML = `
+                <div style="flex: 1;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1rem; border: none; padding: 0;">${deal.propertyAddress}</h3>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                        <span class="status-pill status-${deal.status}">${(deal.status || '').replace(/_/g, ' ')}</span> • Seller: ${seller.name} • Last Activity: ${lastContact}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    ${seller.phone ? `<a href="tel:${seller.phone}" class="btn-primary quick-log-btn" style="text-decoration:none; display:inline-flex; align-items:center;" data-id="${deal.id}" data-seller="${seller.name}">📞 Dial</a>` : '<span class="text-muted">No Phone</span>'}
+                    <button class="btn-secondary load-deal-btn" data-id="${deal.id}">View</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        this.bindQueueEvents(container);
+    },
+
+    bindQueueEvents(container) {
+        container.querySelectorAll('.load-deal-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const dealId = parseInt(e.target.dataset.id);
+                this.currentDealId = dealId;
+                this.switchTab('viewCurrentDeal');
+                this.renderDealView();
+            });
+        });
+
+        container.querySelectorAll('.quick-log-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const dealId = parseInt(e.target.dataset.id);
+                const sellerName = e.target.dataset.seller;
+
+                setTimeout(() => {
+                    const note = prompt(`How did the call with ${sellerName} go?`, "Called, left voicemail");
+                    if (note) {
+                        Store.addLogToDeal(dealId, {
+                            type: 'call',
+                            text: note,
+                            contact: sellerName
+                        });
+                        this.renderCallQueue();
+                    }
+                }, 500);
+            });
+        });
+
+        const filterSelect = document.getElementById('callQueueFilter');
+        if (filterSelect && !filterSelect.hasAttribute('data-init')) {
+            filterSelect.setAttribute('data-init', 'true');
+            filterSelect.addEventListener('change', () => this.renderCallQueue());
+        }
+    },
+
+    // ==========================================
+    // Setup Listeners
+    // ==========================================
     setupListeners() {
-        // Tab Linking
+        // Tab Navigation
         const bindTab = (btnId, viewId) => {
             const btn = document.getElementById(btnId);
             if (btn) btn.addEventListener('click', () => this.switchTab(viewId));
         };
         bindTab('tabCurrentDeal', 'viewCurrentDeal');
-        bindTab('tabAllContacts', 'viewAllContacts');
+        bindTab('tabContactDirectory', 'viewContactDirectory');
         bindTab('tabCallQueue', 'viewCallQueue');
 
-        // Search Listener
-        const searchInput = document.getElementById('globalContactSearch');
-        if (searchInput) {
-            searchInput.addEventListener('input', () => this.renderAllContacts());
+        // Back to directory from contact detail
+        const backBtn = document.getElementById('backToDirectoryBtn');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => this.switchTab('viewContactDirectory'));
         }
 
-        // Add Contact
+        // Contact Directory search/filter
+        const searchInput = document.getElementById('crmContactSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => this.renderContactDirectory());
+        }
+        const roleFilter = document.getElementById('crmContactRoleFilter');
+        if (roleFilter) {
+            roleFilter.addEventListener('change', () => this.renderContactDirectory());
+        }
+
+        // Add Contact button in directory -> open modal
+        const addContactDirBtn = document.getElementById('crmAddContactBtn');
+        if (addContactDirBtn) {
+            addContactDirBtn.addEventListener('click', () => {
+                document.getElementById('addGlobalContactModal').classList.remove('hidden');
+            });
+        }
+
+        // Add Contact Modal - save
+        const saveBtn = document.getElementById('saveGlobalContactBtn');
+        if (saveBtn && !saveBtn.hasAttribute('data-init')) {
+            saveBtn.setAttribute('data-init', 'true');
+            saveBtn.addEventListener('click', () => {
+                const name = document.getElementById('globalContactName').value.trim();
+                if (!name) { alert('Name is required.'); return; }
+
+                const contactData = {
+                    name,
+                    role: document.getElementById('globalContactRole').value,
+                    phone: document.getElementById('globalContactPhone').value.trim(),
+                    email: document.getElementById('globalContactEmail').value.trim(),
+                    dealIds: [],
+                    notes: ''
+                };
+
+                const existing = Store.findContactByNamePhone(name, contactData.phone);
+                if (existing) {
+                    alert('A contact with this name already exists.');
+                    return;
+                }
+
+                Store.saveContact(contactData);
+                document.getElementById('addGlobalContactModal').classList.add('hidden');
+                document.getElementById('globalContactName').value = '';
+                document.getElementById('globalContactPhone').value = '';
+                document.getElementById('globalContactEmail').value = '';
+                this.renderContactDirectory();
+            });
+        }
+
+        // Close modal
+        const closeBtn = document.getElementById('closeAddContactModal');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                document.getElementById('addGlobalContactModal').classList.add('hidden');
+            });
+        }
+
+        // CRM search (old globalContactSearch in All Contacts subview)
+        const globalSearch = document.getElementById('globalContactSearch');
+        if (globalSearch) {
+            globalSearch.addEventListener('input', () => this.renderContactDirectory());
+        }
+
+        // Add Contact to Deal
         const addContactBtn = document.getElementById('addContactBtn');
         if (addContactBtn && !addContactBtn.hasAttribute('data-init')) {
             addContactBtn.setAttribute('data-init', 'true');
@@ -451,7 +605,6 @@ export const CRM = {
 
                 if (name) {
                     this.addContact({ name, role, phone, email });
-                    // Clear inputs
                     document.getElementById('contactName').value = '';
                     document.getElementById('contactPhone').value = '';
                     document.getElementById('contactEmail').value = '';
@@ -468,7 +621,6 @@ export const CRM = {
                 const contact = document.getElementById('logContactSelect').value;
 
                 if (text) {
-                    // Detect type keywords?
                     let type = 'note';
                     const lower = text.toLowerCase();
                     if (lower.includes('call') || lower.includes('spoke') || lower.includes('phone')) type = 'call';
@@ -480,29 +632,44 @@ export const CRM = {
             });
         }
 
-        // Status Timeline Event Listener (Triggered by Pipeline)
-        document.removeEventListener('dealStatusChanged', this.handleStatusChange); // Cleanup old if any
+        // Status buttons in CRM
+        document.querySelectorAll('#statusActions .btn-status').forEach(btn => {
+            if (!btn.hasAttribute('data-crm-init')) {
+                btn.setAttribute('data-crm-init', 'true');
+                btn.addEventListener('click', () => {
+                    if (!this.currentDealId) return;
+                    const newStatus = btn.dataset.status;
+                    Store.updateDealStatus(this.currentDealId, newStatus);
+
+                    document.dispatchEvent(new CustomEvent('dealStatusChanged', {
+                        detail: { id: this.currentDealId, status: newStatus }
+                    }));
+
+                    this.renderDealView();
+                });
+            }
+        });
+
+        // Status Timeline Event Listener
+        document.removeEventListener('dealStatusChanged', this.handleStatusChange);
         document.addEventListener('dealStatusChanged', this.handleStatusChange.bind(this));
     },
 
     handleStatusChange(e) {
         const { id, status } = e.detail;
         if (this.currentDealId === id) {
-            // Log it
             Store.addLogToDeal(id, {
                 type: 'status_change',
                 status: status,
                 text: `Status updated to ${status}`
             });
-            this.render(); // Refresh logs
+            this.render();
         } else {
-            // Background log for other deals
             Store.addLogToDeal(id, {
                 type: 'status_change',
                 status: status,
                 text: `Status updated to ${status}`
             });
-            // If in Queue mode, maybe refresh list?
             if (!document.getElementById('viewCallQueue').classList.contains('hidden')) {
                 this.renderCallQueue();
             }
