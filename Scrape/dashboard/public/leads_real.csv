@@ -1,0 +1,33 @@
+ID,Address,Price,ARV,Equity_Percent,Opportunity_Score,Distress_Flags,Source,Link
+lead_0,"4304 Porpoise Dr, Tampa, FL 33617",280000,308000,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/4304-Porpoise-Dr-Tampa-FL-33617/44935217_zpid/
+lead_1,"9502 Sun Dial Dr, Tampa, FL 33635",139000,152900,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/9502-Sun-Dial-Dr-Tampa-FL-33635/2098877239_zpid/
+lead_2,"3412 E Fern St, Tampa, FL 33610",380000,418000,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/3412-E-Fern-St-Tampa-FL-33610/45084589_zpid/
+lead_3,"9801 Pine Way, Tampa, FL 33635",120000,132000,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/9801-Pine-Way-Tampa-FL-33635/2060710441_zpid/
+lead_4,"9711 Linda Pl #D, Tampa, FL 33610",42000,46200,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/9711-Linda-Pl-D-Tampa-FL-33610/458258873_zpid/
+lead_5,"5510 Longboat Blvd, Tampa, FL 33615",1485000,1633500,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/5510-Longboat-Blvd-Tampa-FL-33615/44877281_zpid/
+lead_6,"2906 W North B St, Tampa, FL 33609",539000,592900,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/2906-W-North-B-St-Tampa-FL-33609/45096123_zpid/
+lead_7,"5100 Burchette Rd UNIT 4200, Tampa, FL 33647",250000,275000,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/5100-Burchette-Rd-UNIT-4200-Tampa-FL-33647/44926551_zpid/
+lead_8,"6921 N 16th St, Tampa, FL 33610",694000,763400,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/6921-N-16th-St-Tampa-FL-33610/45082070_zpid/
+lead_9,"237 Sunset Cir #237-SC, Tampa, FL 33613",85000,93500,10,80,FSBO,Zillow,https://www.zillow.com/homedetails/237-Sunset-Cir-237-SC-Tampa-FL-33613/449989832_zpid/
+lead_10,"2303 N 47th St, Tampa, FL 33605",125000,162500,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/2303-N-47th-St-33605/home/47319893
+lead_11,"7627 Dolonita Dr #7627, Tampa, FL 33615",175000,227500,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/7627-Dolonita-Dr-33615/unit-7627/home/54646234
+lead_12,"7608 N Huntley Ave, Tampa, FL 33604",175000,227500,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/7608-N-Huntley-Ave-33604/home/47320793
+lead_13,"4901 E Hanna Ave, Tampa, FL 33610",199000,258700,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/4901-E-Hanna-Ave-33610/home/47157424
+lead_14,"3505 E Mcberry St, Tampa, FL 33610",205000,266500,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/3505-E-McBerry-St-33610/home/47314139
+lead_15,"3007 N 76th St, Tampa, FL 33619",230000,299000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/3007-N-76th-St-33619/home/47159833
+lead_16,"3602 N 25th St, Tampa, FL 33605",249000,323700,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/3602-N-25th-St-33605/home/47331144
+lead_17,"510 E Lake Ave, Tampa, FL 33603",255000,331500,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/510-E-Lake-Ave-33603/home/47325781
+lead_18,"9718 Fox Hollow Rd, Tampa, FL 33647",289900,376870,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/9718-Fox-Hollow-Rd-33647/home/47183938
+lead_19,"301 E Seneca Ave, Tampa, FL 33612",360000,468000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/301-E-Seneca-Ave-33612/home/47260294
+lead_20,"3310 W Beach St, Tampa, FL 33607",399000,518700,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/3310-W-Beach-St-33607/home/47271936
+lead_21,"7311 S Sherrill St, Tampa, FL 33616",420000,546000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/7311-S-Sherrill-St-33616/home/47299971
+lead_22,"15017 Shaw Rd, Tampa, FL 33625",445000,578500,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/15017-Shaw-Rd-33625/home/47110184
+lead_23,"15413 Brushwood Dr, Tampa, FL 33624",460000,598000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/15413-Brushwood-Dr-33624/home/47109870
+lead_24,"7208 N Ola Ave, Tampa, FL 33604",489000,635700,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/7208-N-Ola-Ave-33604/home/47320376
+lead_25,"2001 N 25th St, Tampa, FL 33605",500000,650000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/2001-N-25th-St-33605/home/47341761
+lead_26,"3201 W San Juan St, Tampa, FL 33629",550000,715000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/3201-W-San-Juan-St-33629/home/47286023
+lead_27,"2005 N 25th St, Tampa, FL 33605",600000,780000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/2005-N-25th-St-33605/home/47341762
+lead_28,"4116 Woodacre Ln, Tampa, FL 33624",629999,818998,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/4116-Woodacre-Ln-33624/home/46977154
+lead_29,"2310 N Boulevard, Tampa, FL 33602",699995,909993,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/2310-N-Boulevard-33602/home/47337846
+lead_30,"20104 Pond Spring Way, Tampa, FL 33647",748000,972400,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/20104-Pond-Spring-Way-33647/home/47023817
+lead_31,"1029 Royal Pass Rd, Tampa, FL 33602",4600000,5980000,15,75,"Fixer Upper, TLC",Redfin,https://www.redfin.com/FL/Tampa/1029-Royal-Pass-Rd-33602/home/47345881

@@ -1,0 +1,3663 @@
+[
+  {
+    "id": 69,
+    "address": "9355 Sunset St, Lakeland, FL",
+    "owner_name": "Owner 69",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 3491,
+      "year_built": 1955,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 506000,
+      "estimated_loans": 30360,
+      "equity_percent": 94,
+      "repair_estimate": 69000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Tax Delinquent",
+      "Water Shutoff"
+    ],
+    "opportunity_score": 95,
+    "status": "New"
+  },
+  {
+    "id": 136,
+    "address": "2475 Main St, Sarasota, FL",
+    "owner_name": "Owner 136",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 4,
+      "sqft": 2128,
+      "year_built": 1995,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 352000,
+      "estimated_loans": 38719,
+      "equity_percent": 89,
+      "repair_estimate": 79000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Probate",
+      "Vacant"
+    ],
+    "opportunity_score": 95,
+    "status": "New"
+  },
+  {
+    "id": 150,
+    "address": "5565 Park St, Lakeland, FL",
+    "owner_name": "Owner 150",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1810,
+      "year_built": 1975,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 265000,
+      "estimated_loans": 5300,
+      "equity_percent": 98,
+      "repair_estimate": 41000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Divorce Filing",
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 95,
+    "status": "New"
+  },
+  {
+    "id": 41,
+    "address": "4329 Palm St, Riverview, FL",
+    "owner_name": "Owner 41",
+    "mailing_address": "6699 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1760,
+      "year_built": 2001,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 552000,
+      "estimated_loans": 5520,
+      "equity_percent": 99,
+      "repair_estimate": 33000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Water Shutoff",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 90,
+    "status": "New"
+  },
+  {
+    "id": 63,
+    "address": "1067 Palm St, Clearwater, FL",
+    "owner_name": "Owner 63",
+    "mailing_address": "778 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1587,
+      "year_built": 2005,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 218000,
+      "estimated_loans": 26160,
+      "equity_percent": 88,
+      "repair_estimate": 63000
+    },
+    "distress_flags": [
+      "Probate",
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 90,
+    "status": "New"
+  },
+  {
+    "id": 68,
+    "address": "6465 Washington St, St. Petersburg, FL",
+    "owner_name": "Owner 68",
+    "mailing_address": "4107 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 1409,
+      "year_built": 1987,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 214000,
+      "estimated_loans": 2140,
+      "equity_percent": 99,
+      "repair_estimate": 79000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Pre-Foreclosure",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 90,
+    "status": "New"
+  },
+  {
+    "id": 109,
+    "address": "7911 Cedar St, Orlando, FL",
+    "owner_name": "Owner 109",
+    "mailing_address": "5507 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 2691,
+      "year_built": 1961,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 509000,
+      "estimated_loans": 25450,
+      "equity_percent": 95,
+      "repair_estimate": 26000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Vacant",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 90,
+    "status": "New"
+  },
+  {
+    "id": 126,
+    "address": "6629 Maple St, Plant City, FL",
+    "owner_name": "Owner 126",
+    "mailing_address": "7711 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 3143,
+      "year_built": 1991,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 230000,
+      "estimated_loans": 43699,
+      "equity_percent": 81,
+      "repair_estimate": 76000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Vacant",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 90,
+    "status": "New"
+  },
+  {
+    "id": 107,
+    "address": "7170 Park St, Riverview, FL",
+    "owner_name": "Owner 107",
+    "mailing_address": "9544 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1047,
+      "year_built": 2006,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 284000,
+      "estimated_loans": 147680,
+      "equity_percent": 48,
+      "repair_estimate": 61000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Vacant",
+      "Divorce Filing",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 85,
+    "status": "New"
+  },
+  {
+    "id": 4,
+    "address": "7697 Elm St, Tampa, FL",
+    "owner_name": "Owner 4",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 2786,
+      "year_built": 1976,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 390000,
+      "estimated_loans": 38999,
+      "equity_percent": 90,
+      "repair_estimate": 69000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Probate"
+    ],
+    "opportunity_score": 80,
+    "status": "New"
+  },
+  {
+    "id": 67,
+    "address": "3621 Lake St, Sarasota, FL",
+    "owner_name": "Owner 67",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1138,
+      "year_built": 1978,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 262000,
+      "estimated_loans": 31440,
+      "equity_percent": 88,
+      "repair_estimate": 38000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 80,
+    "status": "New"
+  },
+  {
+    "id": 143,
+    "address": "1471 Elm St, Brandon, FL",
+    "owner_name": "Owner 143",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 2282,
+      "year_built": 2005,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 244000,
+      "estimated_loans": 14640,
+      "equity_percent": 94,
+      "repair_estimate": 55000
+    },
+    "distress_flags": [
+      "Probate",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 80,
+    "status": "New"
+  },
+  {
+    "id": 1,
+    "address": "9491 Magnolia St, Brandon, FL",
+    "owner_name": "Owner 1",
+    "mailing_address": "2073 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 1006,
+      "year_built": 1966,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 443000,
+      "estimated_loans": 70880,
+      "equity_percent": 84,
+      "repair_estimate": 35000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 21,
+    "address": "3995 Pine St, Orlando, FL",
+    "owner_name": "Owner 21",
+    "mailing_address": "7604 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1685,
+      "year_built": 1962,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 465000,
+      "estimated_loans": 27900,
+      "equity_percent": 94,
+      "repair_estimate": 31000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 43,
+    "address": "714 Elm St, Bradenton, FL",
+    "owner_name": "Owner 43",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 2350,
+      "year_built": 2001,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 293000,
+      "estimated_loans": 67390,
+      "equity_percent": 77,
+      "repair_estimate": 24000
+    },
+    "distress_flags": [
+      "Probate",
+      "Divorce Filing",
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 51,
+    "address": "2454 Elm St, Brandon, FL",
+    "owner_name": "Owner 51",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 2807,
+      "year_built": 2000,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 221000,
+      "estimated_loans": 92820,
+      "equity_percent": 58,
+      "repair_estimate": 65000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Probate",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 70,
+    "address": "6033 Magnolia St, Lakeland, FL",
+    "owner_name": "Owner 70",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 1122,
+      "year_built": 1976,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 557000,
+      "estimated_loans": 245079,
+      "equity_percent": 56,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Tax Delinquent",
+      "Code Violation"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 74,
+    "address": "5764 Maple St, Bradenton, FL",
+    "owner_name": "Owner 74",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 2636,
+      "year_built": 2005,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 281000,
+      "estimated_loans": 109590,
+      "equity_percent": 61,
+      "repair_estimate": 76000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Code Violation",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 84,
+    "address": "5998 Hill St, Riverview, FL",
+    "owner_name": "Owner 84",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 3306,
+      "year_built": 1998,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 366000,
+      "estimated_loans": 193980,
+      "equity_percent": 47,
+      "repair_estimate": 73000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Pre-Foreclosure",
+      "Code Violation"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 86,
+    "address": "5099 Park St, St. Petersburg, FL",
+    "owner_name": "Owner 86",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1916,
+      "year_built": 1965,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 241000,
+      "estimated_loans": 132550,
+      "equity_percent": 45,
+      "repair_estimate": 32000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Pre-Foreclosure",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 93,
+    "address": "4709 Magnolia St, Bradenton, FL",
+    "owner_name": "Owner 93",
+    "mailing_address": "3617 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 2968,
+      "year_built": 1983,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 434000,
+      "estimated_loans": 65100,
+      "equity_percent": 85,
+      "repair_estimate": 58000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 121,
+    "address": "1557 Main St, Orlando, FL",
+    "owner_name": "Owner 121",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 1310,
+      "year_built": 1967,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 443000,
+      "estimated_loans": 248080,
+      "equity_percent": 44,
+      "repair_estimate": 67000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Divorce Filing",
+      "Vacant"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 125,
+    "address": "2999 Magnolia St, Plant City, FL",
+    "owner_name": "Owner 125",
+    "mailing_address": "7173 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 3200,
+      "year_built": 1984,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 341000,
+      "estimated_loans": 51150,
+      "equity_percent": 85,
+      "repair_estimate": 34000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 133,
+    "address": "5343 Sunset St, St. Petersburg, FL",
+    "owner_name": "Owner 133",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 4,
+      "sqft": 1407,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 240000,
+      "estimated_loans": 81599,
+      "equity_percent": 66,
+      "repair_estimate": 69000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Tax Delinquent",
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 144,
+    "address": "6241 Park St, St. Petersburg, FL",
+    "owner_name": "Owner 144",
+    "mailing_address": "1743 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 1135,
+      "year_built": 1950,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 517000,
+      "estimated_loans": 31020,
+      "equity_percent": 94,
+      "repair_estimate": 37000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 75,
+    "status": "New"
+  },
+  {
+    "id": 34,
+    "address": "7692 Palm St, Orlando, FL",
+    "owner_name": "Owner 34",
+    "mailing_address": "5730 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 2544,
+      "year_built": 1966,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 200000,
+      "estimated_loans": 96000,
+      "equity_percent": 52,
+      "repair_estimate": 24000
+    },
+    "distress_flags": [
+      "Probate",
+      "Pre-Foreclosure",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 70,
+    "status": "New"
+  },
+  {
+    "id": 78,
+    "address": "2658 Palm St, Kissimmee, FL",
+    "owner_name": "Owner 78",
+    "mailing_address": "7910 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 2898,
+      "year_built": 1956,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 249000,
+      "estimated_loans": 124500,
+      "equity_percent": 50,
+      "repair_estimate": 79000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 70,
+    "status": "New"
+  },
+  {
+    "id": 128,
+    "address": "7592 Elm St, Spring Hill, FL",
+    "owner_name": "Owner 128",
+    "mailing_address": "2576 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1280,
+      "year_built": 1999,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 534000,
+      "estimated_loans": 240299,
+      "equity_percent": 55,
+      "repair_estimate": 62000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Water Shutoff",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 70,
+    "status": "New"
+  },
+  {
+    "id": 129,
+    "address": "3633 Main St, Tampa, FL",
+    "owner_name": "Owner 129",
+    "mailing_address": "8897 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 2099,
+      "year_built": 1981,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 268000,
+      "estimated_loans": 109880,
+      "equity_percent": 59,
+      "repair_estimate": 42000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Vacant",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 70,
+    "status": "New"
+  },
+  {
+    "id": 134,
+    "address": "3803 Magnolia St, Kissimmee, FL",
+    "owner_name": "Owner 134",
+    "mailing_address": "5695 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 1666,
+      "year_built": 1976,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 421000,
+      "estimated_loans": 206290,
+      "equity_percent": 51,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Water Shutoff",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 70,
+    "status": "New"
+  },
+  {
+    "id": 5,
+    "address": "6885 Lake St, Sarasota, FL",
+    "owner_name": "Owner 5",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 3,
+      "sqft": 3161,
+      "year_built": 1986,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 598000,
+      "estimated_loans": 59799,
+      "equity_percent": 90,
+      "repair_estimate": 78000
+    },
+    "distress_flags": [
+      "Code Violation"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 20,
+    "address": "8113 Elm St, St. Petersburg, FL",
+    "owner_name": "Owner 20",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 2418,
+      "year_built": 2005,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 322000,
+      "estimated_loans": 12880,
+      "equity_percent": 96,
+      "repair_estimate": 32000
+    },
+    "distress_flags": [
+      "Code Violation"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 23,
+    "address": "1623 Magnolia St, Tampa, FL",
+    "owner_name": "Owner 23",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1938,
+      "year_built": 2001,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 429000,
+      "estimated_loans": 25740,
+      "equity_percent": 94,
+      "repair_estimate": 26000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 53,
+    "address": "344 Maple St, St. Petersburg, FL",
+    "owner_name": "Owner 53",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 2661,
+      "year_built": 1982,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 254000,
+      "estimated_loans": 33020,
+      "equity_percent": 87,
+      "repair_estimate": 41000
+    },
+    "distress_flags": [
+      "Vacant"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 56,
+    "address": "258 Pine St, Brandon, FL",
+    "owner_name": "Owner 56",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 2555,
+      "year_built": 1955,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 555000,
+      "estimated_loans": 44399,
+      "equity_percent": 92,
+      "repair_estimate": 80000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 73,
+    "address": "7809 Magnolia St, Bradenton, FL",
+    "owner_name": "Owner 73",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 2030,
+      "year_built": 2002,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 477000,
+      "estimated_loans": 38159,
+      "equity_percent": 92,
+      "repair_estimate": 25000
+    },
+    "distress_flags": [
+      "Divorce Filing"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 77,
+    "address": "6099 Magnolia St, Tampa, FL",
+    "owner_name": "Owner 77",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 1583,
+      "year_built": 1979,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 313000,
+      "estimated_loans": 53210,
+      "equity_percent": 83,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 83,
+    "address": "1663 Oak St, Plant City, FL",
+    "owner_name": "Owner 83",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1267,
+      "year_built": 2009,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 412000,
+      "estimated_loans": 32959,
+      "equity_percent": 92,
+      "repair_estimate": 64000
+    },
+    "distress_flags": [
+      "Probate"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 97,
+    "address": "6233 Magnolia St, Sarasota, FL",
+    "owner_name": "Owner 97",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 3121,
+      "year_built": 1987,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 207000,
+      "estimated_loans": 26910,
+      "equity_percent": 87,
+      "repair_estimate": 52000
+    },
+    "distress_flags": [
+      "Code Violation"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 103,
+    "address": "8860 Park St, Lakeland, FL",
+    "owner_name": "Owner 103",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 1094,
+      "year_built": 1996,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 303000,
+      "estimated_loans": 54540,
+      "equity_percent": 82,
+      "repair_estimate": 38000
+    },
+    "distress_flags": [
+      "Code Violation"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 130,
+    "address": "7211 Oak St, Spring Hill, FL",
+    "owner_name": "Owner 130",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 1841,
+      "year_built": 1964,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 569000,
+      "estimated_loans": 91040,
+      "equity_percent": 84,
+      "repair_estimate": 25000
+    },
+    "distress_flags": [
+      "Water Shutoff"
+    ],
+    "opportunity_score": 65,
+    "status": "New"
+  },
+  {
+    "id": 6,
+    "address": "5024 View St, St. Petersburg, FL",
+    "owner_name": "Owner 6",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 3011,
+      "year_built": 1981,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 581000,
+      "estimated_loans": 156870,
+      "equity_percent": 73,
+      "repair_estimate": 77000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 14,
+    "address": "6545 Magnolia St, Lakeland, FL",
+    "owner_name": "Owner 14",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1699,
+      "year_built": 1992,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 500000,
+      "estimated_loans": 290000,
+      "equity_percent": 42,
+      "repair_estimate": 65000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 22,
+    "address": "1570 Palm St, Clearwater, FL",
+    "owner_name": "Owner 22",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 3,
+      "sqft": 1458,
+      "year_built": 1951,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 492000,
+      "estimated_loans": 167279,
+      "equity_percent": 66,
+      "repair_estimate": 32000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 32,
+    "address": "5429 Palm St, Riverview, FL",
+    "owner_name": "Owner 32",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 3297,
+      "year_built": 2008,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 306000,
+      "estimated_loans": 107100,
+      "equity_percent": 65,
+      "repair_estimate": 23000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Code Violation"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 38,
+    "address": "9500 Maple St, Orlando, FL",
+    "owner_name": "Owner 38",
+    "mailing_address": "5890 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 3257,
+      "year_built": 1970,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 353000,
+      "estimated_loans": 10590,
+      "equity_percent": 97,
+      "repair_estimate": 30000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 40,
+    "address": "594 Lake St, Brandon, FL",
+    "owner_name": "Owner 40",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 2391,
+      "year_built": 1954,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 521000,
+      "estimated_loans": 109409,
+      "equity_percent": 79,
+      "repair_estimate": 68000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Probate"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 47,
+    "address": "9319 Palm St, Sarasota, FL",
+    "owner_name": "Owner 47",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 3123,
+      "year_built": 1987,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 246000,
+      "estimated_loans": 115620,
+      "equity_percent": 53,
+      "repair_estimate": 54000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Divorce Filing"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 48,
+    "address": "2176 Palm St, Riverview, FL",
+    "owner_name": "Owner 48",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 2050,
+      "year_built": 1957,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 348000,
+      "estimated_loans": 177480,
+      "equity_percent": 49,
+      "repair_estimate": 71000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 49,
+    "address": "766 Washington St, Brandon, FL",
+    "owner_name": "Owner 49",
+    "mailing_address": "2211 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 2480,
+      "year_built": 2000,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 269000,
+      "estimated_loans": 48420,
+      "equity_percent": 82,
+      "repair_estimate": 39000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 55,
+    "address": "6293 Lake St, Sarasota, FL",
+    "owner_name": "Owner 55",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 3010,
+      "year_built": 1978,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 309000,
+      "estimated_loans": 86520,
+      "equity_percent": 72,
+      "repair_estimate": 51000
+    },
+    "distress_flags": [
+      "Probate",
+      "Water Shutoff"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 72,
+    "address": "9405 Palm St, Kissimmee, FL",
+    "owner_name": "Owner 72",
+    "mailing_address": "4419 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1064,
+      "year_built": 1969,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 544000,
+      "estimated_loans": 43519,
+      "equity_percent": 92,
+      "repair_estimate": 30000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 75,
+    "address": "8399 Cedar St, Lakeland, FL",
+    "owner_name": "Owner 75",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1984,
+      "year_built": 1972,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 451000,
+      "estimated_loans": 243540,
+      "equity_percent": 46,
+      "repair_estimate": 26000
+    },
+    "distress_flags": [
+      "Probate",
+      "Code Violation"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 79,
+    "address": "6310 Maple St, Riverview, FL",
+    "owner_name": "Owner 79",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 2688,
+      "year_built": 1984,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 395000,
+      "estimated_loans": 197500,
+      "equity_percent": 50,
+      "repair_estimate": 66000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 87,
+    "address": "6408 Main St, Clearwater, FL",
+    "owner_name": "Owner 87",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 1523,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 221000,
+      "estimated_loans": 61880,
+      "equity_percent": 72,
+      "repair_estimate": 66000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Probate"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 90,
+    "address": "7287 Pine St, Clearwater, FL",
+    "owner_name": "Owner 90",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 3060,
+      "year_built": 2008,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 220000,
+      "estimated_loans": 81400,
+      "equity_percent": 63,
+      "repair_estimate": 43000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Vacant"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 91,
+    "address": "955 Sunset St, St. Petersburg, FL",
+    "owner_name": "Owner 91",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 3184,
+      "year_built": 1976,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 572000,
+      "estimated_loans": 331760,
+      "equity_percent": 42,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Divorce Filing"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 96,
+    "address": "1855 Park St, Bradenton, FL",
+    "owner_name": "Owner 96",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 2724,
+      "year_built": 1992,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 399000,
+      "estimated_loans": 95760,
+      "equity_percent": 76,
+      "repair_estimate": 25000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 99,
+    "address": "3456 Oak St, St. Petersburg, FL",
+    "owner_name": "Owner 99",
+    "mailing_address": "1289 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1331,
+      "year_built": 1963,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 379000,
+      "estimated_loans": 15160,
+      "equity_percent": 96,
+      "repair_estimate": 23000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 100,
+    "address": "1010 Lake St, Brandon, FL",
+    "owner_name": "Owner 100",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 1,
+      "sqft": 3459,
+      "year_built": 1969,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 533000,
+      "estimated_loans": 223860,
+      "equity_percent": 58,
+      "repair_estimate": 66000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Divorce Filing"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 108,
+    "address": "7304 View St, Plant City, FL",
+    "owner_name": "Owner 108",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 2105,
+      "year_built": 1961,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 503000,
+      "estimated_loans": 286710,
+      "equity_percent": 43,
+      "repair_estimate": 76000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 145,
+    "address": "2005 Lake St, Riverview, FL",
+    "owner_name": "Owner 145",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 1381,
+      "year_built": 1993,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 294000,
+      "estimated_loans": 126420,
+      "equity_percent": 57,
+      "repair_estimate": 26000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Water Shutoff"
+    ],
+    "opportunity_score": 60,
+    "status": "New"
+  },
+  {
+    "id": 13,
+    "address": "5218 Pine St, Bradenton, FL",
+    "owner_name": "Owner 13",
+    "mailing_address": "860 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 2480,
+      "year_built": 2008,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 403000,
+      "estimated_loans": 241800,
+      "equity_percent": 40,
+      "repair_estimate": 42000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Probate",
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 16,
+    "address": "6987 Sunset St, Sarasota, FL",
+    "owner_name": "Owner 16",
+    "mailing_address": "9493 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 2351,
+      "year_built": 1974,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 486000,
+      "estimated_loans": 160379,
+      "equity_percent": 67,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 18,
+    "address": "7912 Pine St, Orlando, FL",
+    "owner_name": "Owner 18",
+    "mailing_address": "394 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1901,
+      "year_built": 1966,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 579000,
+      "estimated_loans": 173700,
+      "equity_percent": 70,
+      "repair_estimate": 78000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 24,
+    "address": "6562 Elm St, St. Petersburg, FL",
+    "owner_name": "Owner 24",
+    "mailing_address": "5074 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 3,
+      "sqft": 3048,
+      "year_built": 1983,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 577000,
+      "estimated_loans": 155790,
+      "equity_percent": 73,
+      "repair_estimate": 64000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 25,
+    "address": "3722 Maple St, Bradenton, FL",
+    "owner_name": "Owner 25",
+    "mailing_address": "8900 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 2141,
+      "year_built": 1996,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 264000,
+      "estimated_loans": 142560,
+      "equity_percent": 46,
+      "repair_estimate": 34000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 29,
+    "address": "7911 Park St, Tampa, FL",
+    "owner_name": "Owner 29",
+    "mailing_address": "1096 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1067,
+      "year_built": 1965,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 487000,
+      "estimated_loans": 180190,
+      "equity_percent": 63,
+      "repair_estimate": 31000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 60,
+    "address": "8312 Washington St, Spring Hill, FL",
+    "owner_name": "Owner 60",
+    "mailing_address": "2289 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 2262,
+      "year_built": 2002,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 513000,
+      "estimated_loans": 210330,
+      "equity_percent": 59,
+      "repair_estimate": 43000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 64,
+    "address": "1382 Magnolia St, Tampa, FL",
+    "owner_name": "Owner 64",
+    "mailing_address": "8289 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 2,
+      "sqft": 1376,
+      "year_built": 1984,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 587000,
+      "estimated_loans": 223060,
+      "equity_percent": 62,
+      "repair_estimate": 47000
+    },
+    "distress_flags": [
+      "Probate",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 76,
+    "address": "5500 Lake St, Lakeland, FL",
+    "owner_name": "Owner 76",
+    "mailing_address": "5634 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1448,
+      "year_built": 2006,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 327000,
+      "estimated_loans": 196200,
+      "equity_percent": 40,
+      "repair_estimate": 39000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Probate",
+      "Water Shutoff",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 95,
+    "address": "479 Main St, Sarasota, FL",
+    "owner_name": "Owner 95",
+    "mailing_address": "4464 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1527,
+      "year_built": 1953,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 313000,
+      "estimated_loans": 115810,
+      "equity_percent": 63,
+      "repair_estimate": 58000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 101,
+    "address": "9789 Magnolia St, Brandon, FL",
+    "owner_name": "Owner 101",
+    "mailing_address": "9273 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 1830,
+      "year_built": 1991,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 557000,
+      "estimated_loans": 289640,
+      "equity_percent": 48,
+      "repair_estimate": 35000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 104,
+    "address": "832 Hill St, Kissimmee, FL",
+    "owner_name": "Owner 104",
+    "mailing_address": "6021 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 2939,
+      "year_built": 2001,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 406000,
+      "estimated_loans": 215180,
+      "equity_percent": 47,
+      "repair_estimate": 54000
+    },
+    "distress_flags": [
+      "Probate",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 115,
+    "address": "257 Magnolia St, Lakeland, FL",
+    "owner_name": "Owner 115",
+    "mailing_address": "7475 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1670,
+      "year_built": 2009,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 283000,
+      "estimated_loans": 107540,
+      "equity_percent": 62,
+      "repair_estimate": 36000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 116,
+    "address": "493 Cedar St, Tampa, FL",
+    "owner_name": "Owner 116",
+    "mailing_address": "8037 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 2065,
+      "year_built": 2003,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 275000,
+      "estimated_loans": 126499,
+      "equity_percent": 54,
+      "repair_estimate": 67000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 55,
+    "status": "New"
+  },
+  {
+    "id": 26,
+    "address": "2977 Oak St, Riverview, FL",
+    "owner_name": "Owner 26",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 1507,
+      "year_built": 1955,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 577000,
+      "estimated_loans": 34620,
+      "equity_percent": 94,
+      "repair_estimate": 36000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 37,
+    "address": "8425 Park St, Kissimmee, FL",
+    "owner_name": "Owner 37",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 2180,
+      "year_built": 1953,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 339000,
+      "estimated_loans": 27119,
+      "equity_percent": 92,
+      "repair_estimate": 45000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 45,
+    "address": "3423 Park St, Sarasota, FL",
+    "owner_name": "Owner 45",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 3234,
+      "year_built": 1977,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 395000,
+      "estimated_loans": 43449,
+      "equity_percent": 89,
+      "repair_estimate": 31000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 50,
+    "address": "3725 Magnolia St, Riverview, FL",
+    "owner_name": "Owner 50",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 2,
+      "sqft": 3132,
+      "year_built": 1970,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 210000,
+      "estimated_loans": 16799,
+      "equity_percent": 92,
+      "repair_estimate": 77000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 62,
+    "address": "3729 Pine St, Kissimmee, FL",
+    "owner_name": "Owner 62",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 2159,
+      "year_built": 1979,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 229000,
+      "estimated_loans": 34350,
+      "equity_percent": 85,
+      "repair_estimate": 29000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 92,
+    "address": "5777 Oak St, Lakeland, FL",
+    "owner_name": "Owner 92",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 1234,
+      "year_built": 1983,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 321000,
+      "estimated_loans": 35309,
+      "equity_percent": 89,
+      "repair_estimate": 68000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 127,
+    "address": "8963 Lake St, Clearwater, FL",
+    "owner_name": "Owner 127",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1439,
+      "year_built": 1982,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 364000,
+      "estimated_loans": 21840,
+      "equity_percent": 94,
+      "repair_estimate": 43000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 131,
+    "address": "6025 Oak St, Clearwater, FL",
+    "owner_name": "Owner 131",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 3350,
+      "year_built": 1973,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 471000,
+      "estimated_loans": 9420,
+      "equity_percent": 98,
+      "repair_estimate": 59000
+    },
+    "distress_flags": [],
+    "opportunity_score": 50,
+    "status": "New"
+  },
+  {
+    "id": 2,
+    "address": "4357 Oak St, Tampa, FL",
+    "owner_name": "Owner 2",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 3490,
+      "year_built": 1970,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 449000,
+      "estimated_loans": 273890,
+      "equity_percent": 39,
+      "repair_estimate": 74000
+    },
+    "distress_flags": [
+      "Water Shutoff",
+      "Tax Delinquent",
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 3,
+    "address": "6463 Magnolia St, Riverview, FL",
+    "owner_name": "Owner 3",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 3,
+      "sqft": 1433,
+      "year_built": 1997,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 287000,
+      "estimated_loans": 252560,
+      "equity_percent": 12,
+      "repair_estimate": 57000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Vacant",
+      "Probate"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 7,
+    "address": "7806 Lake St, Bradenton, FL",
+    "owner_name": "Owner 7",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 1691,
+      "year_built": 1982,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 574000,
+      "estimated_loans": 206640,
+      "equity_percent": 64,
+      "repair_estimate": 22000
+    },
+    "distress_flags": [
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 9,
+    "address": "2286 Elm St, St. Petersburg, FL",
+    "owner_name": "Owner 9",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 1990,
+      "year_built": 1977,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 465000,
+      "estimated_loans": 237150,
+      "equity_percent": 49,
+      "repair_estimate": 79000
+    },
+    "distress_flags": [
+      "Water Shutoff"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 31,
+    "address": "4240 Elm St, Lakeland, FL",
+    "owner_name": "Owner 31",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 2163,
+      "year_built": 1995,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 569000,
+      "estimated_loans": 256049,
+      "equity_percent": 55,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Probate"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 52,
+    "address": "5588 Palm St, Lakeland, FL",
+    "owner_name": "Owner 52",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1500,
+      "year_built": 1950,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 457000,
+      "estimated_loans": 118820,
+      "equity_percent": 74,
+      "repair_estimate": 62000
+    },
+    "distress_flags": [
+      "Vacant"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 57,
+    "address": "2732 Sunset St, Bradenton, FL",
+    "owner_name": "Owner 57",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 2968,
+      "year_built": 1952,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 430000,
+      "estimated_loans": 197799,
+      "equity_percent": 54,
+      "repair_estimate": 66000
+    },
+    "distress_flags": [
+      "Code Violation"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 58,
+    "address": "8826 Washington St, Sarasota, FL",
+    "owner_name": "Owner 58",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 3206,
+      "year_built": 1953,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 398000,
+      "estimated_loans": 95520,
+      "equity_percent": 76,
+      "repair_estimate": 54000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 65,
+    "address": "7165 Lake St, Riverview, FL",
+    "owner_name": "Owner 65",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1414,
+      "year_built": 1982,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 210000,
+      "estimated_loans": 94499,
+      "equity_percent": 55,
+      "repair_estimate": 22000
+    },
+    "distress_flags": [
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 85,
+    "address": "7841 Washington St, Bradenton, FL",
+    "owner_name": "Owner 85",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 3394,
+      "year_built": 2005,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 379000,
+      "estimated_loans": 181920,
+      "equity_percent": 52,
+      "repair_estimate": 24000
+    },
+    "distress_flags": [
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 102,
+    "address": "2914 Hill St, Clearwater, FL",
+    "owner_name": "Owner 102",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 3044,
+      "year_built": 1966,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 448000,
+      "estimated_loans": 112000,
+      "equity_percent": 75,
+      "repair_estimate": 28000
+    },
+    "distress_flags": [
+      "Divorce Filing"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 106,
+    "address": "3940 Oak St, Riverview, FL",
+    "owner_name": "Owner 106",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 2724,
+      "year_built": 1985,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 475000,
+      "estimated_loans": 208999,
+      "equity_percent": 56,
+      "repair_estimate": 76000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 118,
+    "address": "6900 Pine St, Plant City, FL",
+    "owner_name": "Owner 118",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 1,
+      "sqft": 3047,
+      "year_built": 2007,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 590000,
+      "estimated_loans": 253700,
+      "equity_percent": 57,
+      "repair_estimate": 23000
+    },
+    "distress_flags": [
+      "Water Shutoff"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 135,
+    "address": "8051 Elm St, Kissimmee, FL",
+    "owner_name": "Owner 135",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 3382,
+      "year_built": 2001,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 427000,
+      "estimated_loans": 213500,
+      "equity_percent": 50,
+      "repair_estimate": 64000
+    },
+    "distress_flags": [
+      "Probate"
+    ],
+    "opportunity_score": 45,
+    "status": "New"
+  },
+  {
+    "id": 28,
+    "address": "4410 Hill St, Spring Hill, FL",
+    "owner_name": "Owner 28",
+    "mailing_address": "4509 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1066,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 536000,
+      "estimated_loans": 251920,
+      "equity_percent": 53,
+      "repair_estimate": 71000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 42,
+    "address": "9995 Lake St, Tampa, FL",
+    "owner_name": "Owner 42",
+    "mailing_address": "9428 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 2914,
+      "year_built": 1985,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 281000,
+      "estimated_loans": 140500,
+      "equity_percent": 50,
+      "repair_estimate": 32000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 80,
+    "address": "7371 Maple St, Brandon, FL",
+    "owner_name": "Owner 80",
+    "mailing_address": "5264 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 3398,
+      "year_built": 1991,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 482000,
+      "estimated_loans": 241000,
+      "equity_percent": 50,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 89,
+    "address": "4993 Pine St, Brandon, FL",
+    "owner_name": "Owner 89",
+    "mailing_address": "6373 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1958,
+      "year_built": 1986,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 264000,
+      "estimated_loans": 203280,
+      "equity_percent": 23,
+      "repair_estimate": 34000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Probate",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 113,
+    "address": "7070 Main St, Plant City, FL",
+    "owner_name": "Owner 113",
+    "mailing_address": "1911 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 1,
+      "sqft": 1278,
+      "year_built": 1965,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 356000,
+      "estimated_loans": 238519,
+      "equity_percent": 33,
+      "repair_estimate": 67000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Divorce Filing",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 114,
+    "address": "4521 Cedar St, Lakeland, FL",
+    "owner_name": "Owner 114",
+    "mailing_address": "1706 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1901,
+      "year_built": 1993,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 259000,
+      "estimated_loans": 137270,
+      "equity_percent": 47,
+      "repair_estimate": 41000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 122,
+    "address": "3413 Elm St, St. Petersburg, FL",
+    "owner_name": "Owner 122",
+    "mailing_address": "2217 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1364,
+      "year_built": 1978,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 365000,
+      "estimated_loans": 94900,
+      "equity_percent": 74,
+      "repair_estimate": 56000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 123,
+    "address": "2869 Palm St, Sarasota, FL",
+    "owner_name": "Owner 123",
+    "mailing_address": "5595 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 3073,
+      "year_built": 1984,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 349000,
+      "estimated_loans": 69799,
+      "equity_percent": 80,
+      "repair_estimate": 30000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 146,
+    "address": "2071 Palm St, Riverview, FL",
+    "owner_name": "Owner 146",
+    "mailing_address": "653 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1183,
+      "year_built": 2002,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 240000,
+      "estimated_loans": 55199,
+      "equity_percent": 77,
+      "repair_estimate": 48000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 40,
+    "status": "New"
+  },
+  {
+    "id": 15,
+    "address": "2087 Magnolia St, Plant City, FL",
+    "owner_name": "Owner 15",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 2737,
+      "year_built": 1973,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 546000,
+      "estimated_loans": 212940,
+      "equity_percent": 61,
+      "repair_estimate": 48000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 17,
+    "address": "4552 Hill St, Plant City, FL",
+    "owner_name": "Owner 17",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 2328,
+      "year_built": 1997,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 328000,
+      "estimated_loans": 147599,
+      "equity_percent": 55,
+      "repair_estimate": 71000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 19,
+    "address": "1721 Oak St, Sarasota, FL",
+    "owner_name": "Owner 19",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 1897,
+      "year_built": 1999,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 209000,
+      "estimated_loans": 171380,
+      "equity_percent": 18,
+      "repair_estimate": 72000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure",
+      "Water Shutoff"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 30,
+    "address": "5378 Sunset St, Brandon, FL",
+    "owner_name": "Owner 30",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 2,
+      "sqft": 2933,
+      "year_built": 1954,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 378000,
+      "estimated_loans": 306180,
+      "equity_percent": 19,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Vacant",
+      "Water Shutoff"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 35,
+    "address": "4279 Hill St, Brandon, FL",
+    "owner_name": "Owner 35",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 2780,
+      "year_built": 1965,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 208000,
+      "estimated_loans": 112320,
+      "equity_percent": 46,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 36,
+    "address": "160 Magnolia St, St. Petersburg, FL",
+    "owner_name": "Owner 36",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 2233,
+      "year_built": 1990,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 513000,
+      "estimated_loans": 436050,
+      "equity_percent": 15,
+      "repair_estimate": 75000
+    },
+    "distress_flags": [
+      "Probate",
+      "Vacant"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 39,
+    "address": "9326 Lake St, Kissimmee, FL",
+    "owner_name": "Owner 39",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1627,
+      "year_built": 1971,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 307000,
+      "estimated_loans": 73680,
+      "equity_percent": 76,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 61,
+    "address": "3541 Cedar St, Brandon, FL",
+    "owner_name": "Owner 61",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 1,
+      "sqft": 2187,
+      "year_built": 2001,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 208000,
+      "estimated_loans": 174720,
+      "equity_percent": 16,
+      "repair_estimate": 50000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Vacant"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 98,
+    "address": "4333 Cedar St, Plant City, FL",
+    "owner_name": "Owner 98",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1424,
+      "year_built": 1998,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 222000,
+      "estimated_loans": 186480,
+      "equity_percent": 16,
+      "repair_estimate": 49000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Divorce Filing"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 105,
+    "address": "9398 Sunset St, St. Petersburg, FL",
+    "owner_name": "Owner 105",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 2,
+      "sqft": 2015,
+      "year_built": 2007,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 549000,
+      "estimated_loans": 142740,
+      "equity_percent": 74,
+      "repair_estimate": 52000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 111,
+    "address": "7883 View St, Brandon, FL",
+    "owner_name": "Owner 111",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 4,
+      "sqft": 1016,
+      "year_built": 1967,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 412000,
+      "estimated_loans": 214240,
+      "equity_percent": 48,
+      "repair_estimate": 54000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 117,
+    "address": "2907 Park St, Brandon, FL",
+    "owner_name": "Owner 117",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 2196,
+      "year_built": 1961,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 569000,
+      "estimated_loans": 403990,
+      "equity_percent": 29,
+      "repair_estimate": 67000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Vacant"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 120,
+    "address": "5186 Sunset St, Plant City, FL",
+    "owner_name": "Owner 120",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1015,
+      "year_built": 1980,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 358000,
+      "estimated_loans": 107400,
+      "equity_percent": 70,
+      "repair_estimate": 62000
+    },
+    "distress_flags": [],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 139,
+    "address": "854 Main St, Tampa, FL",
+    "owner_name": "Owner 139",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 1107,
+      "year_built": 1989,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 343000,
+      "estimated_loans": 270970,
+      "equity_percent": 21,
+      "repair_estimate": 64000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Probate"
+    ],
+    "opportunity_score": 30,
+    "status": "New"
+  },
+  {
+    "id": 33,
+    "address": "5927 Oak St, Bradenton, FL",
+    "owner_name": "Owner 33",
+    "mailing_address": "7362 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 2578,
+      "year_built": 1975,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 258000,
+      "estimated_loans": 190920,
+      "equity_percent": 26,
+      "repair_estimate": 59000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 44,
+    "address": "9864 Palm St, Spring Hill, FL",
+    "owner_name": "Owner 44",
+    "mailing_address": "8013 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 2981,
+      "year_built": 2002,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 353000,
+      "estimated_loans": 296520,
+      "equity_percent": 16,
+      "repair_estimate": 56000
+    },
+    "distress_flags": [
+      "Divorce Filing",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 94,
+    "address": "7971 Main St, Plant City, FL",
+    "owner_name": "Owner 94",
+    "mailing_address": "7814 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1330,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 518000,
+      "estimated_loans": 372960,
+      "equity_percent": 28,
+      "repair_estimate": 52000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 112,
+    "address": "5373 Magnolia St, Riverview, FL",
+    "owner_name": "Owner 112",
+    "mailing_address": "1403 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 2718,
+      "year_built": 1984,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 457000,
+      "estimated_loans": 301619,
+      "equity_percent": 34,
+      "repair_estimate": 46000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 132,
+    "address": "8983 Lake St, Sarasota, FL",
+    "owner_name": "Owner 132",
+    "mailing_address": "5431 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 1621,
+      "year_built": 1952,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 595000,
+      "estimated_loans": 368900,
+      "equity_percent": 38,
+      "repair_estimate": 70000
+    },
+    "distress_flags": [
+      "Probate",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 140,
+    "address": "7481 Park St, Clearwater, FL",
+    "owner_name": "Owner 140",
+    "mailing_address": "1715 Other St, New York, NY",
+    "property_details": {
+      "beds": 3,
+      "baths": 3,
+      "sqft": 2456,
+      "year_built": 1960,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 362000,
+      "estimated_loans": 242539,
+      "equity_percent": 33,
+      "repair_estimate": 33000
+    },
+    "distress_flags": [
+      "Code Violation",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 142,
+    "address": "8874 Elm St, St. Petersburg, FL",
+    "owner_name": "Owner 142",
+    "mailing_address": "8755 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 2140,
+      "year_built": 2009,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 551000,
+      "estimated_loans": 429780,
+      "equity_percent": 22,
+      "repair_estimate": 76000
+    },
+    "distress_flags": [
+      "Probate",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 148,
+    "address": "9743 Main St, Orlando, FL",
+    "owner_name": "Owner 148",
+    "mailing_address": "722 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 2,
+      "sqft": 2470,
+      "year_built": 2009,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 226000,
+      "estimated_loans": 187580,
+      "equity_percent": 17,
+      "repair_estimate": 44000
+    },
+    "distress_flags": [
+      "Tax Delinquent",
+      "Absentee Owner"
+    ],
+    "opportunity_score": 25,
+    "status": "New"
+  },
+  {
+    "id": 8,
+    "address": "5083 Lake St, Plant City, FL",
+    "owner_name": "Owner 8",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 2058,
+      "year_built": 1953,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 341000,
+      "estimated_loans": 252340,
+      "equity_percent": 26,
+      "repair_estimate": 54000
+    },
+    "distress_flags": [
+      "Pre-Foreclosure"
+    ],
+    "opportunity_score": 15,
+    "status": "New"
+  },
+  {
+    "id": 66,
+    "address": "7352 Elm St, Clearwater, FL",
+    "owner_name": "Owner 66",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 1119,
+      "year_built": 1965,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 439000,
+      "estimated_loans": 285350,
+      "equity_percent": 35,
+      "repair_estimate": 63000
+    },
+    "distress_flags": [
+      "Code Violation"
+    ],
+    "opportunity_score": 15,
+    "status": "New"
+  },
+  {
+    "id": 82,
+    "address": "3994 Lake St, Lakeland, FL",
+    "owner_name": "Owner 82",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 1783,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 463000,
+      "estimated_loans": 361140,
+      "equity_percent": 22,
+      "repair_estimate": 46000
+    },
+    "distress_flags": [
+      "Divorce Filing"
+    ],
+    "opportunity_score": 15,
+    "status": "New"
+  },
+  {
+    "id": 137,
+    "address": "6217 Pine St, Brandon, FL",
+    "owner_name": "Owner 137",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1833,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 311000,
+      "estimated_loans": 258130,
+      "equity_percent": 17,
+      "repair_estimate": 22000
+    },
+    "distress_flags": [
+      "Probate"
+    ],
+    "opportunity_score": 15,
+    "status": "New"
+  },
+  {
+    "id": 141,
+    "address": "2355 Hill St, Bradenton, FL",
+    "owner_name": "Owner 141",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 4,
+      "sqft": 1892,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 493000,
+      "estimated_loans": 433840,
+      "equity_percent": 12,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Tax Delinquent"
+    ],
+    "opportunity_score": 15,
+    "status": "New"
+  },
+  {
+    "id": 11,
+    "address": "2142 Washington St, Tampa, FL",
+    "owner_name": "Owner 11",
+    "mailing_address": "695 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1676,
+      "year_built": 1950,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 353000,
+      "estimated_loans": 285930,
+      "equity_percent": 19,
+      "repair_estimate": 72000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 10,
+    "status": "New"
+  },
+  {
+    "id": 12,
+    "address": "6245 Washington St, Plant City, FL",
+    "owner_name": "Owner 12",
+    "mailing_address": "3132 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 1430,
+      "year_built": 1961,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 427000,
+      "estimated_loans": 290360,
+      "equity_percent": 32,
+      "repair_estimate": 55000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 10,
+    "status": "New"
+  },
+  {
+    "id": 59,
+    "address": "1596 Oak St, Lakeland, FL",
+    "owner_name": "Owner 59",
+    "mailing_address": "1928 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 1,
+      "sqft": 1553,
+      "year_built": 1973,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 373000,
+      "estimated_loans": 313320,
+      "equity_percent": 16,
+      "repair_estimate": 24000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 10,
+    "status": "New"
+  },
+  {
+    "id": 110,
+    "address": "8307 Magnolia St, Lakeland, FL",
+    "owner_name": "Owner 110",
+    "mailing_address": "2336 Other St, New York, NY",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1648,
+      "year_built": 1966,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 447000,
+      "estimated_loans": 281610,
+      "equity_percent": 37,
+      "repair_estimate": 37000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 10,
+    "status": "New"
+  },
+  {
+    "id": 124,
+    "address": "1758 Pine St, Spring Hill, FL",
+    "owner_name": "Owner 124",
+    "mailing_address": "6608 Other St, New York, NY",
+    "property_details": {
+      "beds": 4,
+      "baths": 3,
+      "sqft": 2717,
+      "year_built": 1975,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 293000,
+      "estimated_loans": 222680,
+      "equity_percent": 24,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 10,
+    "status": "New"
+  },
+  {
+    "id": 147,
+    "address": "5337 Pine St, Riverview, FL",
+    "owner_name": "Owner 147",
+    "mailing_address": "569 Other St, New York, NY",
+    "property_details": {
+      "beds": 5,
+      "baths": 3,
+      "sqft": 1330,
+      "year_built": 1975,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 563000,
+      "estimated_loans": 365950,
+      "equity_percent": 35,
+      "repair_estimate": 73000
+    },
+    "distress_flags": [
+      "Absentee Owner"
+    ],
+    "opportunity_score": 10,
+    "status": "New"
+  },
+  {
+    "id": 10,
+    "address": "1983 Pine St, Lakeland, FL",
+    "owner_name": "Owner 10",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 1,
+      "sqft": 1088,
+      "year_built": 1973,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 551000,
+      "estimated_loans": 473860,
+      "equity_percent": 14,
+      "repair_estimate": 21000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 27,
+    "address": "5172 Pine St, Orlando, FL",
+    "owner_name": "Owner 27",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 4,
+      "sqft": 1406,
+      "year_built": 1987,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 313000,
+      "estimated_loans": 253530,
+      "equity_percent": 19,
+      "repair_estimate": 31000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 46,
+    "address": "9865 Lake St, Lakeland, FL",
+    "owner_name": "Owner 46",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 1,
+      "sqft": 1236,
+      "year_built": 1988,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 408000,
+      "estimated_loans": 277440,
+      "equity_percent": 32,
+      "repair_estimate": 47000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 54,
+    "address": "4395 Washington St, Lakeland, FL",
+    "owner_name": "Owner 54",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 2,
+      "sqft": 2356,
+      "year_built": 1973,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 421000,
+      "estimated_loans": 265230,
+      "equity_percent": 37,
+      "repair_estimate": 35000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 71,
+    "address": "8774 Main St, St. Petersburg, FL",
+    "owner_name": "Owner 71",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 3,
+      "baths": 2,
+      "sqft": 1127,
+      "year_built": 1966,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 425000,
+      "estimated_loans": 335750,
+      "equity_percent": 21,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 81,
+    "address": "1764 Park St, Spring Hill, FL",
+    "owner_name": "Owner 81",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 1,
+      "sqft": 1249,
+      "year_built": 1998,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 317000,
+      "estimated_loans": 212389,
+      "equity_percent": 33,
+      "repair_estimate": 29000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 88,
+    "address": "3761 Palm St, Bradenton, FL",
+    "owner_name": "Owner 88",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 4,
+      "sqft": 2838,
+      "year_built": 1959,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 479000,
+      "estimated_loans": 359250,
+      "equity_percent": 25,
+      "repair_estimate": 53000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 119,
+    "address": "9482 Cedar St, Plant City, FL",
+    "owner_name": "Owner 119",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 5,
+      "baths": 2,
+      "sqft": 2704,
+      "year_built": 1974,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 337000,
+      "estimated_loans": 205570,
+      "equity_percent": 39,
+      "repair_estimate": 64000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 138,
+    "address": "9390 Elm St, Tampa, FL",
+    "owner_name": "Owner 138",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 4,
+      "baths": 4,
+      "sqft": 3183,
+      "year_built": 1962,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 440000,
+      "estimated_loans": 325600,
+      "equity_percent": 26,
+      "repair_estimate": 47000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  },
+  {
+    "id": 149,
+    "address": "5018 Sunset St, Lakeland, FL",
+    "owner_name": "Owner 149",
+    "mailing_address": "Same",
+    "property_details": {
+      "beds": 2,
+      "baths": 2,
+      "sqft": 1471,
+      "year_built": 1960,
+      "property_type": "Single Family"
+    },
+    "financials": {
+      "arv": 423000,
+      "estimated_loans": 346860,
+      "equity_percent": 18,
+      "repair_estimate": 63000
+    },
+    "distress_flags": [],
+    "opportunity_score": 0,
+    "status": "New"
+  }
+]

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird Dog OS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>BIRD DOG <span style="color: #fff; font-weight: 300;">OS</span></h1>
+            </div>
+
+            <nav class="main-nav">
+                <button id="navCalculator" class="nav-btn active">Details</button>
+                <button id="navPipeline" class="nav-btn">Pipeline</button>
+                <button id="navCrm" class="nav-btn">CRM</button>
+                <button id="navContacts" class="nav-btn">Contacts</button>
+                <button id="navDashboard" class="nav-btn">Dashboard</button>
+                <a href="data_explorer.html" class="nav-btn" target="_blank">Data</a>
+            </nav>
+
+            <!-- Calculator Sidebar Content -->
+            <div id="calculatorSidebar">
+                <div class="saved-deals-section">
+                    <h2>Recent Deals</h2>
+                    <div class="search-filter-bar">
+                        <input type="search" id="dealSearchInput" placeholder="Search deals...">
+                        <div class="filter-row">
+                            <select id="dealFilterStatus">
+                                <option value="all">All Status</option>
+                                <option value="lead">Lead</option>
+                                <option value="analyzed">Analyzed</option>
+                                <option value="offer_sent">Offer Sent</option>
+                                <option value="under_contract">Under Contract</option>
+                                <option value="closed">Closed</option>
+                                <option value="dead">Dead</option>
+                            </select>
+                            <select id="dealSortBy">
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="profit_high">Highest Profit</option>
+                                <option value="score">Best Score</option>
+                            </select>
+                        </div>
+                    </div>
+                    <ul id="savedDealsList" class="saved-deals-list">
+                        <!-- Populated by JS -->
+                        <li class="empty-state">No saved deals yet</li>
+                    </ul>
+                    <div class="data-actions">
+                        <button id="exportDataBtn">Export Data</button>
+                        <button id="importDataBtn">Import Data</button>
+                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="accordion-item open">
+                    <div class="accordion-header">
+                        <h2>Property Details</h2>
+                        <span class="accordion-toggle">−</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="field">
+                            <label for="source">Lead Source</label>
+                            <select id="source">
+                                <option value="mls">MLS</option>
+                                <option value="direct_mail">Direct Mail</option>
+                                <option value="cold_call">Cold Call</option>
+                                <option value="referral">Referral</option>
+                                <option value="driving_dollars">Driving for Dollars</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="sellerName">Seller Name</label>
+                            <input type="text" id="sellerName" placeholder="Jane Smith">
+                        </div>
+                        <div class="field">
+                            <label for="propertyAddress">Property Address</label>
+                            <div class="autocomplete-wrapper">
+                                <input type="text" id="propertyAddress" placeholder="123 Main St" autocomplete="off">
+                                <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
+                            </div>
+                            <div style="display: flex; gap: 8px; margin-top: 8px;">
+                                <button id="fetchDataBtn" class="btn-small" style="flex: 1;">Auto-Fill
+                                    (RentCast)</button>
+                                <button id="fetchOfficialBtn" class="btn-secondary" style="flex: 1;"
+                                    title="Fetch from County Property Appraiser">Official Data</button>
+                            </div>
+                            <div id="permitHistoryContainer" style="margin-top: 15px; display: none;">
+                                <h4 style="margin-bottom: 10px; color: #a0a0a0;">Permit History</h4>
+                                <ul id="permitList"
+                                    style="list-style: none; padding: 0; max-height: 200px; overflow-y: auto;"></ul>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="beds">Beds</label>
+                                <input type="number" id="beds" placeholder="3">
+                            </div>
+                            <div class="field">
+                                <label for="baths">Baths</label>
+                                <input type="number" id="baths" placeholder="2">
+                            </div>
+                            <div class="field">
+                                <label for="yearBuilt">Year</label>
+                                <input type="number" id="yearBuilt" placeholder="1980">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="ownerOccupied">Owner Occupied</label>
+                            <select id="ownerOccupied">
+                                <option value="">Unknown</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="hoaFee">HOA Fee ($/mo)</label>
+                                <input type="number" id="hoaFee" placeholder="0">
+                            </div>
+                            <div class="field">
+                                <label for="propertyTax">Property Tax ($/yr)</label>
+                                <input type="number" id="propertyTax" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h2>Property Condition</h2>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="field">
+                            <label for="sqft">Square Footage</label>
+                            <input type="number" id="sqft" placeholder="e.g. 1500">
+                        </div>
+                        <div class="field">
+                            <label for="condition">Condition (Est. Repairs)</label>
+                            <div style="display: flex; gap: 8px;">
+                                <select id="condition" style="flex: 1;">
+                                    <option value="custom">Custom Amount</option>
+                                    <option value="light">Light ($15/sqft)</option>
+                                    <option value="medium">Medium ($30/sqft)</option>
+                                    <option value="heavy">Heavy ($60/sqft)</option>
+                                </select>
+                                <button id="openRepairModalBtn" class="btn-ghost"
+                                    title="Advanced Repair Estimator">Settings</button>
+                            </div>
+                            <div id="repairHelperText" class="helper-text"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" style="margin-top: auto; border-top: 1px solid #333; padding-top: 10px;">
+                    <div class="accordion-header">
+                        <h2>Offer Details</h2>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="field">
+                            <label for="earnestMoney">Earnest Money Deposit ($)</label>
+                            <input type="number" id="earnestMoney" value="100">
+                        </div>
+                        <div class="field">
+                            <label for="daysToClose">Days Until Close</label>
+                            <input type="number" id="daysToClose" value="30">
+                        </div>
+                        <div class="field">
+                            <label for="contingency">Contingency</label>
+                            <textarea id="contingency" rows="3">Inspection and financing contingency...</textarea>
+                        </div>
+                        <div class="field checkbox-field">
+                            <label for="includeContingency">Include in offer</label>
+                            <input type="checkbox" id="includeContingency">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard -->
+        <main id="mainDashboard" class="dashboard">
+            <!-- Calculator View -->
+            <div id="calculatorView">
+                <header class="top-bar">
+                    <div class="actions">
+                        <button id="saveDealBtn" class="btn-primary">Save Deal</button>
+                        <button id="crmSwitchBtn" class="btn-secondary"
+                            style="background-color: #4a6fa5; color: white;">CRM & Contacts</button>
+                        <button id="downloadPdfBtn" class="btn-secondary">Download Offer</button>
+                        <button id="clearFormBtn" class="btn-ghost">Clear</button>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Profit to Investor</h3>
+                        <div class="value" id="profitToInvestor">$0</div>
+                    </div>
+                    <div class="metric-card highlight">
+                        <h3>Buyer ROI</h3>
+                        <div class="value" id="buyerRoi">0%</div>
+                    </div>
+                    <div class="metric-card profit-highlight">
+                        <h3>Your Profit</h3>
+                        <div class="value" id="yourProfit">$0</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Suggested Offer</h3>
+                        <div class="value" id="suggestedOffer">$0</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Sale Price to Investor</h3>
+                        <div class="value" id="salePriceToInvestor">$0</div>
+                    </div>
+                </header>
+
+                <div class="content-grid">
+                    <section class="full-width-card" style="margin-bottom: 20px;">
+                        <div class="offers-grid">
+                            <div class="offer-box high">
+                                <h4>High Motivation</h4>
+                                <div class="price" id="offerHigh">$0</div>
+                            </div>
+                            <div class="offer-box medium">
+                                <h4>Medium Motivation</h4>
+                                <div class="price" id="offerMedium">$0</div>
+                            </div>
+                            <div class="offer-box low">
+                                <h4>Low Motivation</h4>
+                                <div class="price" id="offerLow">$0</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h2>Deal Overview</h2>
+                        <div class="split-view">
+                            <div class="column">
+                                <h3>Buyer Costs</h3>
+                                <ul class="data-list" id="deductionsList">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                            <div class="column">
+                                <h3>Your Numbers</h3>
+                                <ul class="data-list" id="yourNumbersList">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h2>Financials</h2>
+                        <div class="input-group">
+                            <label for="arv" style="display:flex; align-items:center;">
+                                After Repair Value (ARV)
+                                <span class="info-icon"
+                                    title="Source: Hillsborough County Property Appraiser 'Market Value' (Auto-filled) or Manual Input"
+                                    style="margin-left:6px; cursor:help; opacity:0.7;">ⓘ</span>
+                            </label>
+                            <input type="text" id="arv" placeholder="$0">
+                        </div>
+                        <div class="input-group">
+                            <label for="repairCosts">Est. Repair Costs</label>
+                            <input type="text" id="repairCosts" placeholder="$0">
+                        </div>
+                        <div class="input-group">
+                            <label for="assignmentFee">Assignment Fee</label>
+                            <input type="text" id="assignmentFee" value="10000">
+                        </div>
+                        <div class="field-row">
+                            <div class="input-group">
+                                <label>Agent Comm (%)</label>
+                                <input type="number" id="agentCommission" value="2.5" step="0.1">
+                            </div>
+                            <div class="input-group">
+                                <label>Closing Costs (%)</label>
+                                <input type="number" id="closingCosts" value="1.5" step="0.1">
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="input-group">
+                                <label>Investor Profit (%)</label>
+                                <input type="number" id="investorProfit" value="15">
+                            </div>
+                            <div class="input-group">
+                                <label>Cost Buffer (%)</label>
+                                <input type="number" id="costBuffer" value="5">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h2>Property Features & Specs</h2>
+                        <div class="split-view">
+                            <div class="column">
+                                <ul class="data-list">
+                                    <li><span>Property Type</span> <span id="featType">-</span></li>
+                                    <li><span>Year Built</span> <span id="featYear">-</span></li>
+                                    <li><span>Lot Size</span> <span id="featLot">-</span></li>
+                                    <li><span>Zoning</span> <span id="featZoning">-</span></li>
+                                    <li><span>County</span> <span id="featCounty">-</span></li>
+                                </ul>
+                            </div>
+                            <div class="column">
+                                <ul class="data-list">
+                                    <li><span>Cooling</span> <span id="featCooling">-</span></li>
+                                    <li><span>Heating</span> <span id="featHeating">-</span></li>
+                                    <li><span>Pool</span> <span id="featPool">-</span></li>
+                                    <li><span>Garage</span> <span id="featGarage">-</span></li>
+                                    <li><span>Roof</span> <span id="featRoof">-</span></li>
+                                    <li><span>Last Sale</span> <span id="featLastSale">-</span></li>
+                                    <li><span>Subdivision</span> <span id="featSubdivision">-</span></li>
+                                    <li><span>Parcel ID</span> <span id="featParcel">-</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Property Details Sections (Merged) -->
+                    <section class="card">
+                        <h3>General Info</h3>
+                        <div class="input-group">
+                            <label for="detailsBeds">Beds</label>
+                            <input type="number" id="detailsBeds" placeholder="3">
+                        </div>
+                        <div class="input-group">
+                            <label for="detailsBaths">Baths</label>
+                            <input type="number" id="detailsBaths" placeholder="2">
+                        </div>
+                        <div class="input-group">
+                            <label for="detailsSqft">Square Footage</label>
+                            <input type="number" id="detailsSqft" placeholder="1500">
+                        </div>
+                        <div class="input-group">
+                            <label for="lastPermits">Last Permits</label>
+                            <div style="display: flex; gap: 8px; align-items: flex-start;">
+                                <textarea id="lastPermits" rows="3" placeholder="e.g. Roof replaced 2015..."
+                                    style="flex: 1;"></textarea>
+                                <button id="checkPermitsBtn" class="btn-ghost"
+                                    title="Check Official Permits">Permits</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h3>Roof & Exterior</h3>
+                        <div class="input-group">
+                            <label for="roofPitch">Roof Pitch</label>
+                            <select id="roofPitch">
+                                <option value="flat">Flat / Low Slope</option>
+                                <option value="standard" selected>Standard</option>
+                                <option value="steep">Steep</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="roofMaterial">Roof Material</label>
+                            <select id="roofMaterial">
+                                <option value="shingle">Asphalt Shingle</option>
+                                <option value="metal">Metal</option>
+                                <option value="tile">Tile</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h3>Systems</h3>
+                        <div class="input-group">
+                            <label for="plumbingType">Plumbing Type</label>
+                            <select id="plumbingType">
+                                <option value="pvc">PVC / Copper (Modern)</option>
+                                <option value="cast_iron">Cast Iron / Galvanized (Old)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="electricalPanel">Electrical Panel</label>
+                            <select id="electricalPanel">
+                                <option value="modern">Breakers (Modern)</option>
+                                <option value="fuse">Fuse Box / Old</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="hvacAge">HVAC Age</label>
+                            <select id="hvacAge">
+                                <option value="new">0-10 Years</option>
+                                <option value="old">10+ Years (Likely Replace)</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h3>Interior</h3>
+                        <div class="input-group">
+                            <label for="kitchenSqft">Kitchen Sqft (Approx)</label>
+                            <input type="number" id="kitchenSqft" placeholder="e.g. 150">
+                        </div>
+                        <div class="input-group">
+                            <label for="flooringType">Flooring Type</label>
+                            <select id="flooringType">
+                                <option value="carpet">Carpet</option>
+                                <option value="hardwood">Hardwood</option>
+                                <option value="tile">Tile</option>
+                                <option value="vinyl">Vinyl / LVP</option>
+                            </select>
+                        </div>
+                    </section>
+
+
+
+
+                    <section class="card">
+                        <h2>Comparable Sales (Comps)</h2>
+                        <div id="compsContainer" class="comps-container">
+                            <p class="empty-state">Enter an address and click "Auto-Fill" to see comps.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Pipeline View -->
+            <div id="pipelineView" class="pipeline-view hidden">
+                <div class="pipeline-container">
+                    <!-- Main Kanban Board -->
+                    <div class="pipeline-main">
+                        <div class="pipeline-header">
+                            <h2>Deal Pipeline</h2>
+                            <div class="bulk-actions">
+                                <label for="csvUpload" class="btn-secondary" style="cursor: pointer;">
+                                    Import CSV
+                                </label>
+                                <input type="file" id="csvUpload" accept=".csv" style="display: none;">
+                            </div>
+                        </div>
+
+                        <!-- Bulk Results Container (Initially Hidden) -->
+                        <div id="bulkResults" class="bulk-results hidden card" style="margin-bottom: 20px;"></div>
+
+                        <!-- Pipeline Stats Bar -->
+                        <div class="pipeline-stats-bar" id="pipelineStatsBar">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <div class="kanban-board">
+                            <div class="kanban-column" data-status="lead">
+                                <h3>Leads</h3>
+                                <div class="kanban-list" id="col-lead"></div>
+                            </div>
+                            <div class="kanban-column" data-status="analyzed">
+                                <h3>Analyzed</h3>
+                                <div class="kanban-list" id="col-analyzed"></div>
+                            </div>
+                            <div class="kanban-column" data-status="offer_sent">
+                                <h3>Offer Sent</h3>
+                                <div class="kanban-list" id="col-offer_sent"></div>
+                            </div>
+                            <div class="kanban-column" data-status="under_contract">
+                                <h3>Under Contract</h3>
+                                <div class="kanban-list" id="col-under_contract"></div>
+                            </div>
+                            <div class="kanban-column" data-status="closed">
+                                <h3>Closed</h3>
+                                <div class="kanban-list" id="col-closed"></div>
+                            </div>
+                            <div class="kanban-column" data-status="dead">
+                                <h3>Dead</h3>
+                                <div class="kanban-list" id="col-dead"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRM View (New) -->
+            <div id="crmView" class="crm-view hidden">
+                <header class="top-bar">
+                    <div style="flex: 1;">
+                        <h2>CRM & Call Center</h2>
+
+                        <!-- CRM Sub-Navigation -->
+                        <div class="crm-nav"
+                            style="display: flex; gap: 10px; margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 1px;">
+                            <button id="tabCurrentDeal" class="nav-btn active">📍 Current Property</button>
+                            <button id="tabAllContacts" class="nav-btn">👥 All Contacts</button>
+                            <button id="tabCallQueue" class="nav-btn">📞 Call Queue</button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- 1. Current Deal View -->
+                <div id="viewCurrentDeal" class="crm-subview">
+                    <div class="top-bar" style="margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <div class="status-actions" id="statusActions">
+                                <button class="btn-status" data-status="lead">Lead</button>
+                                <button class="btn-status" data-status="analyzed">Analyzed</button>
+                                <button class="btn-status" data-status="offer_sent">Offer Sent</button>
+                                <button class="btn-status" data-status="under_contract">Under Contract</button>
+                                <button class="btn-status" data-status="closed">Closed</button>
+                                <button class="btn-status" data-status="dead"
+                                    style="color: #ff5252; border-color: #ff5252;">Dead</button>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button id="backToCalcBtn" class="btn-secondary">← Back to Property Details</button>
+                            <button id="submitDealBtn" class="btn-primary">Submit Deal (Start Timeline)</button>
+                        </div>
+                    </div>
+
+                    <div class="content-grid">
+                        <section class="card">
+                            <h2>Contacts</h2>
+                            <div class="add-contact-composer">
+                                <div class="add-contact-fields">
+                                    <div class="input-group">
+                                        <input type="text" id="contactName" placeholder="Name">
+                                    </div>
+                                    <div class="input-group">
+                                        <select id="contactRole">
+                                            <option value="seller">Seller</option>
+                                            <option value="agent">Agent</option>
+                                            <option value="contractor">Contractor</option>
+                                            <option value="buyer">Buyer</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" id="contactPhone" placeholder="Phone">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="email" id="contactEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <button id="addContactBtn" class="btn-primary">Add Contact</button>
+                            </div>
+                            <ul id="contactsList" class="contacts-list">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </section>
+
+                        <section class="card">
+                            <h2>Interaction Log</h2>
+                            <div class="log-composer">
+                                <div class="type-selector" id="logTypeSelector">
+                                    <button class="type-btn active" data-type="note">Note</button>
+                                    <button class="type-btn" data-type="call">Call</button>
+                                    <button class="type-btn" data-type="email">Email</button>
+                                    <button class="type-btn" data-type="text">Text</button>
+                                    <button class="type-btn" data-type="meeting">Meeting</button>
+                                </div>
+                                <div class="log-composer-fields">
+                                    <div class="input-group">
+                                        <select id="logContactSelect">
+                                            <option value="">-- Select Contact --</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <select id="templateSelect">
+                                            <option value="">-- Use Template --</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <textarea id="logEntry" rows="3"
+                                            placeholder="Log a call, email, or note..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="log-composer-actions">
+                                    <button id="addLogBtn" class="btn-primary">Add Note</button>
+                                    <button id="setFollowUpBtn" class="btn-secondary">Set Follow-Up</button>
+                                </div>
+                            </div>
+                            <div id="followUpForm" class="followup-form hidden">
+                                <div class="input-group">
+                                    <label>Due Date</label>
+                                    <input type="date" id="followUpDate">
+                                </div>
+
+                                <div class="input-group" style="flex: 1;">
+                                    <label>Reminder</label>
+                                    <input type="text" id="followUpNote" placeholder="Follow-up reminder...">
+                                </div>
+                                <div class="followup-form-actions">
+                                    <button id="saveFollowUpBtn" class="btn-primary">Save</button>
+                                    <button id="cancelFollowUpBtn" class="btn-secondary">Cancel</button>
+                                </div>
+                            </div>
+                            <ul id="interactionLog" class="interaction-log">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </section>
+
+                        <section class="card">
+                            <h2>Deal Timeline</h2>
+                            <ul id="dealTimeline" class="timeline-list">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </section>
+                    </div>
+                </div> <!-- End viewCurrentDeal -->
+
+                <!-- 2. All Contacts View -->
+                <div id="viewAllContacts" class="crm-subview hidden">
+                    <div class="card full-width-card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2>Global Contact List</h2>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="globalContactSearch" placeholder="Search contacts..."
+                                    class="filter-input" style="width: 250px;">
+                                <button class="btn-primary" onclick="CRM.renderAllContacts()">Refresh</button>
+                            </div>
+                        </div>
+                        <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                            <table class="data-grid" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Associated Property</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="globalContactsBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Call Queue View -->
+                <div id="viewCallQueue" class="crm-subview hidden">
+                    <div class="card full-width-card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2>Outbound Call Queue</h2>
+                            <div class="filter-group">
+                                <label style="margin-right: 15px;">Smart Filter:</label>
+                                <select id="callQueueFilter" class="filter-select">
+                                    <option value="all_leads">All Leads & Offers</option>
+                                    <option value="fresh_leads">Fresh Leads (< 7 Days)</option>
+                                    <option value="follow_up_needed">Follow-Up Needed (No contact > 3 days)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="callQueueContainer" style="display: grid; gap: 15px;">
+                            <!-- Call Cards injected here -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Contacts Directory View -->
+                <div id="contactsView" class="contacts-view hidden">
+                    <header class="top-bar">
+                        <div class="view-header-left">
+                            <h2>Contacts Directory</h2>
+                        </div>
+                        <div class="actions">
+                            <button id="addGlobalContactBtn" class="btn-primary">Add Contact</button>
+                        </div>
+                    </header>
+
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="contacts-toolbar">
+                            <div class="input-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                                <input type="text" id="contactSearchInput" placeholder="Search contacts...">
+                            </div>
+                            <div class="input-group" style="min-width: 140px; margin-bottom: 0;">
+                                <select id="contactRoleFilter">
+                                    <option value="all">All Roles</option>
+                                    <option value="seller">Sellers</option>
+                                    <option value="agent">Agents</option>
+                                    <option value="contractor">Contractors</option>
+                                    <option value="buyer">Buyers</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="overflow-x: auto;">
+                        <table class="contacts-directory" id="contactsTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Deals</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contactsTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="contactHistoryPanel" class="contact-history-panel hidden">
+                        <h3 id="contactHistoryName">Contact History</h3>
+                        <div id="contactHistoryList"></div>
+                    </div>
+                </div>
+
+                <!-- Dashboard View -->
+                <div id="dashboardView" class="dashboard-view hidden">
+                    <header class="top-bar">
+                        <div class="view-header-left">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </header>
+
+                    <!-- Stats Row -->
+                    <div class="stats-row" id="dashboardStatsRow">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Follow-Ups & Tasks -->
+                        <div class="dashboard-card">
+                            <h3>Today's Follow-Ups <span class="badge-green badge" id="todayTaskCount">0</span></h3>
+                            <div class="add-task-composer">
+                                <div class="add-task-fields">
+                                    <div class="input-group">
+                                        <select id="taskDealSelect">
+                                            <option value="">-- Select Deal --</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group" style="flex: 2;">
+                                        <input type="text" id="taskText" placeholder="Follow-up note...">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="date" id="taskDueDate">
+                                    </div>
+                                </div>
+                                <button id="addTaskBtn" class="btn-primary">Add Task</button>
+                            </div>
+                            <div id="todayTasksList"></div>
+                        </div>
+
+                        <!-- Overdue Tasks -->
+                        <div class="dashboard-card">
+                            <h3>Overdue <span class="badge" id="overdueTaskCount">0</span></h3>
+                            <div id="overdueTasksList"></div>
+                        </div>
+
+                        <!-- Stale Lead Alerts -->
+                        <div class="dashboard-card">
+                            <h3>Stale Leads <span class="badge badge-yellow" id="staleCount">0</span></h3>
+                            <div id="staleAlertsList"></div>
+                        </div>
+
+                        <!-- Pipeline Funnel -->
+                        <div class="dashboard-card">
+                            <h3>Conversion Funnel</h3>
+                            <div class="funnel-chart" id="funnelChart">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Top Deals by Score -->
+                        <div class="dashboard-card">
+                            <h3>Top Deals by Score</h3>
+                            <ul class="top-deals-list" id="topDealsList">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+
+                        <!-- Avg Days Per Stage -->
+                        <div class="dashboard-card">
+                            <h3>Avg Days Per Stage</h3>
+                            <ul class="avg-days-list" id="avgDaysList">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    </div>
+
+    <!-- Advanced Repair Modal -->
+    <div id="repairModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Advanced Repair Estimator</h2>
+                <button id="closeRepairModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="repair-grid" id="repairGrid">
+                    <!-- Generated by JS -->
+                </div>
+                <div class="repair-summary">
+                    <h3>Total Estimated Repairs: <span id="modalTotalRepairs">$0</span></h3>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="applyRepairsBtn" class="btn-primary">Apply to Deal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSV Column Mapping Modal -->
+    <div id="csvMappingModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Map CSV Columns</h2>
+                <button id="closeCsvModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted" style="margin-bottom: 12px;">Map your CSV columns to deal fields:</p>
+                <div class="csv-mapping-grid" id="csvMappingGrid">
+                    <!-- Generated by JS -->
+                </div>
+                <h4 style="margin-top: 16px; color: var(--text-secondary);">Preview (first 5 rows)</h4>
+                <div style="overflow-x: auto;">
+                    <table class="csv-preview-table" id="csvPreviewTable">
+                        <!-- Generated by JS -->
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="importCsvBtn" class="btn-primary">Import Deals</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Global Contact Modal -->
+    <div id="addGlobalContactModal" class="modal hidden">
+        <div class="modal-content" style="width: 400px;">
+            <div class="modal-header">
+                <h2>Add Contact</h2>
+                <button id="closeAddContactModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" id="globalContactName" placeholder="Full name">
+                </div>
+                <div class="field">
+                    <label>Role</label>
+                    <select id="globalContactRole">
+                        <option value="seller">Seller</option>
+                        <option value="agent">Agent</option>
+                        <option value="contractor">Contractor</option>
+                        <option value="buyer">Buyer</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Phone</label>
+                    <input type="text" id="globalContactPhone" placeholder="Phone number">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" id="globalContactEmail" placeholder="Email address">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveGlobalContactBtn" class="btn-primary">Save Contact</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js?v=debug"></script>
+</body>
+
+</html>

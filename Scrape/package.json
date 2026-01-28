@@ -1,0 +1,19 @@
+{
+  "name": "birddog-scraper",
+  "version": "1.0.0",
+  "description": "Wholesaler analytics data collector",
+  "main": "collector.js",
+  "scripts": {
+    "start": "node collector.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "papaparse": "^5.4.0",
+    "puppeteer": "^23.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

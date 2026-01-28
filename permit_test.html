@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permit Search Test - Bird Dog OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+        }
+
+        .jurisdiction-display {
+            padding: 16px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .jurisdiction-display.hidden {
+            display: none;
+        }
+
+        .jurisdiction-display h3 {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .jurisdiction-display p {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .jurisdiction-display .portal-url {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border: 1px solid #444;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .recent-searches {
+            list-style: none;
+        }
+
+        .recent-searches li {
+            padding: 12px 16px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .recent-searches li:hover {
+            background: rgba(30, 30, 30, 0.8);
+            border-color: #00d4ff;
+        }
+
+        .recent-searches .address {
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+
+        .recent-searches .jurisdiction {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .recent-searches .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .recent-searches button {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .instructions {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .instructions h4 {
+            color: #ffc107;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏗️ Permit Search Test</h1>
+            <p>Test address parsing and jurisdiction detection for Hillsborough County</p>
+        </div>
+
+        <div class="card">
+            <h2>Search for Permits</h2>
+            <div class="input-group">
+                <label for="addressInput">Property Address</label>
+                <input type="text" id="addressInput" placeholder="e.g., 11660 Hidden Hollow Cir, Tampa, FL 33635"
+                    autocomplete="off">
+            </div>
+
+            <div id="jurisdictionDisplay" class="jurisdiction-display hidden">
+                <h3>Detected Jurisdiction</h3>
+                <p id="jurisdictionName">-</p>
+                <div class="portal-url" id="portalUrl">-</div>
+            </div>
+
+            <div class="button-group">
+                <button id="searchBtn" class="btn" disabled>🔍 Search Permits</button>
+                <button id="copyBtn" class="btn btn-secondary" disabled>📋 Copy Address</button>
+            </div>
+
+            <div class="instructions">
+                <h4>📖 How to Search in the Portal</h4>
+                <ol>
+                    <li>Click "Search Permits" to open the appropriate portal</li>
+                    <li>In the portal, look for "Address" or "Street Name" field</li>
+                    <li>Enter the street name (e.g., "Hidden Hollow Cir")</li>
+                    <li>Click Search to view all permits for that address</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Searches</h2>
+            <ul id="recentSearches" class="recent-searches">
+                <li class="empty-state">No recent searches yet</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        import { PermitService } from './js/PermitService.js';
+
+        const addressInput = document.getElementById('addressInput');
+        const jurisdictionDisplay = document.getElementById('jurisdictionDisplay');
+        const jurisdictionName = document.getElementById('jurisdictionName');
+        const portalUrl = document.getElementById('portalUrl');
+        const searchBtn = document.getElementById('searchBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const recentSearches = document.getElementById('recentSearches');
+
+        let currentJurisdiction = null;
+
+        // Update jurisdiction display as user types
+        addressInput.addEventListener('input', () => {
+            const address = addressInput.value.trim();
+
+            if (address.length > 5) {
+                const parsed = PermitService.parseAddress(address);
+                currentJurisdiction = PermitService.getJurisdiction(parsed.city, parsed.zip);
+
+                jurisdictionName.textContent = currentJurisdiction.name;
+                portalUrl.textContent = currentJurisdiction.url;
+                jurisdictionDisplay.classList.remove('hidden');
+                searchBtn.disabled = false;
+                copyBtn.disabled = false;
+            } else {
+                jurisdictionDisplay.classList.add('hidden');
+                searchBtn.disabled = true;
+                copyBtn.disabled = true;
+                currentJurisdiction = null;
+            }
+        });
+
+        // Search button click
+        searchBtn.addEventListener('click', () => {
+            const address = addressInput.value.trim();
+            if (!address || !currentJurisdiction) return;
+
+            // Save to recent searches
+            PermitService.savePermitSearch(address, currentJurisdiction.name);
+
+            // Open portal in new tab
+            window.open(currentJurisdiction.searchUrl, '_blank');
+
+            // Refresh recent searches
+            loadRecentSearches();
+        });
+
+        // Copy button click
+        copyBtn.addEventListener('click', () => {
+            const address = addressInput.value.trim();
+            navigator.clipboard.writeText(address).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        });
+
+        // Load recent searches
+        function loadRecentSearches() {
+            const searches = PermitService.getRecentPermitSearches();
+
+            if (searches.length === 0) {
+                recentSearches.innerHTML = '<li class="empty-state">No recent searches yet</li>';
+                return;
+            }
+
+            recentSearches.innerHTML = searches.map(search => `
+                <li>
+                    <div>
+                        <div class="address">${search.address}</div>
+                        <div class="jurisdiction">${search.jurisdiction} • ${new Date(search.timestamp).toLocaleDateString()}</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-secondary" onclick="searchAgain('${search.address.replace(/'/g, "\\'")}')">Search Again</button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        // Search again from history
+        window.searchAgain = (address) => {
+            addressInput.value = address;
+            addressInput.dispatchEvent(new Event('input'));
+        };
+
+        // Load recent searches on page load
+        loadRecentSearches();
+    </script>
+</body>
+
+</html>

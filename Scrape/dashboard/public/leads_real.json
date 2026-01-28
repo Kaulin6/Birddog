@@ -1,0 +1,728 @@
+[
+  {
+    "address": "4304 Porpoise Dr, Tampa, FL 33617",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/4304-Porpoise-Dr-Tampa-FL-33617/44935217_zpid/"
+    },
+    "financials": {
+      "list_price": 280000,
+      "arv": 308000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_0"
+  },
+  {
+    "address": "9502 Sun Dial Dr, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9502-Sun-Dial-Dr-Tampa-FL-33635/2098877239_zpid/"
+    },
+    "financials": {
+      "list_price": 139000,
+      "arv": 152900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_1"
+  },
+  {
+    "address": "3412 E Fern St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/3412-E-Fern-St-Tampa-FL-33610/45084589_zpid/"
+    },
+    "financials": {
+      "list_price": 380000,
+      "arv": 418000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_2"
+  },
+  {
+    "address": "9801 Pine Way, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9801-Pine-Way-Tampa-FL-33635/2060710441_zpid/"
+    },
+    "financials": {
+      "list_price": 120000,
+      "arv": 132000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_3"
+  },
+  {
+    "address": "9711 Linda Pl #D, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9711-Linda-Pl-D-Tampa-FL-33610/458258873_zpid/"
+    },
+    "financials": {
+      "list_price": 42000,
+      "arv": 46200,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_4"
+  },
+  {
+    "address": "5510 Longboat Blvd, Tampa, FL 33615",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5510-Longboat-Blvd-Tampa-FL-33615/44877281_zpid/"
+    },
+    "financials": {
+      "list_price": 1485000,
+      "arv": 1633500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_5"
+  },
+  {
+    "address": "2906 W North B St, Tampa, FL 33609",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/2906-W-North-B-St-Tampa-FL-33609/45096123_zpid/"
+    },
+    "financials": {
+      "list_price": 539000,
+      "arv": 592900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_6"
+  },
+  {
+    "address": "5100 Burchette Rd UNIT 4200, Tampa, FL 33647",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5100-Burchette-Rd-UNIT-4200-Tampa-FL-33647/44926551_zpid/"
+    },
+    "financials": {
+      "list_price": 250000,
+      "arv": 275000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_7"
+  },
+  {
+    "address": "6921 N 16th St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/6921-N-16th-St-Tampa-FL-33610/45082070_zpid/"
+    },
+    "financials": {
+      "list_price": 694000,
+      "arv": 763400,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_8"
+  },
+  {
+    "address": "237 Sunset Cir #237-SC, Tampa, FL 33613",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/237-Sunset-Cir-237-SC-Tampa-FL-33613/449989832_zpid/"
+    },
+    "financials": {
+      "list_price": 85000,
+      "arv": 93500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "lead_9"
+  },
+  {
+    "id": "lead_10",
+    "address": "2303 N 47th St, Tampa, FL 33605",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/2303-N-47th-St-33605/home/47319893"
+    },
+    "financials": {
+      "list_price": 125000,
+      "arv": 162500,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_11",
+    "address": "7627 Dolonita Dr #7627, Tampa, FL 33615",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/7627-Dolonita-Dr-33615/unit-7627/home/54646234"
+    },
+    "financials": {
+      "list_price": 175000,
+      "arv": 227500,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_12",
+    "address": "7608 N Huntley Ave, Tampa, FL 33604",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/7608-N-Huntley-Ave-33604/home/47320793"
+    },
+    "financials": {
+      "list_price": 175000,
+      "arv": 227500,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_13",
+    "address": "4901 E Hanna Ave, Tampa, FL 33610",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/4901-E-Hanna-Ave-33610/home/47157424"
+    },
+    "financials": {
+      "list_price": 199000,
+      "arv": 258700,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_14",
+    "address": "3505 E Mcberry St, Tampa, FL 33610",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/3505-E-McBerry-St-33610/home/47314139"
+    },
+    "financials": {
+      "list_price": 205000,
+      "arv": 266500,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_15",
+    "address": "3007 N 76th St, Tampa, FL 33619",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/3007-N-76th-St-33619/home/47159833"
+    },
+    "financials": {
+      "list_price": 230000,
+      "arv": 299000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_16",
+    "address": "3602 N 25th St, Tampa, FL 33605",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/3602-N-25th-St-33605/home/47331144"
+    },
+    "financials": {
+      "list_price": 249000,
+      "arv": 323700,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_17",
+    "address": "510 E Lake Ave, Tampa, FL 33603",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/510-E-Lake-Ave-33603/home/47325781"
+    },
+    "financials": {
+      "list_price": 255000,
+      "arv": 331500,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_18",
+    "address": "9718 Fox Hollow Rd, Tampa, FL 33647",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/9718-Fox-Hollow-Rd-33647/home/47183938"
+    },
+    "financials": {
+      "list_price": 289900,
+      "arv": 376870,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_19",
+    "address": "301 E Seneca Ave, Tampa, FL 33612",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/301-E-Seneca-Ave-33612/home/47260294"
+    },
+    "financials": {
+      "list_price": 360000,
+      "arv": 468000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_20",
+    "address": "3310 W Beach St, Tampa, FL 33607",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/3310-W-Beach-St-33607/home/47271936"
+    },
+    "financials": {
+      "list_price": 399000,
+      "arv": 518700,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_21",
+    "address": "7311 S Sherrill St, Tampa, FL 33616",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/7311-S-Sherrill-St-33616/home/47299971"
+    },
+    "financials": {
+      "list_price": 420000,
+      "arv": 546000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_22",
+    "address": "15017 Shaw Rd, Tampa, FL 33625",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/15017-Shaw-Rd-33625/home/47110184"
+    },
+    "financials": {
+      "list_price": 445000,
+      "arv": 578500,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_23",
+    "address": "15413 Brushwood Dr, Tampa, FL 33624",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/15413-Brushwood-Dr-33624/home/47109870"
+    },
+    "financials": {
+      "list_price": 460000,
+      "arv": 598000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_24",
+    "address": "7208 N Ola Ave, Tampa, FL 33604",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/7208-N-Ola-Ave-33604/home/47320376"
+    },
+    "financials": {
+      "list_price": 489000,
+      "arv": 635700,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_25",
+    "address": "2001 N 25th St, Tampa, FL 33605",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/2001-N-25th-St-33605/home/47341761"
+    },
+    "financials": {
+      "list_price": 500000,
+      "arv": 650000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_26",
+    "address": "3201 W San Juan St, Tampa, FL 33629",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/3201-W-San-Juan-St-33629/home/47286023"
+    },
+    "financials": {
+      "list_price": 550000,
+      "arv": 715000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_27",
+    "address": "2005 N 25th St, Tampa, FL 33605",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/2005-N-25th-St-33605/home/47341762"
+    },
+    "financials": {
+      "list_price": 600000,
+      "arv": 780000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_28",
+    "address": "4116 Woodacre Ln, Tampa, FL 33624",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/4116-Woodacre-Ln-33624/home/46977154"
+    },
+    "financials": {
+      "list_price": 629999,
+      "arv": 818998,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_29",
+    "address": "2310 N Boulevard, Tampa, FL 33602",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/2310-N-Boulevard-33602/home/47337846"
+    },
+    "financials": {
+      "list_price": 699995,
+      "arv": 909993,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_30",
+    "address": "20104 Pond Spring Way, Tampa, FL 33647",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/20104-Pond-Spring-Way-33647/home/47023817"
+    },
+    "financials": {
+      "list_price": 748000,
+      "arv": 972400,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  },
+  {
+    "id": "lead_31",
+    "address": "1029 Royal Pass Rd, Tampa, FL 33602",
+    "owner_name": "Unknown (Redfin)",
+    "mailing_address": "Unknown",
+    "property_details": {
+      "summary": "Fixer Upper / TLC",
+      "source_link": "https://www.redfin.com/FL/Tampa/1029-Royal-Pass-Rd-33602/home/47345881"
+    },
+    "financials": {
+      "list_price": 4600000,
+      "arv": 5980000,
+      "equity_percent": 15,
+      "repair_estimate": 40000
+    },
+    "distress_flags": [
+      "Fixer Upper",
+      "TLC"
+    ],
+    "opportunity_score": 75,
+    "status": "Active",
+    "source": "Redfin"
+  }
+]

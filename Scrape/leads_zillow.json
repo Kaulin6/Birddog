@@ -1,0 +1,640 @@
+[
+  {
+    "address": "4304 Porpoise Dr, Tampa, FL 33617",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/4304-Porpoise-Dr-Tampa-FL-33617/44935217_zpid/"
+    },
+    "financials": {
+      "list_price": 280000,
+      "arv": 308000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_0"
+  },
+  {
+    "address": "9502 Sun Dial Dr, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9502-Sun-Dial-Dr-Tampa-FL-33635/2098877239_zpid/"
+    },
+    "financials": {
+      "list_price": 139000,
+      "arv": 152900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_1"
+  },
+  {
+    "address": "3412 E Fern St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/3412-E-Fern-St-Tampa-FL-33610/45084589_zpid/"
+    },
+    "financials": {
+      "list_price": 380000,
+      "arv": 418000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_2"
+  },
+  {
+    "address": "9801 Pine Way, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9801-Pine-Way-Tampa-FL-33635/2060710441_zpid/"
+    },
+    "financials": {
+      "list_price": 120000,
+      "arv": 132000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_3"
+  },
+  {
+    "address": "9711 Linda Pl #D, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9711-Linda-Pl-D-Tampa-FL-33610/458258873_zpid/"
+    },
+    "financials": {
+      "list_price": 42000,
+      "arv": 46200,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_4"
+  },
+  {
+    "address": "5510 Longboat Blvd, Tampa, FL 33615",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5510-Longboat-Blvd-Tampa-FL-33615/44877281_zpid/"
+    },
+    "financials": {
+      "list_price": 1485000,
+      "arv": 1633500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_5"
+  },
+  {
+    "address": "2906 W North B St, Tampa, FL 33609",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/2906-W-North-B-St-Tampa-FL-33609/45096123_zpid/"
+    },
+    "financials": {
+      "list_price": 539000,
+      "arv": 592900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_6"
+  },
+  {
+    "address": "5100 Burchette Rd UNIT 4200, Tampa, FL 33647",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5100-Burchette-Rd-UNIT-4200-Tampa-FL-33647/44926551_zpid/"
+    },
+    "financials": {
+      "list_price": 250000,
+      "arv": 275000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_7"
+  },
+  {
+    "address": "6921 N 16th St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/6921-N-16th-St-Tampa-FL-33610/45082070_zpid/"
+    },
+    "financials": {
+      "list_price": 694000,
+      "arv": 763400,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_8"
+  },
+  {
+    "address": "4304 Porpoise Dr, Tampa, FL 33617",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/4304-Porpoise-Dr-Tampa-FL-33617/44935217_zpid/"
+    },
+    "financials": {
+      "list_price": 280000,
+      "arv": 308000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_9"
+  },
+  {
+    "address": "9502 Sun Dial Dr, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9502-Sun-Dial-Dr-Tampa-FL-33635/2098877239_zpid/"
+    },
+    "financials": {
+      "list_price": 139000,
+      "arv": 152900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_10"
+  },
+  {
+    "address": "3412 E Fern St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/3412-E-Fern-St-Tampa-FL-33610/45084589_zpid/"
+    },
+    "financials": {
+      "list_price": 380000,
+      "arv": 418000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_11"
+  },
+  {
+    "address": "9801 Pine Way, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9801-Pine-Way-Tampa-FL-33635/2060710441_zpid/"
+    },
+    "financials": {
+      "list_price": 120000,
+      "arv": 132000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_12"
+  },
+  {
+    "address": "9711 Linda Pl #D, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9711-Linda-Pl-D-Tampa-FL-33610/458258873_zpid/"
+    },
+    "financials": {
+      "list_price": 42000,
+      "arv": 46200,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_13"
+  },
+  {
+    "address": "5510 Longboat Blvd, Tampa, FL 33615",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5510-Longboat-Blvd-Tampa-FL-33615/44877281_zpid/"
+    },
+    "financials": {
+      "list_price": 1485000,
+      "arv": 1633500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_14"
+  },
+  {
+    "address": "2906 W North B St, Tampa, FL 33609",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/2906-W-North-B-St-Tampa-FL-33609/45096123_zpid/"
+    },
+    "financials": {
+      "list_price": 539000,
+      "arv": 592900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_15"
+  },
+  {
+    "address": "5100 Burchette Rd UNIT 4200, Tampa, FL 33647",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5100-Burchette-Rd-UNIT-4200-Tampa-FL-33647/44926551_zpid/"
+    },
+    "financials": {
+      "list_price": 250000,
+      "arv": 275000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_16"
+  },
+  {
+    "address": "6921 N 16th St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/6921-N-16th-St-Tampa-FL-33610/45082070_zpid/"
+    },
+    "financials": {
+      "list_price": 694000,
+      "arv": 763400,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_17"
+  },
+  {
+    "address": "237 Sunset Cir #237-SC, Tampa, FL 33613",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/237-Sunset-Cir-237-SC-Tampa-FL-33613/449989832_zpid/"
+    },
+    "financials": {
+      "list_price": 85000,
+      "arv": 93500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_18"
+  },
+  {
+    "address": "4304 Porpoise Dr, Tampa, FL 33617",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/4304-Porpoise-Dr-Tampa-FL-33617/44935217_zpid/"
+    },
+    "financials": {
+      "list_price": 280000,
+      "arv": 308000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_19"
+  },
+  {
+    "address": "9502 Sun Dial Dr, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9502-Sun-Dial-Dr-Tampa-FL-33635/2098877239_zpid/"
+    },
+    "financials": {
+      "list_price": 139000,
+      "arv": 152900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_20"
+  },
+  {
+    "address": "3412 E Fern St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/3412-E-Fern-St-Tampa-FL-33610/45084589_zpid/"
+    },
+    "financials": {
+      "list_price": 380000,
+      "arv": 418000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_21"
+  },
+  {
+    "address": "9801 Pine Way, Tampa, FL 33635",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9801-Pine-Way-Tampa-FL-33635/2060710441_zpid/"
+    },
+    "financials": {
+      "list_price": 120000,
+      "arv": 132000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_22"
+  },
+  {
+    "address": "9711 Linda Pl #D, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/9711-Linda-Pl-D-Tampa-FL-33610/458258873_zpid/"
+    },
+    "financials": {
+      "list_price": 42000,
+      "arv": 46200,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_23"
+  },
+  {
+    "address": "5510 Longboat Blvd, Tampa, FL 33615",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5510-Longboat-Blvd-Tampa-FL-33615/44877281_zpid/"
+    },
+    "financials": {
+      "list_price": 1485000,
+      "arv": 1633500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_24"
+  },
+  {
+    "address": "2906 W North B St, Tampa, FL 33609",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/2906-W-North-B-St-Tampa-FL-33609/45096123_zpid/"
+    },
+    "financials": {
+      "list_price": 539000,
+      "arv": 592900,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_25"
+  },
+  {
+    "address": "5100 Burchette Rd UNIT 4200, Tampa, FL 33647",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/5100-Burchette-Rd-UNIT-4200-Tampa-FL-33647/44926551_zpid/"
+    },
+    "financials": {
+      "list_price": 250000,
+      "arv": 275000,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_26"
+  },
+  {
+    "address": "6921 N 16th St, Tampa, FL 33610",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/6921-N-16th-St-Tampa-FL-33610/45082070_zpid/"
+    },
+    "financials": {
+      "list_price": 694000,
+      "arv": 763400,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_27"
+  },
+  {
+    "address": "237 Sunset Cir #237-SC, Tampa, FL 33613",
+    "owner_name": "FSBO Seller",
+    "mailing_address": "Same as Property",
+    "property_details": {
+      "summary": "View Link for Details",
+      "source_link": "https://www.zillow.com/homedetails/237-Sunset-Cir-237-SC-Tampa-FL-33613/449989832_zpid/"
+    },
+    "financials": {
+      "list_price": 85000,
+      "arv": 93500,
+      "equity_percent": 10,
+      "repair_estimate": 20000
+    },
+    "distress_flags": [
+      "FSBO"
+    ],
+    "opportunity_score": 80,
+    "status": "Active",
+    "source": "Zillow",
+    "id": "zillow_1766602670029_28"
+  }
+]
