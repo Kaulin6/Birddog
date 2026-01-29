@@ -115,12 +115,12 @@
                         <button id="fetchOfficialBtn" class="btn-secondary" title="Fetch from County Property Appraiser">Official Data</button>
                         <button id="clearFormBtn" class="btn-ghost">Clear</button>
                     </div>
-                    <div class="metric-card">
-                        <h3>Profit to Investor</h3>
+                    <div class="metric-card" title="Target investor profit calculated as a % of ARV">
+                        <h3>Investor Profit</h3>
                         <div class="value" id="profitToInvestor">$0</div>
                     </div>
-                    <div class="metric-card highlight">
-                        <h3>Buyer ROI</h3>
+                    <div class="metric-card highlight" title="Investor's actual return on total cash invested (purchase + repairs + closing)">
+                        <h3>Investor ROI</h3>
                         <div class="value" id="buyerRoi">0%</div>
                     </div>
                     <div class="metric-card profit-highlight">
@@ -138,7 +138,7 @@
                 </header>
 
                 <div class="content-grid">
-                    <section class="full-width-card" style="margin-bottom: 20px;">
+                    <section class="full-width-card" style="margin-bottom: 0;">
                         <div class="offers-grid">
                             <div class="offer-box high">
                                 <h4>High Motivation</h4>
@@ -157,6 +157,24 @@
 
                     <section class="card full-width-card">
                         <h2>Deal Overview</h2>
+                        <div class="deal-overview-status-row">
+                            <div class="input-group" style="flex:1; margin-bottom:0;">
+                                <label for="waitingOnSelect">Waiting On</label>
+                                <select id="waitingOnSelect">
+                                    <option value="">— None —</option>
+                                    <option value="seller_response">Seller Response</option>
+                                    <option value="agent_response">Agent Response</option>
+                                    <option value="contractor_bid">Contractor Bid</option>
+                                    <option value="inspector_report">Inspector Report</option>
+                                    <option value="title_search">Title Search</option>
+                                    <option value="appraisal">Appraisal</option>
+                                    <option value="buyer_funding">Buyer Funding</option>
+                                    <option value="closing_docs">Closing Docs</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div id="waitingOnDisplay" class="waiting-on-display"></div>
+                        </div>
                         <div class="split-view">
                             <div class="column">
                                 <h3>Buyer Costs</h3>
@@ -202,7 +220,7 @@
                                 <input type="number" id="closingCosts" value="1.5" step="0.1">
                             </div>
                             <div class="input-group">
-                                <label>Investor Profit (%)</label>
+                                <label title="Target profit as % of ARV — used to calculate MAO">Investor Profit (% of ARV)</label>
                                 <input type="number" id="investorProfit" value="15">
                             </div>
                             <div class="input-group">

@@ -84,19 +84,15 @@ export const Pipeline = {
         else if (dealAge >= 14) ageClass = 'age-hot';
         else if (dealAge >= 7) ageClass = 'age-warm';
 
-        // Deal score
-        const score = Store.scoreDeal(deal);
-        const scoreClass = score >= 60 ? 'score-high' : score >= 30 ? 'score-medium' : 'score-low';
+        const waitingOn = deal.waitingOn ? deal.waitingOn.replace(/_/g, ' ') : '';
 
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <h4>${deal.propertyAddress || 'Untitled'}</h4>
-                <span class="score-badge ${scoreClass}" title="Deal Score">${score}</span>
-            </div>
+            <h4>${deal.propertyAddress || 'Untitled'}</h4>
             <div class="card-metrics">
                 <span>MAO: ${mao}</span>
                 <span class="card-profit">${profit}</span>
             </div>
+            ${waitingOn ? `<div class="card-waiting-on"><span class="waiting-on-badge">⏳ ${waitingOn}</span></div>` : ''}
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
                 <span class="age-badge ${ageClass}">${dealAge}d old</span>
                 <span class="card-stage-days">In stage: ${daysInStage}d</span>

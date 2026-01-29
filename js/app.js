@@ -158,6 +158,7 @@ const App = {
             Pipeline.render();
         } else if (viewName === 'crm') {
             document.getElementById('crmView').classList.remove('hidden');
+            document.getElementById('calculatorSidebar').classList.remove('hidden');
             document.getElementById('navCrm').classList.add('active');
             CRM.init(this.currentDealId);
         } else if (viewName === 'dashboard') {
@@ -867,7 +868,8 @@ const App = {
             mao: document.getElementById('suggestedOffer').textContent,
             profit: document.getElementById('yourProfit').textContent,
             source: document.getElementById('source').value,
-            summary: document.getElementById('dealSummary').value
+            summary: document.getElementById('dealSummary').value,
+            waitingOn: document.getElementById('waitingOnSelect').value
         };
 
         const savedDeal = Store.saveDeal(dealData);
@@ -902,9 +904,11 @@ const App = {
         if (deal.repairCosts) document.getElementById('repairCosts').value = deal.repairCosts;
         if (deal.assignmentFee) document.getElementById('assignmentFee').value = deal.assignmentFee;
 
-        // Restore deal summary
+        // Restore deal summary and waiting-on
         const summaryEl = document.getElementById('dealSummary');
         if (summaryEl) summaryEl.value = deal.summary || '';
+        const waitingOnEl = document.getElementById('waitingOnSelect');
+        if (waitingOnEl) waitingOnEl.value = deal.waitingOn || '';
 
         this.runCalculator();
         this.updateDealBar();
@@ -916,6 +920,8 @@ const App = {
         document.querySelectorAll('input').forEach(i => i.value = '');
         const summaryEl = document.getElementById('dealSummary');
         if (summaryEl) summaryEl.value = '';
+        const waitingOnEl = document.getElementById('waitingOnSelect');
+        if (waitingOnEl) waitingOnEl.value = '';
         this.runCalculator();
         this.updateDealBar();
     },
@@ -976,14 +982,42 @@ const App = {
             }
         }
 
+        const allTasks = Store.getTasks();
+
         list.innerHTML = deals.map(deal => {
-            const score = Store.scoreDeal(deal);
-            const scoreClass = score >= 60 ? 'score-high' : score >= 30 ? 'score-medium' : 'score-low';
+            const status = (deal.status || 'lead').replace(/_/g, ' ');
+            const waitingOn = deal.waitingOn ? deal.waitingOn.replace(/_/g, ' ') : '';
+
+            // Last activity: most recent timeline entry
+            let lastActivity = '';
+            if (deal.timeline && deal.timeline.length > 0) {
+                const latest = deal.timeline[0];
+                const dateStr = new Date(latest.timestamp).toLocaleDateString();
+                const typeLabel = latest.type === 'status_change' ? 'Status change' : (latest.type || 'note');
+                lastActivity = `${typeLabel} — ${dateStr}`;
+            }
+
+            // Next follow-up: earliest incomplete task for this deal
+            const dealTasks = allTasks
+                .filter(t => t.dealId === deal.id && !t.completed && t.dueDate)
+                .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+            const nextFollowUp = dealTasks.length > 0
+                ? new Date(dealTasks[0].dueDate).toLocaleDateString()
+                : '';
+
+            const summarySnip = deal.summary ? deal.summary.substring(0, 60) + (deal.summary.length > 60 ? '...' : '') : '';
             return `
                 <li data-id="${deal.id}">
                     <div class="deal-info">
                         <span class="deal-addr" title="${deal.propertyAddress}">${deal.propertyAddress || 'Untitled'}</span>
-                        <span class="deal-metrics">MAO: ${deal.mao || '$0'} | ${deal.profit || '$0'} | <span class="${scoreClass}" style="font-weight:600;">${score}pts</span></span>
+                        <div class="deal-card-row">
+                            <span class="status-pill status-${deal.status || 'lead'}" style="font-size:0.65rem; padding:2px 6px;">${status}</span>
+                            ${waitingOn ? `<span class="waiting-on-badge">⏳ ${waitingOn}</span>` : ''}
+                        </div>
+                        <span class="deal-metrics">MAO: ${deal.mao || '$0'} | Profit: ${deal.profit || '$0'}</span>
+                        ${lastActivity ? `<span class="deal-activity">Last: ${lastActivity}</span>` : ''}
+                        ${nextFollowUp ? `<span class="deal-followup">Follow-up: ${nextFollowUp}</span>` : ''}
+                        ${summarySnip ? `<span class="deal-summary-snip">${summarySnip}</span>` : ''}
                     </div>
                     <button class="delete-btn">&times;</button>
                 </li>

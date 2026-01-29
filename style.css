@@ -95,7 +95,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 320px;
+    width: 360px;
     background-color: var(--bg-panel);
     border-right: 1px solid var(--border-color);
     padding: 24px;
@@ -156,15 +156,14 @@ body {
     background-color: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     padding: 12px;
-    max-height: 200px;
     overflow-y: auto;
 }
 
 .saved-deals-section h2 {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     letter-spacing: 1px;
 }
 
@@ -199,16 +198,77 @@ body {
 }
 
 .saved-deals-list li .deal-addr {
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.9rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 180px;
+    max-width: 260px;
+}
+
+.saved-deals-list li .deal-card-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+}
+
+.saved-deals-list li .deal-date {
+    font-size: 0.7rem;
+    color: var(--text-muted);
 }
 
 .saved-deals-list li .deal-metrics {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
+}
+
+.saved-deals-list li .deal-activity,
+.saved-deals-list li .deal-followup {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.saved-deals-list li .deal-followup {
+    color: var(--accent-orange);
+}
+
+.saved-deals-list li .deal-summary-snip {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+.waiting-on-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background-color: rgba(255, 167, 38, 0.15);
+    color: var(--accent-orange);
+    text-transform: capitalize;
+}
+
+/* Deal Overview status row */
+.deal-overview-status-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.waiting-on-display {
+    font-size: 0.85rem;
+    color: var(--accent-orange);
+    font-weight: 600;
+    padding-bottom: 4px;
 }
 
 .saved-deals-list li .delete-btn {
@@ -592,9 +652,7 @@ body {
 .content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    /* Slightly tighter minimum */
-    gap: 32px;
-    /* Increased breathing room */
+    gap: 20px;
     padding-bottom: 40px;
 }
 
@@ -700,20 +758,24 @@ body {
 
 .offer-box {
     background-color: rgba(255, 255, 255, 0.03);
-    padding: 16px;
-    border-radius: 8px;
+    padding: 24px 20px;
+    border-radius: 10px;
     text-align: center;
+    border: 1px solid var(--border-color);
 }
 
 .offer-box h4 {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .offer-box .price {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .offer-box.high .price {
@@ -2448,6 +2510,10 @@ body {
     font-size: 0.7rem;
     color: var(--text-secondary);
     margin-top: 4px;
+}
+
+.card-waiting-on {
+    margin: 4px 0;
 }
 
 /* Dead column */
