@@ -519,9 +519,11 @@
                             <div class="add-contact-composer">
                                 <div class="add-contact-fields">
                                     <div class="input-group">
-                                        <input type="text" id="contactName" placeholder="Name">
+                                        <label for="contactName">Name</label>
+                                        <input type="text" id="contactName" placeholder="Full name">
                                     </div>
                                     <div class="input-group">
+                                        <label for="contactRole">Role</label>
                                         <select id="contactRole">
                                             <option value="seller">Seller</option>
                                             <option value="agent">Agent</option>
@@ -531,10 +533,12 @@
                                         </select>
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" id="contactPhone" placeholder="Phone">
+                                        <label for="contactPhone">Phone</label>
+                                        <input type="text" id="contactPhone" placeholder="(555) 555-5555">
                                     </div>
                                     <div class="input-group">
-                                        <input type="email" id="contactEmail" placeholder="Email">
+                                        <label for="contactEmail">Email</label>
+                                        <input type="email" id="contactEmail" placeholder="email@example.com">
                                     </div>
                                 </div>
                                 <button id="addContactBtn" class="btn-primary">Add Contact</button>

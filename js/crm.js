@@ -90,20 +90,49 @@ export const CRM = {
             return;
         }
 
+        // Get deal timeline for last-interaction lookup
+        const deal = Store.getDeal(this.currentDealId);
+        const timeline = (deal && deal.timeline) || [];
+
         contacts.forEach((contact, index) => {
             const li = document.createElement('li');
+            li.className = 'contact-card';
+
+            const initials = (contact.name || '?').charAt(0).toUpperCase();
+            const roleClass = `role-${contact.role || 'other'}`;
+
+            // Find last interaction with this contact
+            const lastEntry = timeline.find(t =>
+                t.contact && t.contact.toLowerCase().trim() === (contact.name || '').toLowerCase().trim()
+            );
+            const lastDate = lastEntry ? new Date(lastEntry.timestamp).toLocaleDateString() : null;
+
+            // Find global contact ID for detail link
+            const globalContact = Store.findContactByNamePhone(contact.name, contact.phone);
+
             li.innerHTML = `
-                <div class="contact-info">
-                    <strong>${contact.name}</strong>
-                    <span class="role-badge">${contact.role}</span>
-                    <div class="contact-details">
-                        ${contact.phone ? `<a href="tel:${contact.phone}">📞 ${contact.phone}</a>` : ''}
-                        ${contact.email ? `<a href="mailto:${contact.email}">✉️ ${contact.email}</a>` : ''}
+                <div class="contact-card-left">
+                    <div class="contact-avatar ${roleClass}">${initials}</div>
+                    <div class="contact-card-info">
+                        <strong class="contact-card-name" ${globalContact ? `data-contact-id="${globalContact.id}"` : ''}>${contact.name}</strong>
+                        <span class="role-badge ${roleClass}">${contact.role || 'other'}</span>
+                        <div class="contact-card-links">
+                            ${contact.phone ? `<a href="tel:${contact.phone}" class="contact-link" title="Call">📞 ${contact.phone}</a>` : ''}
+                            ${contact.email ? `<a href="mailto:${contact.email}" class="contact-link" title="Email">✉️ ${contact.email}</a>` : ''}
+                        </div>
+                        ${lastDate ? `<div class="contact-card-last">Last contact: ${lastDate}</div>` : ''}
                     </div>
                 </div>
-                <button class="delete-btn" data-index="${index}" title="Remove Contact">×</button>
+                <button class="delete-btn" data-index="${index}" title="Remove Contact">&times;</button>
             `;
             list.appendChild(li);
+        });
+
+        // Click contact name → open Contact Detail
+        list.querySelectorAll('.contact-card-name[data-contact-id]').forEach(el => {
+            el.addEventListener('click', () => {
+                this.showContactDetail(parseInt(el.dataset.contactId));
+            });
         });
 
         list.querySelectorAll('.delete-btn').forEach(btn => {
@@ -119,27 +148,64 @@ export const CRM = {
         if (!list) return;
         list.innerHTML = '';
 
-        const logs = timeline.filter(t => t.type === 'note' || t.type === 'call' || t.type === 'email' || t.type === 'text' || t.type === 'meeting');
+        const logs = timeline.filter(t =>
+            t.type === 'note' || t.type === 'call' || t.type === 'email' || t.type === 'text' || t.type === 'meeting'
+        );
 
         if (logs.length === 0) {
             list.innerHTML = '<li class="empty-state">No interaction logs yet. Add a note above.</li>';
             return;
         }
 
-        logs.forEach(log => {
+        const iconMap = { call: '📞', email: '✉️', text: '💬', meeting: '📅', note: '📝' };
+        const labelMap = { call: 'Call', email: 'Email', text: 'Text', meeting: 'Meeting', note: 'Note' };
+
+        logs.forEach((log, index) => {
             const li = document.createElement('li');
-            li.className = 'log-entry';
-            const icon = log.type === 'call' ? '📞' : (log.type === 'email' ? '✉️' : log.type === 'text' ? '💬' : log.type === 'meeting' ? '📅' : '📝');
+            li.className = `log-entry log-type-${log.type || 'note'}`;
+            const icon = iconMap[log.type] || '📝';
+            const label = labelMap[log.type] || 'Note';
             const date = new Date(log.timestamp).toLocaleString();
 
             li.innerHTML = `
                 <div class="log-header">
-                    <span class="log-type">${icon} ${log.contact ? `with ${log.contact}` : 'Note'}</span>
-                    <span class="log-date">${date}</span>
+                    <span class="log-type">${icon} ${label}</span>
+                    <div class="log-header-right">
+                        <span class="log-date">${date}</span>
+                        <button class="log-delete-btn" data-index="${index}" title="Delete entry">&times;</button>
+                    </div>
                 </div>
+                ${log.contact ? `<div class="log-meta">with ${log.contact}</div>` : ''}
                 <div class="log-content">${log.text}</div>
             `;
             list.appendChild(li);
+        });
+
+        // Delete log entries
+        list.querySelectorAll('.log-delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!confirm('Delete this log entry?')) return;
+
+                const logIndex = parseInt(btn.dataset.index);
+                const deal = Store.getDeal(this.currentDealId);
+                if (!deal || !deal.timeline) return;
+
+                // Find the actual timeline index (logs are filtered subset)
+                const logTypes = ['note', 'call', 'email', 'text', 'meeting'];
+                let count = -1;
+                for (let i = 0; i < deal.timeline.length; i++) {
+                    if (logTypes.includes(deal.timeline[i].type)) {
+                        count++;
+                        if (count === logIndex) {
+                            deal.timeline.splice(i, 1);
+                            Store.saveDeal(deal);
+                            this.render();
+                            return;
+                        }
+                    }
+                }
+            });
         });
     },
 
@@ -149,26 +215,33 @@ export const CRM = {
         list.innerHTML = '';
 
         if (timeline.length === 0) {
-            list.innerHTML = '<li class="empty-state">New Deal</li>';
+            list.innerHTML = '<li class="empty-state" style="border:none;">New Deal</li>';
             return;
         }
 
+        const iconMap = {
+            call: '📞', email: '✉️', text: '💬', meeting: '📅',
+            note: '📝', status_change: '🔄', system: '⚙️'
+        };
+
         timeline.forEach(item => {
             const li = document.createElement('li');
+            li.className = `timeline-item timeline-type-${item.type || 'system'}`;
             const date = new Date(item.timestamp).toLocaleDateString();
+            const icon = iconMap[item.type] || '📝';
 
             let content = '';
             if (item.type === 'status_change') {
                 content = `Status changed to <span class="status-pill status-${item.status}">${(item.status || '').replace(/_/g, ' ')}</span>`;
             } else if (item.type === 'system') {
-                content = item.text;
+                content = item.text || '';
             } else {
-                content = `${item.contact ? item.contact + ': ' : ''}${item.text.substring(0, 50)}${item.text.length > 50 ? '...' : ''}`;
+                content = `${item.contact ? `<strong>${item.contact}:</strong> ` : ''}${item.text || ''}`;
             }
 
             li.innerHTML = `
-                <span class="timeline-date">${date}</span>
-                <span class="timeline-content">${content}</span>
+                <div class="timeline-date">${icon} ${date}</div>
+                <div class="timeline-content">${content}</div>
             `;
             list.appendChild(li);
         });
@@ -273,7 +346,7 @@ export const CRM = {
                     <td>
                         <strong class="contact-name-link" data-contact-id="${contact.id}">${contact.name}</strong>
                     </td>
-                    <td><span class="role-badge">${contact.role || 'other'}</span></td>
+                    <td><span class="role-badge role-${contact.role || 'other'}">${contact.role || 'other'}</span></td>
                     <td>${contact.phone ? `<a href="tel:${contact.phone}" class="contact-link">${contact.phone}</a>` : '-'}</td>
                     <td>${contact.email ? `<a href="mailto:${contact.email}" class="contact-link">${contact.email}</a>` : '-'}</td>
                     <td><div class="contact-deals-list">${dealChips || '<span class="text-muted">-</span>'}</div></td>

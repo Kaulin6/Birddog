@@ -1149,24 +1149,95 @@ body {
     background-color: rgba(255, 82, 82, 0.1);
 }
 
+/* Contact Cards (deal view) */
 .contact-card {
     background-color: rgba(255, 255, 255, 0.03);
-    padding: 12px;
-    border-radius: 6px;
+    padding: 14px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
 }
 
-.contact-info strong {
-    display: block;
+.contact-card:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-highlight);
+}
+
+.contact-card-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.contact-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    background-color: rgba(59, 158, 255, 0.15);
     color: var(--accent-blue);
 }
 
-.contact-details {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+.contact-avatar.role-seller { background-color: rgba(0, 242, 170, 0.15); color: var(--accent-green); }
+.contact-avatar.role-agent { background-color: rgba(59, 158, 255, 0.15); color: var(--accent-blue); }
+.contact-avatar.role-buyer { background-color: rgba(178, 107, 245, 0.15); color: var(--accent-purple); }
+.contact-avatar.role-contractor { background-color: rgba(255, 171, 64, 0.15); color: var(--accent-orange); }
+.contact-avatar.role-other { background-color: rgba(255, 255, 255, 0.08); color: var(--text-secondary); }
+
+.contact-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
+
+.contact-card-name {
+    font-size: 0.9rem;
+    color: var(--accent-blue);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.contact-card-name:hover {
+    color: #5a9bff;
+}
+
+.contact-card-links {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+}
+
+.contact-card-links .contact-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.contact-card-links .contact-link:hover {
+    color: var(--text-primary);
+}
+
+.contact-card-last {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Role Badge Colors */
+.role-badge { background-color: rgba(59, 158, 255, 0.12); color: var(--accent-blue); }
+.role-badge.role-seller { background-color: rgba(0, 242, 170, 0.12); color: var(--accent-green); }
+.role-badge.role-agent { background-color: rgba(59, 158, 255, 0.12); color: var(--accent-blue); }
+.role-badge.role-buyer { background-color: rgba(178, 107, 245, 0.12); color: var(--accent-purple); }
+.role-badge.role-contractor { background-color: rgba(255, 171, 64, 0.12); color: var(--accent-orange); }
+.role-badge.role-other { background-color: rgba(255, 255, 255, 0.06); color: var(--text-secondary); }
 
 /* Log Composer */
 .log-composer {
@@ -1197,17 +1268,29 @@ body {
 
 .interaction-log {
     list-style: none;
-    max-height: 300px;
+    max-height: 500px;
     overflow-y: auto;
 }
 
 .log-entry {
     padding: 12px;
-    border-left: 2px solid var(--accent-blue);
+    border-left: 3px solid var(--text-muted);
     background-color: rgba(255, 255, 255, 0.03);
     margin-bottom: 10px;
     border-radius: 0 6px 6px 0;
+    transition: background-color 0.2s;
 }
+
+.log-entry:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Type-specific left borders */
+.log-entry.log-type-call { border-left-color: var(--accent-green); }
+.log-entry.log-type-email { border-left-color: var(--accent-blue); }
+.log-entry.log-type-text { border-left-color: var(--accent-purple); }
+.log-entry.log-type-meeting { border-left-color: var(--accent-orange); }
+.log-entry.log-type-note { border-left-color: var(--text-muted); }
 
 .log-header {
     display: flex;
@@ -1216,17 +1299,49 @@ body {
     margin-bottom: 6px;
 }
 
+.log-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .log-type {
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: var(--accent-blue);
     letter-spacing: 0.3px;
 }
+
+.log-type-call .log-type { color: var(--accent-green); }
+.log-type-email .log-type { color: var(--accent-blue); }
+.log-type-text .log-type { color: var(--accent-purple); }
+.log-type-meeting .log-type { color: var(--accent-orange); }
+.log-type-note .log-type { color: var(--text-muted); }
 
 .log-date {
     font-size: 0.7rem;
     color: var(--text-secondary);
+}
+
+.log-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.log-entry:hover .log-delete-btn {
+    opacity: 1;
+}
+
+.log-delete-btn:hover {
+    color: var(--accent-red);
+    background-color: rgba(255, 82, 82, 0.1);
 }
 
 .log-content {
@@ -1239,6 +1354,7 @@ body {
     font-size: 0.75rem;
     color: var(--text-secondary);
     margin-bottom: 4px;
+    font-style: italic;
 }
 
 .status-pill {
@@ -1283,6 +1399,15 @@ body {
     border-radius: 50%;
     background-color: var(--accent-green);
 }
+
+/* Type-specific timeline dot colors */
+.timeline-item.timeline-type-call::before { background-color: var(--accent-green); }
+.timeline-item.timeline-type-email::before { background-color: var(--accent-blue); }
+.timeline-item.timeline-type-text::before { background-color: var(--accent-purple); }
+.timeline-item.timeline-type-meeting::before { background-color: var(--accent-orange); }
+.timeline-item.timeline-type-note::before { background-color: var(--text-muted); }
+.timeline-item.timeline-type-status_change::before { background-color: var(--accent-blue); }
+.timeline-item.timeline-type-system::before { background-color: var(--text-secondary); }
 
 .timeline-date {
     font-size: 0.8rem;
