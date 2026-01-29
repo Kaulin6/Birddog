@@ -35,13 +35,16 @@ export const Store = {
 
         dealData.savedAt = new Date().toISOString();
 
-        if (!dealData.contacts) dealData.contacts = [];
-        if (!dealData.timeline) dealData.timeline = [];
-        if (!dealData.status) dealData.status = 'lead';
-
         if (existingIndex >= 0) {
+            // Merge: preserve existing fields (contacts, timeline, status)
+            // that may not be included in partial updates
+            const existing = deals[existingIndex];
+            dealData = { ...existing, ...dealData };
             deals[existingIndex] = dealData;
         } else {
+            if (!dealData.contacts) dealData.contacts = [];
+            if (!dealData.timeline) dealData.timeline = [];
+            if (!dealData.status) dealData.status = 'lead';
             deals.unshift(dealData);
         }
 

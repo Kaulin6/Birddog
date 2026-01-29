@@ -248,7 +248,10 @@ export const CRM = {
     },
 
     addLog(type, text, contactName) {
-        if (!this.currentDealId) return;
+        if (!this.currentDealId) {
+            alert('Please save a deal first before adding log entries.');
+            return;
+        }
 
         Store.addLogToDeal(this.currentDealId, {
             type,
@@ -276,7 +279,10 @@ export const CRM = {
     },
 
     addContact(contact) {
-        if (!this.currentDealId) return;
+        if (!this.currentDealId) {
+            alert('Please save a deal first before adding contacts.');
+            return;
+        }
         Store.addContactToDeal(this.currentDealId, contact);
 
         Store.addLogToDeal(this.currentDealId, {
