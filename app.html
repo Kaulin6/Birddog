@@ -68,128 +68,40 @@
         <main id="mainDashboard" class="dashboard">
             <!-- Active Deal Context Bar -->
             <div id="activeDealBar" class="active-deal-bar hidden">
-                <div class="deal-bar-content">
-                    <span class="deal-bar-label">Active Deal:</span>
-                    <span id="dealBarAddress" class="deal-bar-address">--</span>
-                    <span id="dealBarStatus" class="deal-bar-status status-pill">--</span>
-                    <span id="dealBarProfit" class="deal-bar-profit">--</span>
+                <div class="deal-bar-top">
+                    <h1 id="dealBarAddress" class="deal-bar-address" title="Click to rename">--</h1>
+                    <input type="text" id="dealBarAddressInput" class="deal-bar-address-input hidden" />
                 </div>
-                <div class="deal-bar-actions">
-                    <button id="dealBarDetails" class="btn-small">Property</button>
-                    <button id="dealBarCrm" class="btn-small">CRM</button>
-                    <button id="dealBarClear" class="btn-ghost btn-small">Clear</button>
+                <div class="deal-bar-bottom">
+                    <div class="deal-bar-meta">
+                        <span id="dealBarStatus" class="deal-bar-status status-pill">--</span>
+                        <span id="dealBarProfit" class="deal-bar-profit">--</span>
+                    </div>
+                    <div class="deal-bar-actions">
+                        <button id="dealBarDetails" class="btn-small">Property</button>
+                        <button id="dealBarCrm" class="btn-small">CRM</button>
+                        <button id="dealBarClear" class="btn-ghost btn-small">Clear</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Calculator View -->
             <div id="calculatorView">
-                <!-- Property Input Panel (moved from sidebar) -->
+                <!-- Address + Summary Panel -->
                 <div class="property-input-panel">
-                    <div class="input-panel-grid">
-                        <section class="card input-card">
-                            <h3>Property Details</h3>
-                            <div class="field">
-                                <label for="propertyAddress">Property Address</label>
-                                <div class="autocomplete-wrapper">
-                                    <input type="text" id="propertyAddress" placeholder="123 Main St" autocomplete="off">
-                                    <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
-                                </div>
-                                <div style="display: flex; gap: 8px; margin-top: 8px;">
-                                    <button id="fetchDataBtn" class="btn-small" style="flex: 1;">Auto-Fill (RentCast)</button>
-                                    <button id="fetchOfficialBtn" class="btn-secondary" style="flex: 1;" title="Fetch from County Property Appraiser">Official Data</button>
-                                </div>
-                                <div id="permitHistoryContainer" style="margin-top: 15px; display: none;">
-                                    <h4 style="margin-bottom: 10px; color: #a0a0a0;">Permit History</h4>
-                                    <ul id="permitList" style="list-style: none; padding: 0; max-height: 200px; overflow-y: auto;"></ul>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="sellerName">Seller Name</label>
-                                <input type="text" id="sellerName" placeholder="Jane Smith">
-                            </div>
-                            <div class="field">
-                                <label for="source">Lead Source</label>
-                                <select id="source">
-                                    <option value="mls">MLS</option>
-                                    <option value="direct_mail">Direct Mail</option>
-                                    <option value="cold_call">Cold Call</option>
-                                    <option value="referral">Referral</option>
-                                    <option value="driving_dollars">Driving for Dollars</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="field-row">
-                                <div class="field">
-                                    <label for="beds">Beds</label>
-                                    <input type="number" id="beds" placeholder="3">
-                                </div>
-                                <div class="field">
-                                    <label for="baths">Baths</label>
-                                    <input type="number" id="baths" placeholder="2">
-                                </div>
-                                <div class="field">
-                                    <label for="yearBuilt">Year</label>
-                                    <input type="number" id="yearBuilt" placeholder="1980">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="ownerOccupied">Owner Occupied</label>
-                                <select id="ownerOccupied">
-                                    <option value="">Unknown</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                            <div class="field-row">
-                                <div class="field">
-                                    <label for="hoaFee">HOA Fee ($/mo)</label>
-                                    <input type="number" id="hoaFee" placeholder="0">
-                                </div>
-                                <div class="field">
-                                    <label for="propertyTax">Property Tax ($/yr)</label>
-                                    <input type="number" id="propertyTax" placeholder="0">
-                                </div>
-                            </div>
-                        </section>
-                        <section class="card input-card">
-                            <h3>Property Condition</h3>
-                            <div class="field">
-                                <label for="sqft">Square Footage</label>
-                                <input type="number" id="sqft" placeholder="e.g. 1500">
-                            </div>
-                            <div class="field">
-                                <label for="condition">Condition (Est. Repairs)</label>
-                                <div style="display: flex; gap: 8px;">
-                                    <select id="condition" style="flex: 1;">
-                                        <option value="custom">Custom Amount</option>
-                                        <option value="light">Light ($15/sqft)</option>
-                                        <option value="medium">Medium ($30/sqft)</option>
-                                        <option value="heavy">Heavy ($60/sqft)</option>
-                                    </select>
-                                    <button id="openRepairModalBtn" class="btn-ghost" title="Advanced Repair Estimator">Settings</button>
-                                </div>
-                                <div id="repairHelperText" class="helper-text"></div>
-                            </div>
-                        </section>
-                        <section class="card input-card">
-                            <h3>Offer Details</h3>
-                            <div class="field">
-                                <label for="earnestMoney">Earnest Money Deposit ($)</label>
-                                <input type="number" id="earnestMoney" value="100">
-                            </div>
-                            <div class="field">
-                                <label for="daysToClose">Days Until Close</label>
-                                <input type="number" id="daysToClose" value="30">
-                            </div>
-                            <div class="field">
-                                <label for="contingency">Contingency</label>
-                                <textarea id="contingency" rows="3">Inspection and financing contingency...</textarea>
-                            </div>
-                            <div class="field checkbox-field">
-                                <label for="includeContingency">Include in offer</label>
-                                <input type="checkbox" id="includeContingency">
-                            </div>
-                        </section>
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="propertyAddress" class="address-input-lg" placeholder="Enter property address..." autocomplete="off">
+                        <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
+                    </div>
+                    <div class="deal-summary-row">
+                        <button id="toggleDealSummary" class="btn-ghost deal-summary-toggle">▼ Deal Summary</button>
+                    </div>
+                    <div id="dealSummaryPanel" class="deal-summary-panel hidden">
+                        <textarea id="dealSummary" rows="3" placeholder="Add a quick summary of this deal — motivation, key details, notes..."></textarea>
+                    </div>
+                    <div id="permitHistoryContainer" style="margin-top: 15px; display: none;">
+                        <h4 style="margin-bottom: 10px; color: #a0a0a0;">Permit History</h4>
+                        <ul id="permitList" style="list-style: none; padding: 0; max-height: 200px; overflow-y: auto;"></ul>
                     </div>
                 </div>
 
@@ -199,6 +111,8 @@
                         <button id="crmSwitchBtn" class="btn-secondary"
                             style="background-color: #4a6fa5; color: white;">CRM & Contacts</button>
                         <button id="downloadPdfBtn" class="btn-secondary">Download Offer</button>
+                        <button id="fetchDataBtn" class="btn-small">Auto-Fill (RentCast)</button>
+                        <button id="fetchOfficialBtn" class="btn-secondary" title="Fetch from County Property Appraiser">Official Data</button>
                         <button id="clearFormBtn" class="btn-ghost">Clear</button>
                     </div>
                     <div class="metric-card">
@@ -241,7 +155,7 @@
                         </div>
                     </section>
 
-                    <section class="card">
+                    <section class="card full-width-card">
                         <h2>Deal Overview</h2>
                         <div class="split-view">
                             <div class="column">
@@ -259,26 +173,26 @@
                         </div>
                     </section>
 
-                    <section class="card">
+                    <section class="card full-width-card">
                         <h2>Financials</h2>
-                        <div class="input-group">
-                            <label for="arv" style="display:flex; align-items:center;">
-                                After Repair Value (ARV)
-                                <span class="info-icon"
-                                    title="Source: Hillsborough County Property Appraiser 'Market Value' (Auto-filled) or Manual Input"
-                                    style="margin-left:6px; cursor:help; opacity:0.7;">ⓘ</span>
-                            </label>
-                            <input type="text" id="arv" placeholder="$0">
-                        </div>
-                        <div class="input-group">
-                            <label for="repairCosts">Est. Repair Costs</label>
-                            <input type="text" id="repairCosts" placeholder="$0">
-                        </div>
-                        <div class="input-group">
-                            <label for="assignmentFee">Assignment Fee</label>
-                            <input type="text" id="assignmentFee" value="10000">
-                        </div>
-                        <div class="field-row">
+                        <div class="financials-grid">
+                            <div class="input-group">
+                                <label for="arv" style="display:flex; align-items:center;">
+                                    After Repair Value (ARV)
+                                    <span class="info-icon"
+                                        title="Source: Hillsborough County Property Appraiser 'Market Value' (Auto-filled) or Manual Input"
+                                        style="margin-left:6px; cursor:help; opacity:0.7;">ⓘ</span>
+                                </label>
+                                <input type="text" id="arv" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label for="repairCosts">Est. Repair Costs</label>
+                                <input type="text" id="repairCosts" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label for="assignmentFee">Assignment Fee</label>
+                                <input type="text" id="assignmentFee" value="10000">
+                            </div>
                             <div class="input-group">
                                 <label>Agent Comm (%)</label>
                                 <input type="number" id="agentCommission" value="2.5" step="0.1">
@@ -287,8 +201,6 @@
                                 <label>Closing Costs (%)</label>
                                 <input type="number" id="closingCosts" value="1.5" step="0.1">
                             </div>
-                        </div>
-                        <div class="field-row">
                             <div class="input-group">
                                 <label>Investor Profit (%)</label>
                                 <input type="number" id="investorProfit" value="15">
@@ -297,6 +209,99 @@
                                 <label>Cost Buffer (%)</label>
                                 <input type="number" id="costBuffer" value="5">
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- Property Details / Condition / Offer Details -->
+                    <section class="card">
+                        <h3>Property Details</h3>
+                        <div class="field">
+                            <label for="sellerName">Seller Name</label>
+                            <input type="text" id="sellerName" placeholder="Jane Smith">
+                        </div>
+                        <div class="field">
+                            <label for="source">Lead Source</label>
+                            <select id="source">
+                                <option value="mls">MLS</option>
+                                <option value="direct_mail">Direct Mail</option>
+                                <option value="cold_call">Cold Call</option>
+                                <option value="referral">Referral</option>
+                                <option value="driving_dollars">Driving for Dollars</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="beds">Beds</label>
+                                <input type="number" id="beds" placeholder="3">
+                            </div>
+                            <div class="field">
+                                <label for="baths">Baths</label>
+                                <input type="number" id="baths" placeholder="2">
+                            </div>
+                            <div class="field">
+                                <label for="yearBuilt">Year</label>
+                                <input type="number" id="yearBuilt" placeholder="1980">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="ownerOccupied">Owner Occupied</label>
+                            <select id="ownerOccupied">
+                                <option value="">Unknown</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="hoaFee">HOA Fee ($/mo)</label>
+                                <input type="number" id="hoaFee" placeholder="0">
+                            </div>
+                            <div class="field">
+                                <label for="propertyTax">Property Tax ($/yr)</label>
+                                <input type="number" id="propertyTax" placeholder="0">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h3>Property Condition</h3>
+                        <div class="field">
+                            <label for="sqft">Square Footage</label>
+                            <input type="number" id="sqft" placeholder="e.g. 1500">
+                        </div>
+                        <div class="field">
+                            <label for="condition">Condition (Est. Repairs)</label>
+                            <div style="display: flex; gap: 8px;">
+                                <select id="condition" style="flex: 1;">
+                                    <option value="custom">Custom Amount</option>
+                                    <option value="light">Light ($15/sqft)</option>
+                                    <option value="medium">Medium ($30/sqft)</option>
+                                    <option value="heavy">Heavy ($60/sqft)</option>
+                                </select>
+                                <button id="openRepairModalBtn" class="btn-ghost" title="Advanced Repair Estimator">Settings</button>
+                            </div>
+                            <div id="repairHelperText" class="helper-text"></div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h3>Offer Details</h3>
+                        <div class="field">
+                            <label for="earnestMoney">Earnest Money Deposit ($)</label>
+                            <input type="number" id="earnestMoney" value="100">
+                        </div>
+                        <div class="field">
+                            <label for="daysToClose">Days Until Close</label>
+                            <input type="number" id="daysToClose" value="30">
+                        </div>
+                        <div class="field">
+                            <label for="contingency">Contingency</label>
+                            <textarea id="contingency" rows="3">Inspection and financing contingency...</textarea>
+                        </div>
+                        <div class="field checkbox-field">
+                            <label for="includeContingency">Include in offer</label>
+                            <input type="checkbox" id="includeContingency">
                         </div>
                     </section>
 
@@ -557,6 +562,10 @@
                                     <button class="type-btn" data-type="email">Email</button>
                                     <button class="type-btn" data-type="text">Text</button>
                                     <button class="type-btn" data-type="meeting">Meeting</button>
+                                </div>
+                                <div class="direction-toggle hidden" id="logDirectionToggle">
+                                    <button class="dir-btn active" data-direction="outbound">↗ Outbound</button>
+                                    <button class="dir-btn" data-direction="inbound">↙ Inbound</button>
                                 </div>
                                 <div class="log-composer-fields">
                                     <div class="input-group">

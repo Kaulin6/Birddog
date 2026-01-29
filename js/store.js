@@ -45,6 +45,12 @@ export const Store = {
             if (!dealData.contacts) dealData.contacts = [];
             if (!dealData.timeline) dealData.timeline = [];
             if (!dealData.status) dealData.status = 'lead';
+            // Add "Deal created" as the first timeline entry
+            dealData.timeline.push({
+                type: 'system',
+                text: 'Deal created',
+                timestamp: new Date().toISOString()
+            });
             deals.unshift(dealData);
         }
 

@@ -166,12 +166,16 @@ export const CRM = {
             const icon = iconMap[log.type] || '📝';
             const label = labelMap[log.type] || 'Note';
             const date = new Date(log.timestamp).toLocaleString();
+            const dirBadge = log.direction
+                ? `<span class="direction-badge dir-${log.direction}">${log.direction === 'inbound' ? '↙' : '↗'} ${log.direction}</span>`
+                : '';
 
             li.innerHTML = `
                 <div class="log-header">
-                    <span class="log-type">${icon} ${label}</span>
+                    <span class="log-type">${icon} ${label} ${dirBadge}</span>
                     <div class="log-header-right">
                         <span class="log-date">${date}</span>
+                        <button class="log-edit-btn" data-index="${index}" title="Edit entry">&#9998;</button>
                         <button class="log-delete-btn" data-index="${index}" title="Delete entry">&times;</button>
                     </div>
                 </div>
@@ -179,6 +183,39 @@ export const CRM = {
                 <div class="log-content">${log.text}</div>
             `;
             list.appendChild(li);
+        });
+
+        // Edit log entries
+        list.querySelectorAll('.log-edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const li = btn.closest('.log-entry');
+                const contentEl = li.querySelector('.log-content');
+                const currentText = contentEl.textContent;
+
+                // Replace content with edit form
+                contentEl.innerHTML = `
+                    <textarea class="log-edit-textarea">${currentText}</textarea>
+                    <div class="log-edit-actions">
+                        <button class="btn-primary log-save-btn">Save</button>
+                        <button class="btn-secondary log-cancel-btn">Cancel</button>
+                    </div>
+                `;
+
+                const textarea = contentEl.querySelector('.log-edit-textarea');
+                textarea.focus();
+                textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+
+                contentEl.querySelector('.log-save-btn').addEventListener('click', () => {
+                    const newText = textarea.value.trim();
+                    if (!newText) return;
+                    this._updateLogText(parseInt(btn.dataset.index), newText);
+                });
+
+                contentEl.querySelector('.log-cancel-btn').addEventListener('click', () => {
+                    contentEl.innerHTML = currentText;
+                });
+            });
         });
 
         // Delete log entries
@@ -236,7 +273,10 @@ export const CRM = {
             } else if (item.type === 'system') {
                 content = item.text || '';
             } else {
-                content = `${item.contact ? `<strong>${item.contact}:</strong> ` : ''}${item.text || ''}`;
+                const dirLabel = item.direction
+                    ? `<span class="direction-badge dir-${item.direction}">${item.direction === 'inbound' ? '↙' : '↗'} ${item.direction}</span> `
+                    : '';
+                content = `${dirLabel}${item.contact ? `<strong>${item.contact}:</strong> ` : ''}${item.text || ''}`;
             }
 
             li.innerHTML = `
@@ -247,18 +287,36 @@ export const CRM = {
         });
     },
 
-    addLog(type, text, contactName) {
+    addLog(type, text, contactName, direction) {
         if (!this.currentDealId) {
             alert('Please save a deal first before adding log entries.');
             return;
         }
 
-        Store.addLogToDeal(this.currentDealId, {
-            type,
-            text,
-            contact: contactName
-        });
+        const entry = { type, text, contact: contactName };
+        if (direction) entry.direction = direction;
+
+        Store.addLogToDeal(this.currentDealId, entry);
         this.render();
+    },
+
+    _updateLogText(logIndex, newText) {
+        const deal = Store.getDeal(this.currentDealId);
+        if (!deal || !deal.timeline) return;
+
+        const logTypes = ['note', 'call', 'email', 'text', 'meeting'];
+        let count = -1;
+        for (let i = 0; i < deal.timeline.length; i++) {
+            if (logTypes.includes(deal.timeline[i].type)) {
+                count++;
+                if (count === logIndex) {
+                    deal.timeline[i].text = newText;
+                    Store.saveDeal(deal);
+                    this.render();
+                    return;
+                }
+            }
+        }
     },
 
     updateContactSelect(contacts) {
@@ -693,7 +751,9 @@ export const CRM = {
 
         // Type Selector Buttons
         this._selectedLogType = 'note';
+        this._selectedDirection = 'outbound';
         const typeSelector = document.getElementById('logTypeSelector');
+        const directionToggle = document.getElementById('logDirectionToggle');
         if (typeSelector && !typeSelector.hasAttribute('data-init')) {
             typeSelector.setAttribute('data-init', 'true');
             typeSelector.querySelectorAll('.type-btn').forEach(btn => {
@@ -707,6 +767,27 @@ export const CRM = {
                         const labels = { note: 'Add Note', call: 'Log Call', email: 'Log Email', text: 'Log Text', meeting: 'Log Meeting' };
                         addLogBtn.textContent = labels[this._selectedLogType] || 'Add Note';
                     }
+
+                    // Show direction toggle for interaction types, hide for notes
+                    if (directionToggle) {
+                        if (btn.dataset.type === 'note') {
+                            directionToggle.classList.add('hidden');
+                        } else {
+                            directionToggle.classList.remove('hidden');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Direction Toggle Buttons
+        if (directionToggle && !directionToggle.hasAttribute('data-init')) {
+            directionToggle.setAttribute('data-init', 'true');
+            directionToggle.querySelectorAll('.dir-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    directionToggle.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    this._selectedDirection = btn.dataset.direction;
                 });
             });
         }
@@ -736,9 +817,11 @@ export const CRM = {
             addLogBtn.addEventListener('click', () => {
                 const text = document.getElementById('logEntry').value;
                 const contact = document.getElementById('logContactSelect').value;
+                const type = this._selectedLogType || 'note';
+                const direction = (type !== 'note') ? this._selectedDirection : null;
 
                 if (text) {
-                    this.addLog(this._selectedLogType || 'note', text, contact);
+                    this.addLog(type, text, contact, direction);
                     document.getElementById('logEntry').value = '';
                 }
             });

@@ -41,8 +41,22 @@ const App = {
         // UI Components
         UI.initAccordions();
 
+        // Deal Summary Toggle
+        const summaryToggle = document.getElementById('toggleDealSummary');
+        const summaryPanel = document.getElementById('dealSummaryPanel');
+        if (summaryToggle && summaryPanel) {
+            summaryToggle.addEventListener('click', () => {
+                summaryPanel.classList.toggle('hidden');
+                summaryToggle.classList.toggle('open');
+                summaryToggle.textContent = summaryPanel.classList.contains('hidden')
+                    ? '▼ Deal Summary'
+                    : '▲ Deal Summary';
+            });
+        }
+
         // Initial Render
         this.renderSavedDeals();
+        this.runCalculator();
 
         // Default View
         this.switchView('calculator');
@@ -65,6 +79,45 @@ const App = {
         if (dealBarDetails) dealBarDetails.addEventListener('click', () => this.switchView('calculator'));
         if (dealBarCrm) dealBarCrm.addEventListener('click', () => this.switchView('crm'));
         if (dealBarClear) dealBarClear.addEventListener('click', () => this.clearForm());
+
+        // Deal bar name editing
+        const dealBarAddress = document.getElementById('dealBarAddress');
+        const dealBarInput = document.getElementById('dealBarAddressInput');
+        if (dealBarAddress && dealBarInput) {
+            dealBarAddress.addEventListener('click', () => {
+                if (!this.currentDealId) return;
+                dealBarAddress.classList.add('hidden');
+                dealBarInput.classList.remove('hidden');
+                dealBarInput.value = dealBarAddress.textContent;
+                dealBarInput.focus();
+                dealBarInput.select();
+            });
+
+            const saveName = () => {
+                const newName = dealBarInput.value.trim();
+                dealBarInput.classList.add('hidden');
+                dealBarAddress.classList.remove('hidden');
+                if (newName && this.currentDealId) {
+                    const deal = Store.getDeal(this.currentDealId);
+                    if (deal) {
+                        deal.propertyAddress = newName;
+                        Store.saveDeal(deal);
+                        dealBarAddress.textContent = newName;
+                        document.getElementById('propertyAddress').value = newName;
+                        this.renderSavedDeals();
+                    }
+                }
+            };
+
+            dealBarInput.addEventListener('blur', saveName);
+            dealBarInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); dealBarInput.blur(); }
+                if (e.key === 'Escape') {
+                    dealBarInput.value = dealBarAddress.textContent;
+                    dealBarInput.blur();
+                }
+            });
+        }
 
         const backBtn = document.getElementById('backToCalcBtn');
         if (backBtn) backBtn.addEventListener('click', () => this.switchView('calculator'));
@@ -813,7 +866,8 @@ const App = {
             assignmentFee: document.getElementById('assignmentFee').value,
             mao: document.getElementById('suggestedOffer').textContent,
             profit: document.getElementById('yourProfit').textContent,
-            source: document.getElementById('source').value
+            source: document.getElementById('source').value,
+            summary: document.getElementById('dealSummary').value
         };
 
         const savedDeal = Store.saveDeal(dealData);
@@ -848,6 +902,10 @@ const App = {
         if (deal.repairCosts) document.getElementById('repairCosts').value = deal.repairCosts;
         if (deal.assignmentFee) document.getElementById('assignmentFee').value = deal.assignmentFee;
 
+        // Restore deal summary
+        const summaryEl = document.getElementById('dealSummary');
+        if (summaryEl) summaryEl.value = deal.summary || '';
+
         this.runCalculator();
         this.updateDealBar();
         this.switchView('calculator');
@@ -856,6 +914,8 @@ const App = {
     clearForm() {
         this.currentDealId = null;
         document.querySelectorAll('input').forEach(i => i.value = '');
+        const summaryEl = document.getElementById('dealSummary');
+        if (summaryEl) summaryEl.value = '';
         this.runCalculator();
         this.updateDealBar();
     },
