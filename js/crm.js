@@ -612,6 +612,44 @@ export const CRM = {
             });
         }
 
+        // Type Selector Buttons
+        this._selectedLogType = 'note';
+        const typeSelector = document.getElementById('logTypeSelector');
+        if (typeSelector && !typeSelector.hasAttribute('data-init')) {
+            typeSelector.setAttribute('data-init', 'true');
+            typeSelector.querySelectorAll('.type-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    typeSelector.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    this._selectedLogType = btn.dataset.type;
+
+                    const addLogBtn = document.getElementById('addLogBtn');
+                    if (addLogBtn) {
+                        const labels = { note: 'Add Note', call: 'Log Call', email: 'Log Email', text: 'Log Text', meeting: 'Log Meeting' };
+                        addLogBtn.textContent = labels[this._selectedLogType] || 'Add Note';
+                    }
+                });
+            });
+        }
+
+        // Template Selector
+        this.populateTemplates();
+        const templateSelect = document.getElementById('templateSelect');
+        if (templateSelect && !templateSelect.hasAttribute('data-init')) {
+            templateSelect.setAttribute('data-init', 'true');
+            templateSelect.addEventListener('change', () => {
+                const templateId = parseInt(templateSelect.value);
+                if (!templateId) return;
+                const template = Store.getTemplates().find(t => t.id === templateId);
+                if (!template) return;
+
+                const deal = this.currentDealId ? Store.getDeal(this.currentDealId) : {};
+                const filled = Store.fillTemplate(template.text, deal || {});
+                document.getElementById('logEntry').value = filled;
+                templateSelect.value = '';
+            });
+        }
+
         // Add Log
         const addLogBtn = document.getElementById('addLogBtn');
         if (addLogBtn && !addLogBtn.hasAttribute('data-init')) {
@@ -621,14 +659,58 @@ export const CRM = {
                 const contact = document.getElementById('logContactSelect').value;
 
                 if (text) {
-                    let type = 'note';
-                    const lower = text.toLowerCase();
-                    if (lower.includes('call') || lower.includes('spoke') || lower.includes('phone')) type = 'call';
-                    else if (lower.includes('email') || lower.includes('sent')) type = 'email';
-
-                    this.addLog(type, text, contact);
+                    this.addLog(this._selectedLogType || 'note', text, contact);
                     document.getElementById('logEntry').value = '';
                 }
+            });
+        }
+
+        // Follow-Up Buttons
+        const setFollowUpBtn = document.getElementById('setFollowUpBtn');
+        const followUpForm = document.getElementById('followUpForm');
+        if (setFollowUpBtn && !setFollowUpBtn.hasAttribute('data-init')) {
+            setFollowUpBtn.setAttribute('data-init', 'true');
+            setFollowUpBtn.addEventListener('click', () => {
+                if (followUpForm) followUpForm.classList.toggle('hidden');
+            });
+        }
+
+        const cancelFollowUpBtn = document.getElementById('cancelFollowUpBtn');
+        if (cancelFollowUpBtn && !cancelFollowUpBtn.hasAttribute('data-init')) {
+            cancelFollowUpBtn.setAttribute('data-init', 'true');
+            cancelFollowUpBtn.addEventListener('click', () => {
+                if (followUpForm) followUpForm.classList.add('hidden');
+            });
+        }
+
+        const saveFollowUpBtn = document.getElementById('saveFollowUpBtn');
+        if (saveFollowUpBtn && !saveFollowUpBtn.hasAttribute('data-init')) {
+            saveFollowUpBtn.setAttribute('data-init', 'true');
+            saveFollowUpBtn.addEventListener('click', () => {
+                const dueDate = document.getElementById('followUpDate').value;
+                const note = document.getElementById('followUpNote').value.trim();
+                if (!dueDate) { alert('Please select a due date.'); return; }
+
+                const deal = this.currentDealId ? Store.getDeal(this.currentDealId) : null;
+                Store.saveTask({
+                    text: note || 'Follow up',
+                    dueDate,
+                    dealId: this.currentDealId,
+                    dealAddress: deal ? deal.propertyAddress : ''
+                });
+
+                if (this.currentDealId) {
+                    Store.addLogToDeal(this.currentDealId, {
+                        type: 'system',
+                        text: `Follow-up set for ${new Date(dueDate).toLocaleDateString()}${note ? ': ' + note : ''}`
+                    });
+                }
+
+                document.getElementById('followUpDate').value = '';
+                document.getElementById('followUpNote').value = '';
+                if (followUpForm) followUpForm.classList.add('hidden');
+                this.render();
+                alert('Follow-up saved!');
             });
         }
 
@@ -653,6 +735,19 @@ export const CRM = {
         // Status Timeline Event Listener
         document.removeEventListener('dealStatusChanged', this.handleStatusChange);
         document.addEventListener('dealStatusChanged', this.handleStatusChange.bind(this));
+    },
+
+    populateTemplates() {
+        const select = document.getElementById('templateSelect');
+        if (!select) return;
+        const templates = Store.getTemplates();
+        select.innerHTML = '<option value="">-- Use Template --</option>';
+        templates.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t.id;
+            opt.textContent = t.name;
+            select.appendChild(opt);
+        });
     },
 
     handleStatusChange(e) {
