@@ -3007,3 +3007,137 @@ body {
 .status-pill.status-under_contract { background: rgba(0, 242, 170, 0.15); color: var(--accent-green); }
 .status-pill.status-closed { background: rgba(0, 242, 170, 0.3); color: var(--accent-green); }
 .status-pill.status-dead { background: rgba(255, 82, 82, 0.15); color: var(--accent-red); }
+
+/* ========================================
+   ADDRESS ROW (Auto-Fill + Official beside input)
+   ======================================== */
+.address-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-autofill {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+    background: rgba(0, 242, 170, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.btn-autofill:hover {
+    background: rgba(0, 242, 170, 0.18);
+    box-shadow: 0 0 12px rgba(0, 242, 170, 0.2);
+}
+
+.btn-official {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(59, 158, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.btn-official:hover {
+    background: rgba(59, 158, 255, 0.18);
+    box-shadow: 0 0 12px rgba(59, 158, 255, 0.2);
+}
+
+/* ========================================
+   OFFER VIEW
+   ======================================== */
+.offer-view {
+    padding: 0;
+}
+
+.offer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.offer-container .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.offer-container .top-bar h2 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.offer-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* AI Generate Offer — under construction */
+.btn-ai-generate {
+    position: relative;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #000;
+    background: repeating-linear-gradient(
+        -45deg,
+        #ffd600,
+        #ffd600 10px,
+        #111 10px,
+        #111 20px
+    );
+    border: 2px solid #ffd600;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+    text-shadow: 0 0 2px rgba(255, 214, 0, 0.4);
+}
+
+.btn-ai-generate:hover {
+    box-shadow: 0 0 18px rgba(255, 214, 0, 0.35), 0 0 6px rgba(255, 214, 0, 0.2) inset;
+    transform: translateY(-1px);
+}
+
+.btn-ai-generate:active {
+    transform: translateY(0);
+}
+
+.offer-terms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.offer-deal-summary {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.offer-deal-summary .text-muted {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+#offerNotes {
+    min-height: 160px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}

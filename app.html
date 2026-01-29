@@ -20,6 +20,7 @@
 
             <nav class="main-nav">
                 <button id="navCalculator" class="nav-btn active">Property</button>
+                <button id="navOffer" class="nav-btn">Offer</button>
                 <button id="navPipeline" class="nav-btn">Pipeline</button>
                 <button id="navCrm" class="nav-btn">CRM</button>
                 <button id="navDashboard" class="nav-btn">Dashboard</button>
@@ -89,9 +90,13 @@
             <div id="calculatorView">
                 <!-- Address + Summary Panel -->
                 <div class="property-input-panel">
-                    <div class="autocomplete-wrapper">
-                        <input type="text" id="propertyAddress" class="address-input-lg" placeholder="Enter property address..." autocomplete="off">
-                        <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
+                    <div class="address-row">
+                        <div class="autocomplete-wrapper" style="flex:1;">
+                            <input type="text" id="propertyAddress" class="address-input-lg" placeholder="Enter property address..." autocomplete="off">
+                            <ul id="addressSuggestions" class="suggestions-list hidden"></ul>
+                        </div>
+                        <button id="fetchDataBtn" class="btn-autofill">Auto-Fill</button>
+                        <button id="fetchOfficialBtn" class="btn-official" title="Fetch from County Property Appraiser">Official Data</button>
                     </div>
                     <div class="deal-summary-row">
                         <button id="toggleDealSummary" class="btn-ghost deal-summary-toggle">▼ Deal Summary</button>
@@ -110,9 +115,8 @@
                         <button id="saveDealBtn" class="btn-primary">Save Deal</button>
                         <button id="crmSwitchBtn" class="btn-secondary"
                             style="background-color: #4a6fa5; color: white;">CRM & Contacts</button>
-                        <button id="downloadPdfBtn" class="btn-secondary">Download Offer</button>
-                        <button id="fetchDataBtn" class="btn-small">Auto-Fill (RentCast)</button>
-                        <button id="fetchOfficialBtn" class="btn-secondary" title="Fetch from County Property Appraiser">Official Data</button>
+                        <button id="offerSwitchBtn" class="btn-secondary"
+                            style="background-color: #b26bf5; color: white;">Configure Offer</button>
                         <button id="clearFormBtn" class="btn-ghost">Clear</button>
                     </div>
                     <div class="metric-card" title="Target investor profit calculated as a % of ARV">
@@ -447,6 +451,126 @@
                             <p class="empty-state">Enter an address and click "Auto-Fill" to see comps.</p>
                         </div>
                     </section>
+                </div>
+            </div>
+
+            <!-- Offer View -->
+            <div id="offerView" class="offer-view hidden">
+                <div class="offer-container">
+                    <header class="top-bar">
+                        <h2>Configure Offer</h2>
+                        <div class="actions">
+                            <button id="offerBackBtn" class="btn-secondary">← Back to Property</button>
+                            <button id="aiGenerateOffer" class="btn-ai-generate">✨ Generate Offer</button>
+                            <button id="generateOfferPdf" class="btn-primary">Download PDF</button>
+                        </div>
+                    </header>
+
+                    <div id="offerNoDeal" class="empty-state" style="padding: 40px;">
+                        <div class="empty-state-icon" style="font-size: 2rem; margin-bottom: 10px;">📄</div>
+                        <p>Save a deal first to configure an offer.</p>
+                    </div>
+
+                    <div id="offerContent" class="hidden">
+                        <div class="content-grid">
+                            <!-- Offer Summary -->
+                            <section class="card full-width-card">
+                                <h3>Offer Summary</h3>
+                                <div class="split-view">
+                                    <div class="column">
+                                        <ul class="data-list">
+                                            <li><span>Property</span> <span id="offerPropertyAddr">--</span></li>
+                                            <li><span>Seller</span> <span id="offerSeller">--</span></li>
+                                            <li><span>MAO (Suggested Offer)</span> <span id="offerMao">$0</span></li>
+                                            <li><span>Sale Price to Investor</span> <span id="offerSalePrice">$0</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="column">
+                                        <ul class="data-list">
+                                            <li><span>Your Assignment Fee</span> <span id="offerAssignment">$0</span></li>
+                                            <li><span>Investor Profit</span> <span id="offerInvestorProfit">$0</span></li>
+                                            <li><span>Investor ROI</span> <span id="offerInvestorRoi">0%</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Motivation-Based Offers -->
+                            <section class="card full-width-card">
+                                <h3>Motivation-Based Offers</h3>
+                                <div class="offers-grid">
+                                    <div class="offer-box high">
+                                        <h4>High Motivation</h4>
+                                        <div class="price" id="offerHighPrice">$0</div>
+                                        <p class="offer-desc">Seller is motivated — offer less</p>
+                                    </div>
+                                    <div class="offer-box medium">
+                                        <h4>Medium Motivation</h4>
+                                        <div class="price" id="offerMediumPrice">$0</div>
+                                        <p class="offer-desc">Standard offer</p>
+                                    </div>
+                                    <div class="offer-box low">
+                                        <h4>Low Motivation</h4>
+                                        <div class="price" id="offerLowPrice">$0</div>
+                                        <p class="offer-desc">Seller not motivated — offer more</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Deal Notes (from Property page) -->
+                            <section class="card full-width-card">
+                                <h3>Deal Notes</h3>
+                                <div id="offerDealSummaryDisplay" class="offer-deal-summary">
+                                    <p class="text-muted">No deal summary added yet. Add one from the Property page.</p>
+                                </div>
+                            </section>
+
+                            <!-- Offer Terms -->
+                            <section class="card full-width-card">
+                                <h3>Offer Terms</h3>
+                                <div class="offer-terms-grid">
+                                    <div class="input-group">
+                                        <label for="offerPrice">Offer Price</label>
+                                        <input type="text" id="offerPrice" placeholder="Enter your offer amount">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="offerEarnest">Earnest Money Deposit</label>
+                                        <input type="text" id="offerEarnest" value="$100">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="offerCloseDate">Days to Close</label>
+                                        <input type="number" id="offerCloseDate" value="30">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="offerFinancing">Financing Type</label>
+                                        <select id="offerFinancing">
+                                            <option value="cash">Cash</option>
+                                            <option value="hard_money">Hard Money</option>
+                                            <option value="conventional">Conventional</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-group" style="margin-top: 16px;">
+                                    <label for="offerContingency">Contingency Language</label>
+                                    <textarea id="offerContingency" rows="5">This offer is contingent upon satisfactory inspection within 10 business days and buyer obtaining financing.</textarea>
+                                </div>
+                                <div class="input-group checkbox-field">
+                                    <label for="offerIncludeContingency">Include contingency in offer</label>
+                                    <input type="checkbox" id="offerIncludeContingency" checked>
+                                </div>
+                            </section>
+
+                            <!-- Notes to Seller -->
+                            <section class="card full-width-card">
+                                <h3>Notes to Seller</h3>
+                                <div class="input-group">
+                                    <label for="offerNotes">Personal note or cover letter</label>
+                                    <textarea id="offerNotes" rows="8" placeholder="Write a personal note to the seller — explain why you're a great buyer, your timeline, any flexibility on terms..."></textarea>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -37,6 +37,7 @@ const App = {
         this.setupSearchFilter();
         this.setupExportImport();
         this.setupCSVImport();
+        this.setupOfferListeners();
 
         // UI Components
         UI.initAccordions();
@@ -68,6 +69,7 @@ const App = {
     // --- Navigation ---
     setupNavigation() {
         document.getElementById('navCalculator').addEventListener('click', () => this.switchView('calculator'));
+        document.getElementById('navOffer').addEventListener('click', () => this.switchView('offer'));
         document.getElementById('navPipeline').addEventListener('click', () => this.switchView('pipeline'));
         document.getElementById('navCrm').addEventListener('click', () => this.switchView('crm'));
         document.getElementById('navDashboard').addEventListener('click', () => this.switchView('dashboard'));
@@ -133,11 +135,23 @@ const App = {
                 }
             });
         }
+
+        const offerSwitchBtn = document.getElementById('offerSwitchBtn');
+        if (offerSwitchBtn) {
+            offerSwitchBtn.addEventListener('click', () => {
+                this.saveDeal();
+                if (this.currentDealId) {
+                    this.switchView('offer');
+                } else {
+                    alert('Please enter an address first to save the deal.');
+                }
+            });
+        }
     },
 
     switchView(viewName) {
         // Hide all views
-        const views = ['calculatorView', 'pipelineView', 'crmView', 'dashboardView'];
+        const views = ['calculatorView', 'offerView', 'pipelineView', 'crmView', 'dashboardView'];
         views.forEach(v => {
             const el = document.getElementById(v);
             if (el) el.classList.add('hidden');
@@ -152,6 +166,11 @@ const App = {
             document.getElementById('calculatorView').classList.remove('hidden');
             document.getElementById('calculatorSidebar').classList.remove('hidden');
             document.getElementById('navCalculator').classList.add('active');
+        } else if (viewName === 'offer') {
+            document.getElementById('offerView').classList.remove('hidden');
+            document.getElementById('calculatorSidebar').classList.remove('hidden');
+            document.getElementById('navOffer').classList.add('active');
+            this.renderOfferView();
         } else if (viewName === 'pipeline') {
             document.getElementById('pipelineView').classList.remove('hidden');
             document.getElementById('navPipeline').classList.add('active');
@@ -490,6 +509,173 @@ const App = {
 
         this.renderList('deductionsList', result.deductions);
         this.renderList('yourNumbersList', result.yourNumbers);
+    },
+
+    // --- Offer View ---
+    renderOfferView() {
+        const noDeal = document.getElementById('offerNoDeal');
+        const content = document.getElementById('offerContent');
+
+        if (!this.currentDealId) {
+            noDeal.classList.remove('hidden');
+            content.classList.add('hidden');
+            return;
+        }
+
+        noDeal.classList.add('hidden');
+        content.classList.remove('hidden');
+
+        const deal = Store.getDeal(this.currentDealId);
+        const address = deal ? deal.propertyAddress : document.getElementById('propertyAddress').value;
+
+        // Run calculator to get current numbers
+        const inputs = {
+            arv: UI.parseInput(document.getElementById('arv')),
+            repairCosts: UI.parseInput(document.getElementById('repairCosts')),
+            assignmentFee: UI.parseInput(document.getElementById('assignmentFee')),
+            agentCommission: UI.parseInput(document.getElementById('agentCommission')),
+            closingCosts: UI.parseInput(document.getElementById('closingCosts')),
+            investorProfit: UI.parseInput(document.getElementById('investorProfit')),
+            costBuffer: UI.parseInput(document.getElementById('costBuffer')),
+        };
+        const result = Calculator.calculate(inputs);
+
+        // Populate offer summary
+        UI.setText('offerPropertyAddr', address || '--');
+        UI.setText('offerSeller', document.getElementById('sellerName').value || '--');
+        UI.setText('offerMao', UI.formatCurrency(result.results.mao));
+        UI.setText('offerSalePrice', UI.formatCurrency(result.results.salePriceToInvestor));
+        UI.setText('offerAssignment', UI.formatCurrency(result.results.assignmentFee));
+        UI.setText('offerInvestorProfit', UI.formatCurrency(result.results.investorProfitAmt));
+        UI.setText('offerInvestorRoi', result.results.buyerRoi.toFixed(1) + '%');
+
+        // Motivation prices
+        UI.setText('offerHighPrice', UI.formatCurrency(result.results.offerHigh));
+        UI.setText('offerMediumPrice', UI.formatCurrency(result.results.offerMedium));
+        UI.setText('offerLowPrice', UI.formatCurrency(result.results.offerLow));
+
+        // Show deal summary from property page
+        const dealSummaryDisplay = document.getElementById('offerDealSummaryDisplay');
+        const summaryText = document.getElementById('dealSummary').value;
+        if (dealSummaryDisplay) {
+            if (summaryText && summaryText.trim()) {
+                dealSummaryDisplay.innerHTML = `<p>${summaryText.replace(/\n/g, '<br>')}</p>`;
+            } else {
+                dealSummaryDisplay.innerHTML = `<p class="text-muted">No deal summary added yet. Add one from the Property page.</p>`;
+            }
+        }
+
+        // Pre-fill offer price with MAO if empty
+        const offerPriceInput = document.getElementById('offerPrice');
+        if (!offerPriceInput.value || offerPriceInput.value === '$0') {
+            offerPriceInput.value = UI.formatCurrency(result.results.mao);
+        }
+
+        // Pre-fill earnest from property page
+        const earnestVal = document.getElementById('earnestMoney').value;
+        if (earnestVal) {
+            document.getElementById('offerEarnest').value = UI.formatCurrency(parseFloat(earnestVal) || 100);
+        }
+
+        // Pre-fill days to close
+        const daysVal = document.getElementById('daysToClose').value;
+        if (daysVal) {
+            document.getElementById('offerCloseDate').value = daysVal;
+        }
+    },
+
+    setupOfferListeners() {
+        const backBtn = document.getElementById('offerBackBtn');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => this.switchView('calculator'));
+        }
+
+        const pdfBtn = document.getElementById('generateOfferPdf');
+        if (pdfBtn) {
+            pdfBtn.addEventListener('click', () => this.generateOfferPdf());
+        }
+
+        const aiBtn = document.getElementById('aiGenerateOffer');
+        if (aiBtn) {
+            aiBtn.addEventListener('click', () => {
+                alert('AI Offer Generation is under construction. Coming soon!');
+            });
+        }
+    },
+
+    generateOfferPdf() {
+        if (!this.currentDealId) {
+            alert('Please save a deal first.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        if (!jsPDF) {
+            alert('PDF library not loaded.');
+            return;
+        }
+
+        const doc = new jsPDF();
+        const address = document.getElementById('offerPropertyAddr').textContent;
+        const seller = document.getElementById('offerSeller').textContent;
+        const offerPrice = document.getElementById('offerPrice').value;
+        const earnest = document.getElementById('offerEarnest').value;
+        const daysToClose = document.getElementById('offerCloseDate').value;
+        const contingency = document.getElementById('offerContingency').value;
+        const includeContingency = document.getElementById('offerIncludeContingency').checked;
+        const notes = document.getElementById('offerNotes').value;
+
+        let y = 20;
+        doc.setFontSize(18);
+        doc.text('Purchase Offer', 105, y, { align: 'center' });
+        y += 15;
+
+        doc.setFontSize(11);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, y);
+        y += 10;
+        doc.text(`Property: ${address}`, 20, y);
+        y += 8;
+        doc.text(`Seller: ${seller}`, 20, y);
+        y += 15;
+
+        doc.setFontSize(13);
+        doc.text('Offer Terms', 20, y);
+        y += 10;
+
+        doc.setFontSize(11);
+        doc.text(`Offer Price: ${offerPrice}`, 20, y);
+        y += 8;
+        doc.text(`Earnest Money Deposit: ${earnest}`, 20, y);
+        y += 8;
+        doc.text(`Closing Timeline: ${daysToClose} days`, 20, y);
+        y += 12;
+
+        if (includeContingency && contingency) {
+            doc.setFontSize(13);
+            doc.text('Contingencies', 20, y);
+            y += 10;
+            doc.setFontSize(10);
+            const lines = doc.splitTextToSize(contingency, 170);
+            doc.text(lines, 20, y);
+            y += lines.length * 6 + 10;
+        }
+
+        if (notes) {
+            doc.setFontSize(13);
+            doc.text('Notes', 20, y);
+            y += 10;
+            doc.setFontSize(10);
+            const noteLines = doc.splitTextToSize(notes, 170);
+            doc.text(noteLines, 20, y);
+            y += noteLines.length * 6 + 10;
+        }
+
+        y += 10;
+        doc.setFontSize(10);
+        doc.text('Generated by Bird Dog OS', 105, y, { align: 'center' });
+
+        const filename = `Offer_${address.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.pdf`;
+        doc.save(filename);
     },
 
     renderList(elementId, items) {
