@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird Dog OS - Follow-Up Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>BIRD DOG <span style="color: #fff; font-weight: 300;">OS</span></h1>
+            </div>
+            <nav class="main-nav">
+                <a href="app.html" class="nav-btn">← Back to App</a>
+            </nav>
+        </aside>
+
+        <main class="dashboard" style="padding: 24px;">
+            <header class="top-bar" style="margin-bottom: 24px;">
+                <h2 style="margin:0;">Follow-Up Manager</h2>
+                <div class="actions">
+                    <select id="viewFilter" class="filter-select">
+                        <option value="overdue">Overdue</option>
+                        <option value="today">Due Today</option>
+                        <option value="upcoming">Upcoming (7 days)</option>
+                        <option value="no_contact">Never Contacted</option>
+                        <option value="stale">Stale (No contact > 7 days)</option>
+                        <option value="all">All Active Deals</option>
+                    </select>
+                    <select id="sortBy" class="filter-select">
+                        <option value="urgency">Sort: Most Urgent</option>
+                        <option value="last_contact">Sort: Least Recently Contacted</option>
+                        <option value="deal_age">Sort: Oldest Deal</option>
+                        <option value="value">Sort: Highest Value</option>
+                    </select>
+                </div>
+            </header>
+
+            <!-- Stats Row -->
+            <div class="pipeline-stats-bar" id="followUpStats">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Follow-Up Queue -->
+            <div id="followUpQueue" style="display: grid; gap: 12px; margin-top: 20px;">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Quick Log Modal -->
+            <div id="quickLogModal" class="modal hidden">
+                <div class="modal-content" style="max-width: 500px;">
+                    <h3 id="quickLogTitle">Log Interaction</h3>
+                    <div class="input-group">
+                        <label>Type</label>
+                        <select id="quickLogType">
+                            <option value="call">Call</option>
+                            <option value="text">Text</option>
+                            <option value="email">Email</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Direction</label>
+                        <select id="quickLogDirection">
+                            <option value="outbound">Outbound</option>
+                            <option value="inbound">Inbound</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Outcome</label>
+                        <select id="quickLogOutcome">
+                            <option value="connected">Connected - Spoke with them</option>
+                            <option value="voicemail">Left Voicemail</option>
+                            <option value="no_answer">No Answer</option>
+                            <option value="callback">Requested Callback</option>
+                            <option value="not_interested">Not Interested</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Notes</label>
+                        <textarea id="quickLogNotes" rows="3" placeholder="What happened?"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>Schedule Next Follow-Up</label>
+                        <input type="date" id="quickLogNextFollowUp">
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <button id="quickLogSave" class="btn-primary">Save & Next</button>
+                        <button id="quickLogCancel" class="btn-ghost">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/followup.js"></script>
+</body>
+
+</html>

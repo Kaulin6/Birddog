@@ -25,6 +25,7 @@
                 <button id="navOffer" class="nav-btn">Offer</button>
                 <button id="navPipeline" class="nav-btn">Pipeline</button>
                 <button id="navCrm" class="nav-btn">CRM</button>
+                <a href="outreach.html" class="nav-btn">Outreach</a>
                 <button id="navDashboard" class="nav-btn nav-construction">Dashboard</button>
                 <a href="data_explorer.html" class="nav-btn nav-construction" target="_blank">Data</a>
             </nav>
@@ -669,6 +670,26 @@
                         </div>
                     </div>
 
+                    <!-- Contact Activity Summary -->
+                    <div class="contact-activity-bar" id="contactActivityBar">
+                        <div class="activity-stat">
+                            <span class="activity-label">First Contact</span>
+                            <span class="activity-value" id="firstContactDate">--</span>
+                        </div>
+                        <div class="activity-stat">
+                            <span class="activity-label">Last Contacted</span>
+                            <span class="activity-value" id="lastContactDate">--</span>
+                        </div>
+                        <div class="activity-stat">
+                            <span class="activity-label">Total Interactions</span>
+                            <span class="activity-value" id="totalInteractions">0</span>
+                        </div>
+                        <div class="activity-stat">
+                            <span class="activity-label">Days Since Contact</span>
+                            <span class="activity-value" id="daysSinceContact">--</span>
+                        </div>
+                    </div>
+
                     <div class="content-grid">
                         <section class="card">
                             <h2>Contacts</h2>
@@ -850,8 +871,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- (Contacts view merged into CRM above) -->
-
                 <!-- Dashboard View -->
                 <div id="dashboardView" class="dashboard-view hidden">
                     <header class="top-bar">

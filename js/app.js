@@ -65,6 +65,16 @@ const App = {
         // Default View
         this.switchView('calculator');
 
+        // Handle ?deal= query param (from Outreach page links)
+        const urlParams = new URLSearchParams(window.location.search);
+        const dealParam = urlParams.get('deal');
+        if (dealParam) {
+            const dealId = parseInt(dealParam);
+            if (dealId && Store.getDeal(dealId)) {
+                this.loadDeal(dealId);
+            }
+        }
+
         // Start loading DBF in background
         DbfService.init();
     },

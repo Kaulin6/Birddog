@@ -1024,7 +1024,9 @@ body {
 }
 
 .modal-content {
-    background-color: var(--bg-panel);
+    background-color: rgba(20, 23, 28, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     width: 600px;
     max-width: 90%;
     border-radius: 12px;
@@ -1681,7 +1683,8 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .pipeline-stats {
@@ -3084,6 +3087,48 @@ body {
     margin-top: 6px;
 }
 
+/* Contact Activity Bar */
+.contact-activity-bar {
+    display: flex;
+    gap: 24px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.activity-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.activity-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.activity-value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.activity-fresh {
+    color: var(--accent-green);
+}
+
+.activity-warm {
+    color: var(--accent-orange);
+}
+
+.activity-stale {
+    color: var(--accent-red);
+}
+
 /* Global Back Button */
 .logo-area {
     display: flex;
@@ -3251,4 +3296,584 @@ body {
     min-height: 160px;
     font-size: 0.95rem;
     line-height: 1.5;
+}
+
+/* Follow-Up Manager */
+.followup-card.urgency-overdue {
+    border-left: 3px solid var(--accent-red);
+}
+
+.followup-card.urgency-today {
+    border-left: 3px solid var(--accent-orange);
+}
+
+.followup-card.urgency-upcoming {
+    border-left: 3px solid var(--accent-blue);
+}
+
+.urgency-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.urgency-badge.urgency-overdue {
+    background: rgba(255, 82, 82, 0.15);
+    color: var(--accent-red);
+}
+
+.urgency-badge.urgency-today {
+    background: rgba(255, 171, 64, 0.15);
+    color: var(--accent-orange);
+}
+
+.urgency-badge.urgency-upcoming {
+    background: rgba(59, 158, 255, 0.15);
+    color: var(--accent-blue);
+}
+
+/* ==========================================
+   OUTREACH PAGE
+   ========================================== */
+.clickable-stat {
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    border-radius: var(--radius-sm);
+}
+
+.clickable-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.outreach-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 0;
+    border-left: 3px solid transparent;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.outreach-card:hover {
+    box-shadow: var(--shadow-card);
+}
+
+.outreach-card.priority-new { border-left-color: var(--accent-blue); }
+.outreach-card.priority-overdue { border-left-color: var(--accent-red); }
+.outreach-card.priority-today { border-left-color: var(--accent-orange); }
+.outreach-card.priority-stale { border-left-color: var(--accent-orange); }
+.outreach-card.priority-upcoming { border-left-color: var(--accent-purple); }
+
+.outreach-card h3 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    border: none;
+    padding: 0;
+}
+
+.outreach-card .card-info {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.outreach-card .card-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.urgency-badge.outreach-priority-new {
+    background: rgba(59, 158, 255, 0.15);
+    color: var(--accent-blue);
+}
+
+.urgency-badge.outreach-priority-overdue {
+    background: rgba(255, 82, 82, 0.15);
+    color: var(--accent-red);
+}
+
+.urgency-badge.outreach-priority-today {
+    background: rgba(255, 171, 64, 0.15);
+    color: var(--accent-orange);
+}
+
+.urgency-badge.outreach-priority-upcoming {
+    background: rgba(178, 107, 245, 0.15);
+    color: var(--accent-purple);
+}
+
+.urgency-badge.outreach-priority-stale {
+    background: rgba(255, 171, 64, 0.15);
+    color: var(--accent-orange);
+}
+
+/* Contact Slideout */
+.contact-slideout {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--bg-panel);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid var(--border-color);
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+    transition: transform var(--transition-fast);
+}
+
+.contact-slideout.hidden {
+    transform: translateX(100%);
+    pointer-events: none;
+}
+
+.slideout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.slideout-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    border: none;
+    padding: 0;
+}
+
+.slideout-contact {
+    padding: 10px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+}
+
+.slideout-contact a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.slideout-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.slideout-timeline-entry {
+    display: flex;
+    gap: 10px;
+    font-size: 0.85rem;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.slideout-time {
+    color: var(--text-muted);
+    white-space: nowrap;
+    min-width: 130px;
+}
+
+/* Import preview table */
+#importPreviewTable table {
+    color: var(--text-primary);
+}
+
+#importPreviewTable th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+#importPreviewTable td {
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+#importPreviewTable tr:hover td {
+    background: var(--bg-card-hover);
+}
+
+/* ============================================
+   OUTREACH: List Cards
+   ============================================ */
+.list-card {
+    padding: 0;
+    overflow: hidden;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.list-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+
+.list-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px 8px;
+}
+
+.list-card-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    padding: 0;
+}
+
+.list-card-meta {
+    padding: 0 20px 12px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.list-card-stats {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-card-actions {
+    display: flex;
+    gap: 8px;
+    padding: 12px 20px;
+    flex-wrap: wrap;
+}
+
+.list-card-actions button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+}
+
+/* ============================================
+   OUTREACH: List Status Pills
+   ============================================ */
+.list-status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.list-status-pill.status-imported {
+    background: rgba(59, 158, 255, 0.15);
+    color: var(--accent-blue);
+}
+
+.list-status-pill.status-skip_tracing {
+    background: rgba(178, 107, 245, 0.15);
+    color: var(--accent-purple);
+}
+
+.list-status-pill.status-ready {
+    background: rgba(255, 171, 64, 0.15);
+    color: var(--accent-orange);
+}
+
+.list-status-pill.status-active {
+    background: rgba(0, 242, 170, 0.15);
+    color: var(--accent-green);
+}
+
+.list-status-pill.status-completed {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   OUTREACH: List Pill (inline tag in cadence cards)
+   ============================================ */
+.list-pill {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    background: rgba(59, 158, 255, 0.12);
+    color: var(--accent-blue);
+}
+
+/* ============================================
+   OUTREACH: Cadence Progress (7-dot step indicator)
+   ============================================ */
+.cadence-progress {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.step-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-fast);
+}
+
+.step-dot.completed {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.step-dot.current {
+    background: transparent;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 6px rgba(59, 158, 255, 0.5);
+    animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 4px rgba(59, 158, 255, 0.3); }
+    50% { box-shadow: 0 0 8px rgba(59, 158, 255, 0.7); }
+}
+
+/* ============================================
+   OUTREACH: Cadence Step Info (Quick Log modal)
+   ============================================ */
+.cadence-step-info {
+    background: rgba(59, 158, 255, 0.08);
+    border: 1px solid rgba(59, 158, 255, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+}
+
+.cadence-step-info .cadence-progress {
+    margin-top: 0;
+}
+
+/* ============================================
+   OUTREACH: Skip Trace Status
+   ============================================ */
+.skip-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.skip-status.traced {
+    background: rgba(0, 242, 170, 0.15);
+    color: var(--accent-green);
+}
+
+.skip-status.pending {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+}
+
+/* ============================================
+   OUTREACH: Activity Chart (CSS-only bar chart)
+   ============================================ */
+.activity-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 140px;
+    padding: 0;
+}
+
+.activity-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    min-width: 0;
+}
+
+.activity-bar .bar-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    border-radius: 2px 2px 0 0;
+    overflow: hidden;
+}
+
+.bar-calls {
+    background: var(--accent-blue);
+    width: 100%;
+    min-height: 0;
+    transition: height 0.3s ease;
+}
+
+.bar-texts {
+    background: var(--accent-purple);
+    width: 100%;
+    min-height: 0;
+    transition: height 0.3s ease;
+}
+
+.activity-bar .bar-label {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* ============================================
+   OUTREACH: Pipeline Funnel
+   ============================================ */
+.outreach-funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.outreach-funnel-step .funnel-label {
+    width: 110px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.outreach-funnel-step .funnel-bar {
+    height: 26px;
+    border-radius: 4px;
+    min-width: 4px;
+    transition: width 0.5s ease;
+}
+
+.outreach-funnel-step .funnel-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 40px;
+}
+
+/* ============================================
+   OUTREACH: Cadence Card — Top Row (Address + Phone)
+   ============================================ */
+.cadence-card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.cadence-card-top h3 {
+    margin: 0;
+    font-size: 1rem;
+    border: none;
+    padding: 0;
+}
+
+.cadence-card-phone-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cadence-card-phone {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: 0.5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.cadence-card-contact-role {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   OUTREACH: Quick Log — Lead Info Panel
+   ============================================ */
+.quick-log-lead-info {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+}
+
+.lead-info-address {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.lead-info-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.lead-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.lead-info-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.lead-info-value {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.lead-info-phone {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+}
+
+.lead-info-phone:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   OUTREACH: Empty State
+   ============================================ */
+.empty-state {
+    color: var(--text-muted);
+    font-size: 0.95rem;
 }

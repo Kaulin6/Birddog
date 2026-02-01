@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird Dog OS - Outreach</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>BIRD DOG <span style="color: #fff; font-weight: 300;">OS</span></h1>
+            </div>
+            <nav class="main-nav">
+                <a href="app.html" class="nav-btn">Back to App</a>
+                <button id="navLists" class="nav-btn active">Lists</button>
+                <button id="navCadenceQueue" class="nav-btn">Cadence Queue</button>
+                <button id="navStats" class="nav-btn">Stats</button>
+            </nav>
+        </aside>
+
+        <main class="dashboard" style="padding: 24px;">
+
+            <!-- ============================================ -->
+            <!-- VIEW 1: LISTS -->
+            <!-- ============================================ -->
+            <div id="listsView">
+                <header class="top-bar" style="margin-bottom: 20px;">
+                    <h2 style="margin: 0;">Lead Lists</h2>
+                    <div class="actions">
+                        <button id="newListImportBtn" class="btn-primary">+ Import New List</button>
+                    </div>
+                </header>
+                <div id="listsGrid" style="display: grid; gap: 16px;"></div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- VIEW 1b: LIST DETAIL -->
+            <!-- ============================================ -->
+            <div id="listDetailView" class="hidden">
+                <header class="top-bar" style="margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <button id="backToListsBtn" class="btn-ghost">Back</button>
+                        <h2 id="listDetailTitle" style="margin: 0;">List: ---</h2>
+                    </div>
+                    <div class="actions" style="gap: 10px; display: flex;">
+                        <button id="listExportBtn" class="btn-ghost">Export to Sheets</button>
+                        <button id="listPasteBackBtn" class="btn-secondary">Paste Back Skip Trace</button>
+                        <button id="listStartCadencesBtn" class="btn-primary">Start Cadences</button>
+                    </div>
+                </header>
+                <div class="pipeline-stats-bar" id="listDetailStats"></div>
+                <div style="overflow-x: auto; margin-top: 16px;">
+                    <table class="contacts-directory" id="listDealsTable">
+                        <thead>
+                            <tr>
+                                <th>Address</th>
+                                <th>Owner</th>
+                                <th>Phone</th>
+                                <th>Agent</th>
+                                <th>Email</th>
+                                <th>Skip Traced</th>
+                                <th>Cadence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listDealsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- VIEW 2: CADENCE QUEUE -->
+            <!-- ============================================ -->
+            <div id="cadenceQueueView" class="hidden">
+                <header class="top-bar" style="margin-bottom: 20px;">
+                    <h2 style="margin: 0;">Cadence Queue</h2>
+                    <div class="actions" style="gap: 10px; display: flex; align-items: center;">
+                        <input type="search" id="cadenceSearch" class="filter-select" placeholder="Search..." style="min-width: 200px;">
+                        <select id="cadenceFilter" class="filter-select">
+                            <option value="due_today">Due Today</option>
+                            <option value="overdue">Overdue</option>
+                            <option value="all_active">All Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="responded">Responded</option>
+                        </select>
+                        <select id="cadenceSort" class="filter-select">
+                            <option value="due_date">Sort: Due Date</option>
+                            <option value="step">Sort: Cadence Step</option>
+                            <option value="list">Sort: List</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="pipeline-stats-bar" id="cadenceStats"></div>
+                <div id="cadenceQueue" style="display: grid; gap: 12px; margin-top: 20px;"></div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- VIEW 3: STATS -->
+            <!-- ============================================ -->
+            <div id="statsView" class="hidden">
+                <header class="top-bar" style="margin-bottom: 20px;">
+                    <h2 style="margin: 0;">Outreach Stats</h2>
+                    <div class="actions">
+                        <select id="statsDateRange" class="filter-select">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30" selected>Last 30 Days</option>
+                            <option value="90">Last 90 Days</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="pipeline-stats-bar" id="activityMetrics"></div>
+
+                <div class="card" style="margin-top: 20px; padding: 20px;">
+                    <h3 style="margin: 0 0 16px 0; border: none; padding: 0;">Pipeline Funnel</h3>
+                    <div id="outreachFunnel"></div>
+                </div>
+
+                <div class="card" style="margin-top: 20px; padding: 20px;">
+                    <h3 style="margin: 0 0 16px 0; border: none; padding: 0;">Daily Activity (30 days)</h3>
+                    <div id="activityChart" class="activity-chart"></div>
+                    <div style="display: flex; gap: 16px; margin-top: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                        <span><span style="display:inline-block;width:10px;height:10px;background:var(--accent-blue);border-radius:2px;margin-right:4px;"></span>Calls</span>
+                        <span><span style="display:inline-block;width:10px;height:10px;background:var(--accent-purple);border-radius:2px;margin-right:4px;"></span>Texts</span>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px; padding: 20px;">
+                    <h3 style="margin: 0 0 16px 0; border: none; padding: 0;">Performance by List</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="contacts-directory" id="listPerformanceTable">
+                            <thead>
+                                <tr>
+                                    <th>List</th>
+                                    <th>Source</th>
+                                    <th>Total</th>
+                                    <th>Skip Traced</th>
+                                    <th>Contacted</th>
+                                    <th>Interested</th>
+                                    <th>Dead</th>
+                                    <th>Conv %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listPerformanceBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- MODAL: IMPORT -->
+            <!-- ============================================ -->
+            <div id="importModal" class="modal hidden">
+                <div class="modal-content" style="max-width: 700px;">
+                    <h3>Import New Lead List</h3>
+                    <div class="input-group">
+                        <label>List Name</label>
+                        <input type="text" id="importListName" placeholder="e.g. D4D Tampa Jan 2026">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="input-group">
+                            <label>Lead Source</label>
+                            <select id="importSource">
+                                <option value="driving_dollars">Driving for Dollars</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="mls">MLS</option>
+                                <option value="county_data">County Data</option>
+                                <option value="cold_call">Cold Call List</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Assign to VA (optional)</label>
+                            <input type="text" id="importAssignVA" placeholder="e.g. Maria">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Lead Data (paste from Google Sheets)</label>
+                        <textarea id="importData" rows="10" placeholder="Copy rows from Google Sheets and paste here. Headers auto-detected."></textarea>
+                    </div>
+                    <div id="importColMap" class="hidden" style="margin-top: 12px;"></div>
+                    <div id="importPreview" class="hidden" style="margin-top: 12px;">
+                        <h4 style="margin-bottom: 8px;">Preview</h4>
+                        <div id="importPreviewTable" style="max-height: 200px; overflow-y: auto;"></div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <button id="importPreviewBtn" class="btn-secondary">Preview</button>
+                        <button id="importExecuteBtn" class="btn-primary hidden">Import Leads</button>
+                        <button id="importCancelBtn" class="btn-ghost">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- MODAL: PASTE BACK SKIP TRACE -->
+            <!-- ============================================ -->
+            <div id="pasteBackModal" class="modal hidden">
+                <div class="modal-content" style="max-width: 700px;">
+                    <h3>Paste Back Skip Trace Data</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 12px;">
+                        Paste the completed sheet from your VA. Address column matches existing deals.
+                        New contact data will be merged into existing records.
+                    </p>
+                    <div class="input-group">
+                        <label>Completed Sheet Data</label>
+                        <textarea id="pasteBackData" rows="10" placeholder="Paste tab-separated data from Google Sheets..."></textarea>
+                    </div>
+                    <div id="pasteBackColMap" class="hidden" style="margin-top: 12px;"></div>
+                    <div id="pasteBackPreview" class="hidden" style="margin-top: 12px;">
+                        <h4 style="margin-bottom: 8px;">Preview Matches</h4>
+                        <div id="pasteBackPreviewTable" style="max-height: 200px; overflow-y: auto;"></div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <button id="pasteBackPreviewBtn" class="btn-secondary">Preview & Match</button>
+                        <button id="pasteBackExecuteBtn" class="btn-primary hidden">Apply Skip Trace</button>
+                        <button id="pasteBackCancelBtn" class="btn-ghost">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- MODAL: ASSIGN VA -->
+            <!-- ============================================ -->
+            <div id="assignVAModal" class="modal hidden">
+                <div class="modal-content" style="max-width: 400px;">
+                    <h3>Assign VA</h3>
+                    <div class="input-group">
+                        <label>VA Name</label>
+                        <input type="text" id="assignVAName" placeholder="e.g. Maria">
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <button id="assignVASave" class="btn-primary">Assign</button>
+                        <button id="assignVACancel" class="btn-ghost">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- MODAL: QUICK LOG (Cadence-Aware) -->
+            <!-- ============================================ -->
+            <div id="quickLogModal" class="modal hidden">
+                <div class="modal-content" style="max-width: 640px; width: 95%;">
+                    <h3 id="quickLogTitle">Log Interaction</h3>
+                    <div id="quickLogLeadInfo" class="quick-log-lead-info hidden"></div>
+                    <div id="cadenceStepInfo" class="cadence-step-info hidden"></div>
+                    <div class="input-group">
+                        <label>Type</label>
+                        <select id="quickLogType">
+                            <option value="call">Call</option>
+                            <option value="text">Text</option>
+                            <option value="email">Email</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Direction</label>
+                        <select id="quickLogDirection">
+                            <option value="outbound">Outbound</option>
+                            <option value="inbound">Inbound</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Outcome</label>
+                        <select id="quickLogOutcome">
+                            <option value="connected">Connected</option>
+                            <option value="voicemail">Left Voicemail</option>
+                            <option value="no_answer">No Answer</option>
+                            <option value="interested">Interested (Exits Cadence)</option>
+                            <option value="not_interested">Not Interested (Mark Dead)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Notes</label>
+                        <textarea id="quickLogNotes" rows="3" placeholder="What happened?"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <button id="quickLogSave" class="btn-primary">Log & Next</button>
+                        <button id="quickLogCancel" class="btn-ghost">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module" src="js/outreach.js"></script>
+</body>
+
+</html>

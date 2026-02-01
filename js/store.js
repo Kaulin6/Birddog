@@ -7,6 +7,18 @@ const STORAGE_KEY = 'birdDogDeals';
 const CONTACTS_KEY = 'birdDogContacts';
 const TASKS_KEY = 'birdDogTasks';
 const TEMPLATES_KEY = 'birdDogTemplates';
+const LISTS_KEY = 'birdDogLists';
+const CADENCES_KEY = 'birdDogCadences';
+
+export const CADENCE_STEPS = [
+    { day: 1,  types: ['call', 'text'], label: 'Day 1: Call + Text' },
+    { day: 2,  types: ['call'],         label: 'Day 2: Call' },
+    { day: 3,  types: ['text'],         label: 'Day 3: Text' },
+    { day: 7,  types: ['call'],         label: 'Day 7: Call' },
+    { day: 14, types: ['call', 'text'], label: 'Day 14: Call + Text' },
+    { day: 21, types: ['call'],         label: 'Day 21: Call' },
+    { day: 30, types: ['call'],         label: 'Day 30: Final Call' }
+];
 
 export const Store = {
     // ========================================
@@ -683,6 +695,460 @@ export const Store = {
         });
 
         return timeline.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    },
+
+    // ========================================
+    // OUTREACH QUEUE
+    // ========================================
+    getOutreachQueue() {
+        const CONTACT_TYPES = ['call', 'email', 'text', 'meeting'];
+        const deals = this.getDeals();
+        const tasks = this.getTasks();
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        const queue = deals
+            .filter(d => d.status !== 'closed' && d.status !== 'dead')
+            .map(deal => {
+                const timeline = deal.timeline || [];
+                const interactions = timeline.filter(e => CONTACT_TYPES.includes(e.type));
+                const sorted = [...interactions].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+                const firstContact = sorted.length > 0 ? new Date(sorted[0].timestamp) : null;
+                const lastContact = sorted.length > 0 ? new Date(sorted[sorted.length - 1].timestamp) : null;
+                const daysSinceContact = lastContact ? Math.floor((now - lastContact) / 86400000) : null;
+
+                // Follow-up date from tasks
+                const dealTask = tasks.find(t => t.dealId === deal.id && t.dueDate && !t.completed);
+                const followUpDate = dealTask ? new Date(dealTask.dueDate) : null;
+
+                const isOverdue = followUpDate && followUpDate < today;
+                const isDueToday = followUpDate && followUpDate.toDateString() === today.toDateString();
+                const isUpcoming = followUpDate && followUpDate > today && followUpDate <= new Date(today.getTime() + 7 * 86400000);
+
+                // Primary contact: prefer seller/owner, then agent
+                const contacts = deal.contacts || [];
+                const owner = contacts.find(c => c.role === 'seller' || c.role === 'owner');
+                const agent = contacts.find(c => c.role === 'agent');
+                const primaryContact = owner || agent || contacts[0] || null;
+                const contactType = primaryContact ? (primaryContact.role === 'agent' ? 'agent' : 'owner') : null;
+
+                // Priority score (lower = more urgent)
+                let priority = 50;
+                if (interactions.length === 0) priority = 5; // never contacted
+                else if (isOverdue) priority = 10;
+                else if (isDueToday) priority = 15;
+                else if (daysSinceContact !== null && daysSinceContact >= 7) priority = 20;
+                else if (isUpcoming) priority = 30;
+
+                const dealAge = deal.savedAt ? Math.floor((now - new Date(deal.savedAt)) / 86400000) : 0;
+
+                return {
+                    deal,
+                    primaryContact,
+                    contactType,
+                    firstContact,
+                    lastContact,
+                    daysSinceContact,
+                    followUpDate,
+                    isOverdue,
+                    isDueToday,
+                    isUpcoming,
+                    totalInteractions: interactions.length,
+                    dealAge,
+                    priority
+                };
+            });
+
+        return queue.sort((a, b) => a.priority - b.priority);
+    },
+
+    addDealsFromList(rows) {
+        const deals = this.getDeals();
+        const existingAddresses = new Set(deals.map(d => (d.propertyAddress || '').toLowerCase().trim()));
+        let imported = 0;
+        let skipped = 0;
+
+        rows.forEach(row => {
+            const address = (row.address || '').trim();
+            if (!address) { skipped++; return; }
+            if (existingAddresses.has(address.toLowerCase())) { skipped++; return; }
+
+            const contacts = [];
+            if (row.ownerName) {
+                contacts.push({ name: row.ownerName, role: 'seller', phone: row.ownerPhone || '', email: row.ownerEmail || '' });
+            }
+            if (row.agentName) {
+                contacts.push({ name: row.agentName, role: 'agent', phone: row.agentPhone || '', email: row.agentEmail || '' });
+            }
+
+            const dealData = {
+                id: Date.now() + imported,
+                propertyAddress: address,
+                status: 'lead',
+                contacts,
+                timeline: [{
+                    type: 'system',
+                    text: 'Imported via lead list',
+                    timestamp: new Date().toISOString()
+                }],
+                savedAt: new Date().toISOString(),
+                source: row.source || 'import'
+            };
+
+            deals.unshift(dealData);
+            existingAddresses.add(address.toLowerCase());
+            imported++;
+
+            // Sync contacts to global directory
+            contacts.forEach(c => {
+                if (c.name) this.syncContactToGlobal(c, dealData.id);
+            });
+        });
+
+        this.saveDeals(deals);
+        return { imported, skipped };
+    },
+
+    // ========================================
+    // LISTS
+    // ========================================
+    getLists() {
+        return JSON.parse(localStorage.getItem(LISTS_KEY) || '[]');
+    },
+
+    saveLists(lists) {
+        localStorage.setItem(LISTS_KEY, JSON.stringify(lists));
+    },
+
+    getList(id) {
+        return this.getLists().find(l => l.id === id);
+    },
+
+    saveList(listData) {
+        const lists = this.getLists();
+        if (!listData.id) listData.id = Date.now();
+        if (!listData.createdAt) listData.createdAt = new Date().toISOString();
+        if (!listData.status) listData.status = 'imported';
+        if (!listData.dealIds) listData.dealIds = [];
+        if (!listData.stats) listData.stats = { total: 0, skipTraced: 0, cadenceStarted: 0, cadenceCompleted: 0, interested: 0, dead: 0 };
+        const idx = lists.findIndex(l => l.id === listData.id);
+        if (idx >= 0) { lists[idx] = listData; } else { lists.unshift(listData); }
+        this.saveLists(lists);
+        return listData;
+    },
+
+    deleteList(id) {
+        this.saveLists(this.getLists().filter(l => l.id !== id));
+    },
+
+    getListDeals(listId) {
+        const list = this.getList(listId);
+        if (!list) return [];
+        const deals = this.getDeals();
+        return list.dealIds.map(did => deals.find(d => d.id === did)).filter(Boolean);
+    },
+
+    recalcListStats(listId) {
+        const list = this.getList(listId);
+        if (!list) return;
+        const deals = this.getListDeals(listId);
+        const cadences = this.getCadences().filter(c => c.listId === listId);
+        list.stats = {
+            total: deals.length,
+            skipTraced: deals.filter(d => d.skipTraced).length,
+            cadenceStarted: cadences.filter(c => c.status !== 'pending').length,
+            cadenceCompleted: cadences.filter(c => c.status === 'completed').length,
+            interested: cadences.filter(c => c.status === 'responded').length,
+            dead: cadences.filter(c => c.status === 'dead').length
+        };
+        this.saveList(list);
+        return list;
+    },
+
+    // ========================================
+    // CADENCES
+    // ========================================
+    getCadences() {
+        return JSON.parse(localStorage.getItem(CADENCES_KEY) || '[]');
+    },
+
+    saveCadences(cadences) {
+        localStorage.setItem(CADENCES_KEY, JSON.stringify(cadences));
+    },
+
+    getCadence(id) {
+        return this.getCadences().find(c => c.id === id);
+    },
+
+    getCadenceByDeal(dealId) {
+        return this.getCadences().find(c => c.dealId === dealId && c.status === 'active');
+    },
+
+    saveCadence(cadenceData) {
+        const cadences = this.getCadences();
+        if (!cadenceData.id) cadenceData.id = Date.now();
+        if (!cadenceData.touches) cadenceData.touches = [];
+        if (!cadenceData.status) cadenceData.status = 'active';
+        const idx = cadences.findIndex(c => c.id === cadenceData.id);
+        if (idx >= 0) { cadences[idx] = cadenceData; } else { cadences.unshift(cadenceData); }
+        this.saveCadences(cadences);
+        return cadenceData;
+    },
+
+    startCadence(dealId, listId) {
+        const now = new Date();
+        const cadence = this.saveCadence({
+            dealId,
+            listId: listId || null,
+            status: 'active',
+            startedAt: now.toISOString(),
+            currentStep: 0,
+            touches: [],
+            nextTouchDate: now.toISOString().split('T')[0],
+            nextTouchType: 'call+text',
+            completedAt: null,
+            exitReason: null
+        });
+        const deal = this.getDeal(dealId);
+        if (deal) { deal.cadenceId = cadence.id; this.saveDeal(deal); }
+        return cadence;
+    },
+
+    logCadenceTouch(cadenceId, touchData) {
+        const cadence = this.getCadence(cadenceId);
+        if (!cadence || cadence.status !== 'active') return null;
+
+        const step = CADENCE_STEPS[cadence.currentStep];
+        cadence.touches.push({
+            step: cadence.currentStep,
+            type: touchData.type,
+            scheduledDate: cadence.nextTouchDate,
+            completedAt: new Date().toISOString(),
+            outcome: touchData.outcome || 'no_answer',
+            notes: touchData.notes || ''
+        });
+
+        // Check if all required types for this step are done
+        const touchesForStep = cadence.touches.filter(t => t.step === cadence.currentStep);
+        const completedTypes = new Set(touchesForStep.map(t => t.type));
+        const stepComplete = step.types.every(t => completedTypes.has(t));
+
+        if (stepComplete) {
+            if (touchData.outcome === 'interested') {
+                cadence.status = 'responded';
+                cadence.exitReason = 'responded_interested';
+                cadence.completedAt = new Date().toISOString();
+            } else if (touchData.outcome === 'not_interested') {
+                cadence.status = 'dead';
+                cadence.exitReason = 'marked_dead';
+                cadence.completedAt = new Date().toISOString();
+            } else if (cadence.currentStep >= CADENCE_STEPS.length - 1) {
+                cadence.status = 'completed';
+                cadence.exitReason = 'cadence_exhausted';
+                cadence.completedAt = new Date().toISOString();
+            } else {
+                cadence.currentStep += 1;
+                const nextStep = CADENCE_STEPS[cadence.currentStep];
+                const startDate = new Date(cadence.startedAt);
+                const nextDate = new Date(startDate);
+                nextDate.setDate(nextDate.getDate() + nextStep.day - 1);
+                cadence.nextTouchDate = nextDate.toISOString().split('T')[0];
+                cadence.nextTouchType = nextStep.types.join('+');
+            }
+        }
+
+        this.saveCadence(cadence);
+
+        // Also log to deal timeline
+        this.addLogToDeal(cadence.dealId, {
+            type: touchData.type,
+            direction: 'outbound',
+            text: `[Cadence Step ${cadence.currentStep + 1}/${CADENCE_STEPS.length}] ${touchData.notes || touchData.outcome}`,
+            outcome: touchData.outcome
+        });
+
+        // Recalc list stats if linked
+        if (cadence.listId) this.recalcListStats(cadence.listId);
+
+        return cadence;
+    },
+
+    exitCadence(cadenceId, reason) {
+        const cadence = this.getCadence(cadenceId);
+        if (!cadence) return null;
+        cadence.status = reason === 'responded_interested' ? 'responded' : 'dead';
+        cadence.exitReason = reason;
+        cadence.completedAt = new Date().toISOString();
+        this.saveCadence(cadence);
+        if (cadence.listId) this.recalcListStats(cadence.listId);
+        return cadence;
+    },
+
+    getDueCadences() {
+        const today = new Date().toISOString().split('T')[0];
+        return this.getCadences().filter(c => c.status === 'active' && c.nextTouchDate <= today);
+    },
+
+    getUpcomingCadences(days) {
+        days = days || 7;
+        const today = new Date();
+        const future = new Date(today);
+        future.setDate(future.getDate() + days);
+        const todayStr = today.toISOString().split('T')[0];
+        const futureStr = future.toISOString().split('T')[0];
+        return this.getCadences().filter(c => c.status === 'active' && c.nextTouchDate > todayStr && c.nextTouchDate <= futureStr);
+    },
+
+    startCadencesForList(listId) {
+        const list = this.getList(listId);
+        if (!list) return 0;
+        const deals = this.getListDeals(listId);
+        let started = 0;
+        deals.forEach(deal => {
+            if (!deal.skipTraced) return;
+            const existing = this.getCadenceByDeal(deal.id);
+            if (existing) return;
+            this.startCadence(deal.id, listId);
+            started++;
+        });
+        list.status = 'active';
+        this.saveList(list);
+        this.recalcListStats(listId);
+        return started;
+    },
+
+    // ========================================
+    // LIST-BASED IMPORT
+    // ========================================
+    addDealsToList(rows, listId) {
+        const deals = this.getDeals();
+        const existingAddresses = new Set(deals.map(d => (d.propertyAddress || '').toLowerCase().trim()));
+        let imported = 0;
+        let skipped = 0;
+        const newDealIds = [];
+
+        rows.forEach(row => {
+            const address = (row.address || '').trim();
+            if (!address) { skipped++; return; }
+            if (existingAddresses.has(address.toLowerCase())) { skipped++; return; }
+
+            const contacts = [];
+            if (row.ownerName) {
+                contacts.push({ name: row.ownerName, role: 'seller', phone: row.ownerPhone || '', email: row.ownerEmail || '' });
+            }
+            if (row.agentName) {
+                contacts.push({ name: row.agentName, role: 'agent', phone: row.agentPhone || '', email: row.agentEmail || '' });
+            }
+
+            const hasSkipData = !!(row.ownerName && row.ownerPhone);
+
+            const dealData = {
+                id: Date.now() + imported,
+                propertyAddress: address,
+                status: 'lead',
+                contacts,
+                timeline: [{ type: 'system', text: 'Imported via lead list', timestamp: new Date().toISOString() }],
+                savedAt: new Date().toISOString(),
+                source: row.source || 'import',
+                listId: listId || null,
+                skipTraced: hasSkipData,
+                cadenceId: null
+            };
+
+            deals.unshift(dealData);
+            existingAddresses.add(address.toLowerCase());
+            newDealIds.push(dealData.id);
+            imported++;
+
+            contacts.forEach(c => { if (c.name) this.syncContactToGlobal(c, dealData.id); });
+        });
+
+        this.saveDeals(deals);
+
+        if (listId) {
+            const list = this.getList(listId);
+            if (list) {
+                list.dealIds = [...list.dealIds, ...newDealIds];
+                list.stats.total = list.dealIds.length;
+                list.stats.skipTraced = this.getListDeals(listId).filter(d => d.skipTraced).length;
+                this.saveList(list);
+            }
+        }
+
+        return { imported, skipped, dealIds: newDealIds };
+    },
+
+    // ========================================
+    // OUTREACH ANALYTICS
+    // ========================================
+    getOutreachAnalytics(days) {
+        const cadences = this.getCadences();
+        const lists = this.getLists();
+        const deals = this.getDeals();
+
+        const allTouches = cadences.flatMap(c => c.touches);
+
+        // Filter by date range if specified
+        let filteredTouches = allTouches;
+        if (days && days !== 'all') {
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - days);
+            const cutoffStr = cutoff.toISOString();
+            filteredTouches = allTouches.filter(t => t.completedAt && t.completedAt >= cutoffStr);
+        }
+
+        const calls = filteredTouches.filter(t => t.type === 'call');
+        const texts = filteredTouches.filter(t => t.type === 'text');
+        const connected = filteredTouches.filter(t => t.outcome === 'connected' || t.outcome === 'interested');
+
+        // Pipeline funnel (all time)
+        const totalImported = deals.filter(d => d.listId).length;
+        const totalSkipTraced = deals.filter(d => d.listId && d.skipTraced).length;
+        const totalContacted = cadences.filter(c => c.touches.length > 0).length;
+        const totalInterested = cadences.filter(c => c.status === 'responded').length;
+        const totalOfferSent = deals.filter(d => d.listId && ['offer_sent', 'under_contract', 'closed'].includes(d.status)).length;
+        const totalClosed = deals.filter(d => d.listId && d.status === 'closed').length;
+
+        const responseRate = totalContacted > 0 ? Math.round((connected.length / totalContacted) * 100) : 0;
+        const activeCadences = cadences.filter(c => c.status === 'active').length;
+
+        // Per-list breakdown
+        const listBreakdowns = lists.map(list => {
+            const lc = cadences.filter(c => c.listId === list.id);
+            const ld = this.getListDeals(list.id);
+            return {
+                listId: list.id, listName: list.name, source: list.source,
+                total: ld.length,
+                skipTraced: ld.filter(d => d.skipTraced).length,
+                contacted: lc.filter(c => c.touches.length > 0).length,
+                interested: lc.filter(c => c.status === 'responded').length,
+                dead: lc.filter(c => c.status === 'dead').length,
+                active: lc.filter(c => c.status === 'active').length
+            };
+        });
+
+        // Activity by day (last 30 days)
+        const activityByDate = [];
+        for (let i = 29; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dateStr = d.toISOString().split('T')[0];
+            const dayTouches = allTouches.filter(t => t.completedAt && t.completedAt.startsWith(dateStr));
+            activityByDate.push({
+                date: dateStr,
+                calls: dayTouches.filter(t => t.type === 'call').length,
+                texts: dayTouches.filter(t => t.type === 'text').length
+            });
+        }
+
+        return {
+            activity: { totalCalls: calls.length, totalTexts: texts.length, totalConnected: connected.length, responseRate },
+            pipeline: { totalImported, totalSkipTraced, totalContacted, totalInterested, totalOfferSent, totalClosed },
+            cadences: { active: activeCadences, total: cadences.length },
+            listBreakdowns,
+            activityByDate
+        };
     },
 
     // CSV Import with dedup

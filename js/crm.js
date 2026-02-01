@@ -56,7 +56,7 @@ export const CRM = {
         const map = {
             'viewCurrentDeal': 'tabCurrentDeal',
             'viewContactDirectory': 'tabContactDirectory',
-            'viewContactDetail': 'tabContactDirectory', // keep directory tab highlighted
+            'viewContactDetail': 'tabContactDirectory',
             'viewCallQueue': 'tabCallQueue'
         };
         const btn = document.getElementById(map[viewId]);
@@ -79,6 +79,44 @@ export const CRM = {
         document.querySelectorAll('#statusActions .btn-status').forEach(btn => {
             btn.classList.toggle('active-status', btn.dataset.status === deal.status);
         });
+
+        // Contact activity summary
+        this.renderContactActivity(deal);
+    },
+
+    renderContactActivity(deal) {
+        const timeline = deal.timeline || [];
+        // Filter to real contact interactions (not system/status entries)
+        const contactTypes = ['call', 'email', 'text', 'meeting'];
+        const interactions = timeline.filter(e => contactTypes.includes(e.type));
+
+        const totalEl = document.getElementById('totalInteractions');
+        const firstEl = document.getElementById('firstContactDate');
+        const lastEl = document.getElementById('lastContactDate');
+        const daysEl = document.getElementById('daysSinceContact');
+
+        if (totalEl) totalEl.textContent = interactions.length;
+
+        if (interactions.length === 0) {
+            if (firstEl) firstEl.textContent = '--';
+            if (lastEl) lastEl.textContent = '--';
+            if (daysEl) daysEl.textContent = '--';
+            return;
+        }
+
+        // Timeline is newest-first (unshift), so last item = earliest
+        const sorted = [...interactions].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        const first = sorted[0];
+        const last = sorted[sorted.length - 1];
+
+        if (firstEl) firstEl.textContent = new Date(first.timestamp).toLocaleDateString();
+        if (lastEl) lastEl.textContent = new Date(last.timestamp).toLocaleDateString();
+
+        const daysSince = Math.floor((Date.now() - new Date(last.timestamp)) / (1000 * 60 * 60 * 24));
+        if (daysEl) {
+            daysEl.textContent = daysSince === 0 ? 'Today' : `${daysSince}d ago`;
+            daysEl.className = 'activity-value' + (daysSince >= 7 ? ' activity-stale' : daysSince >= 3 ? ' activity-warm' : ' activity-fresh');
+        }
     },
 
     renderContacts(contacts) {
