@@ -10,6 +10,7 @@ import { UI } from './ui.js';
 
 export const CRM = {
     currentDealId: null,
+    _boundHandleStatusChange: null,
 
     init(dealId) {
         this.currentDealId = dealId;
@@ -894,9 +895,12 @@ export const CRM = {
             }
         });
 
-        // Status Timeline Event Listener
-        document.removeEventListener('dealStatusChanged', this.handleStatusChange);
-        document.addEventListener('dealStatusChanged', this.handleStatusChange.bind(this));
+        // Status Timeline Event Listener — use stored bound reference to avoid duplicates
+        if (this._boundHandleStatusChange) {
+            document.removeEventListener('dealStatusChanged', this._boundHandleStatusChange);
+        }
+        this._boundHandleStatusChange = this.handleStatusChange.bind(this);
+        document.addEventListener('dealStatusChanged', this._boundHandleStatusChange);
     },
 
     populateTemplates() {
