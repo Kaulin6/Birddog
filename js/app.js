@@ -58,6 +58,7 @@ const App = {
         // Initial Render
         this.renderSavedDeals();
         this.runCalculator();
+        this.syncCalcStatusButtons();
 
         // Default View
         this.switchView('calculator');
@@ -1070,6 +1071,7 @@ const App = {
 
         this.renderSavedDeals();
         this.updateDealBar();
+        this.syncCalcStatusButtons();
         Pipeline.render();
 
         if (isNew) {
@@ -1250,6 +1252,11 @@ const App = {
                 }
                 const newStatus = btn.dataset.status;
                 Store.updateDealStatus(this.currentDealId, newStatus);
+
+                // Immediate visual feedback
+                document.querySelectorAll('#calcStatusActions .btn-status').forEach(b => {
+                    b.classList.toggle('active-status', b.dataset.status === newStatus);
+                });
 
                 document.dispatchEvent(new CustomEvent('dealStatusChanged', {
                     detail: { id: this.currentDealId, status: newStatus }
