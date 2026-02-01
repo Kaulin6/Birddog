@@ -3084,6 +3084,36 @@ body {
     margin-top: 6px;
 }
 
+/* Under Construction — card/section */
+.section-construction {
+    position: relative;
+    border: 1px solid rgba(255, 214, 0, 0.25) !important;
+}
+
+.section-construction::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 8px,
+        rgba(255, 214, 0, 0.04) 8px,
+        rgba(255, 214, 0, 0.04) 16px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+}
+
+.section-construction > * {
+    position: relative;
+    z-index: 1;
+}
+
 /* Under Construction nav buttons */
 .nav-construction {
     position: relative;
