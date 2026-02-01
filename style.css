@@ -3084,6 +3084,58 @@ body {
     margin-top: 6px;
 }
 
+/* Under Construction nav buttons */
+.nav-construction {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-construction::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 6px,
+        rgba(255, 214, 0, 0.1) 6px,
+        rgba(255, 214, 0, 0.1) 12px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.nav-construction {
+    border: 1px solid rgba(255, 214, 0, 0.3) !important;
+    color: rgba(255, 214, 0, 0.7) !important;
+}
+
+.nav-construction:hover {
+    border-color: rgba(255, 214, 0, 0.5) !important;
+    color: #ffd600 !important;
+}
+
+/* Configure Offer button — yellow */
+.btn-offer {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #000;
+    background: #ffd600;
+    border: 1px solid #ffd600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-offer:hover {
+    background: #ffe033;
+    box-shadow: 0 0 14px rgba(255, 214, 0, 0.3);
+}
+
 /* AI Generate Offer — under construction */
 .btn-ai-generate {
     position: relative;

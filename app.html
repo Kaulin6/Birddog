@@ -23,8 +23,8 @@
                 <button id="navOffer" class="nav-btn">Offer</button>
                 <button id="navPipeline" class="nav-btn">Pipeline</button>
                 <button id="navCrm" class="nav-btn">CRM</button>
-                <button id="navDashboard" class="nav-btn">Dashboard</button>
-                <a href="data_explorer.html" class="nav-btn" target="_blank">Data</a>
+                <button id="navDashboard" class="nav-btn nav-construction">Dashboard</button>
+                <a href="data_explorer.html" class="nav-btn nav-construction" target="_blank">Data</a>
             </nav>
 
             <!-- Calculator Sidebar Content -->
@@ -115,17 +115,8 @@
                         <button id="saveDealBtn" class="btn-primary">Save Deal</button>
                         <button id="crmSwitchBtn" class="btn-secondary"
                             style="background-color: #4a6fa5; color: white;">CRM & Contacts</button>
-                        <button id="offerSwitchBtn" class="btn-secondary"
-                            style="background-color: #b26bf5; color: white;">Configure Offer</button>
+                        <button id="offerSwitchBtn" class="btn-offer">Configure Offer</button>
                         <button id="clearFormBtn" class="btn-ghost">Clear</button>
-                    </div>
-                    <div class="metric-card" title="Target investor profit calculated as a % of ARV">
-                        <h3>Investor Profit</h3>
-                        <div class="value" id="profitToInvestor">$0</div>
-                    </div>
-                    <div class="metric-card highlight" title="Investor's actual return on total cash invested (purchase + repairs + closing)">
-                        <h3>Investor ROI</h3>
-                        <div class="value" id="buyerRoi">0%</div>
                     </div>
                     <div class="metric-card profit-highlight">
                         <h3>Your Profit</h3>
@@ -138,6 +129,14 @@
                     <div class="metric-card">
                         <h3>Sale Price to Investor</h3>
                         <div class="value" id="salePriceToInvestor">$0</div>
+                    </div>
+                    <div class="metric-card" title="Target investor profit calculated as a % of ARV">
+                        <h3>Investor Profit</h3>
+                        <div class="value" id="profitToInvestor">$0</div>
+                    </div>
+                    <div class="metric-card highlight" title="Investor's actual return on total cash invested (purchase + repairs + closing)">
+                        <h3>Investor ROI</h3>
+                        <div class="value" id="buyerRoi">0%</div>
                     </div>
                 </header>
 
@@ -161,7 +160,15 @@
 
                     <section class="card full-width-card">
                         <h2>Deal Overview</h2>
-                        <div class="deal-overview-status-row">
+                        <div class="status-actions" id="calcStatusActions">
+                            <button class="btn-status" data-status="lead">Lead</button>
+                            <button class="btn-status" data-status="analyzed">Analyzed</button>
+                            <button class="btn-status" data-status="offer_sent">Offer Sent</button>
+                            <button class="btn-status" data-status="under_contract">Under Contract</button>
+                            <button class="btn-status" data-status="closed">Closed</button>
+                            <button class="btn-status" data-status="dead" style="color: #ff5252; border-color: #ff5252;">Dead</button>
+                        </div>
+                        <div class="deal-overview-status-row" style="margin-top: 16px;">
                             <div class="input-group" style="flex:1; margin-bottom:0;">
                                 <label for="waitingOnSelect">Waiting On</label>
                                 <select id="waitingOnSelect">

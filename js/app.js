@@ -1098,6 +1098,7 @@ const App = {
 
         this.runCalculator();
         this.updateDealBar();
+        this.syncCalcStatusButtons();
         this.switchView('calculator');
     },
 
@@ -1110,6 +1111,7 @@ const App = {
         if (waitingOnEl) waitingOnEl.value = '';
         this.runCalculator();
         this.updateDealBar();
+        this.syncCalcStatusButtons();
     },
 
     updateDealBar() {
@@ -1236,6 +1238,31 @@ const App = {
         document.addEventListener('dealStatusChanged', () => {
             this.updateDealBar();
             this.renderSavedDeals();
+            this.syncCalcStatusButtons();
+        });
+
+        // Property page status buttons
+        document.querySelectorAll('#calcStatusActions .btn-status').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!this.currentDealId) {
+                    alert('Please save a deal first.');
+                    return;
+                }
+                const newStatus = btn.dataset.status;
+                Store.updateDealStatus(this.currentDealId, newStatus);
+
+                document.dispatchEvent(new CustomEvent('dealStatusChanged', {
+                    detail: { id: this.currentDealId, status: newStatus }
+                }));
+            });
+        });
+    },
+
+    syncCalcStatusButtons() {
+        const deal = this.currentDealId ? Store.getDeal(this.currentDealId) : null;
+        const status = deal ? deal.status : '';
+        document.querySelectorAll('#calcStatusActions .btn-status').forEach(btn => {
+            btn.classList.toggle('active-status', btn.dataset.status === status);
         });
     },
 
