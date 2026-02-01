@@ -672,11 +672,17 @@ const Outreach = {
             return '<span class="step-dot"></span>';
         }).join('');
 
-        // Action buttons
+        // Action buttons — check which touches are already done for this step
+        const touchesForStep = (cadence.touches || []).filter(t => t.step === cadence.currentStep);
+        const completedTypes = new Set(touchesForStep.map(t => t.type));
+
         let actions = '';
         if (cadence.status === 'active') {
             step.types.forEach(type => {
-                if (type === 'call' && primary && primary.phone) {
+                const done = completedTypes.has(type);
+                if (done) {
+                    actions += `<span class="btn-ghost" style="opacity: 0.5; pointer-events: none; text-decoration: line-through;">${type === 'call' ? 'Called' : 'Texted'}</span>`;
+                } else if (type === 'call' && primary && primary.phone) {
                     actions += `<a href="tel:${esc(primary.phone)}" class="btn-primary cadence-action-btn" data-cadence-id="${cadence.id}" data-type="call" style="text-decoration:none; display:inline-flex; align-items:center;">Call</a>`;
                 } else if (type === 'text' && primary && primary.phone) {
                     actions += `<a href="sms:${esc(primary.phone)}" class="btn-secondary cadence-action-btn" data-cadence-id="${cadence.id}" data-type="text" style="text-decoration:none; display:inline-flex; align-items:center;">Text</a>`;
@@ -836,28 +842,47 @@ const Outreach = {
         const type = document.getElementById('quickLogType').value;
         const outcome = document.getElementById('quickLogOutcome').value;
         const notes = document.getElementById('quickLogNotes').value;
+        const justLoggedId = this._currentCadenceId;
 
-        const cadence = Store.logCadenceTouch(this._currentCadenceId, { type, outcome, notes });
+        // Snapshot the due queue BEFORE logging (so we know who's next)
+        const dueQueueBefore = Store.getDueCadences().map(c => c.id);
+
+        Store.logCadenceTouch(justLoggedId, { type, outcome, notes });
 
         if (outcome === 'not_interested') {
-            const c = Store.getCadence(this._currentCadenceId);
-            if (c) {
-                Store.updateDealStatus(c.dealId, 'dead');
-            }
+            Store.updateDealStatus(Store.getCadence(justLoggedId)?.dealId, 'dead');
         }
 
         document.getElementById('quickLogModal').classList.add('hidden');
-        const justLoggedId = this._currentCadenceId;
         this._currentCadenceId = null;
-
         this.renderCadenceQueue();
 
-        // Auto-advance to next due cadence
-        const dueCadences = Store.getDueCadences();
-        const nextCadence = dueCadences.find(c => c.id !== justLoggedId);
-        if (nextCadence) {
-            const step = CADENCE_STEPS[nextCadence.currentStep];
-            setTimeout(() => this.openQuickLog(nextCadence.id, step.types[0]), 300);
+        // Don't auto-advance on exit outcomes
+        if (outcome === 'interested' || outcome === 'not_interested') return;
+
+        // Check if this lead still has remaining touches for the current step
+        const updated = Store.getCadence(justLoggedId);
+        if (updated && updated.status === 'active') {
+            const currentStep = CADENCE_STEPS[updated.currentStep];
+            const doneTouches = (updated.touches || []).filter(t => t.step === updated.currentStep);
+            const doneTypes = new Set(doneTouches.map(t => t.type));
+            const remaining = currentStep.types.filter(t => !doneTypes.has(t));
+
+            if (remaining.length > 0) {
+                // Same lead, next action (e.g. Call done → now Text)
+                setTimeout(() => this.openQuickLog(justLoggedId, remaining[0]), 300);
+                return;
+            }
+        }
+
+        // This lead's step is complete — move to next lead in queue
+        const nextId = dueQueueBefore.find(id => id !== justLoggedId);
+        if (nextId) {
+            const next = Store.getCadence(nextId);
+            if (next && next.status === 'active') {
+                const step = CADENCE_STEPS[next.currentStep];
+                setTimeout(() => this.openQuickLog(nextId, step.types[0]), 300);
+            }
         }
     },
 
