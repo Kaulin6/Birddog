@@ -3084,6 +3084,35 @@ body {
     margin-top: 6px;
 }
 
+/* Global Back Button */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.global-back-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.global-back-btn:hover {
+    background: rgba(59, 158, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
 /* Under Construction — card/section */
 .section-construction {
     position: relative;

@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const App = {
     currentDealId: null,
     activeRepairs: {},
+    _viewHistory: [],
+    _forwardHistory: [],
 
     init() {
         console.log('App v15 loaded');
@@ -69,6 +71,16 @@ const App = {
 
     // --- Navigation ---
     setupNavigation() {
+        // Global back/forward buttons
+        const globalBackBtn = document.getElementById('globalBackBtn');
+        if (globalBackBtn) {
+            globalBackBtn.addEventListener('click', () => this.goBack());
+        }
+        const globalForwardBtn = document.getElementById('globalForwardBtn');
+        if (globalForwardBtn) {
+            globalForwardBtn.addEventListener('click', () => this.goForward());
+        }
+
         document.getElementById('navCalculator').addEventListener('click', () => this.switchView('calculator'));
         document.getElementById('navOffer').addEventListener('click', () => this.switchView('offer'));
         document.getElementById('navPipeline').addEventListener('click', () => this.switchView('pipeline'));
@@ -150,7 +162,30 @@ const App = {
         }
     },
 
-    switchView(viewName) {
+    goBack() {
+        if (this._viewHistory.length > 0) {
+            this._forwardHistory.push(this._currentView);
+            const prevView = this._viewHistory.pop();
+            this.switchView(prevView, 'back');
+        }
+    },
+
+    goForward() {
+        if (this._forwardHistory.length > 0) {
+            this._viewHistory.push(this._currentView);
+            const nextView = this._forwardHistory.pop();
+            this.switchView(nextView, 'forward');
+        }
+    },
+
+    switchView(viewName, navType = false) {
+        // Track history
+        if (!navType && this._currentView && this._currentView !== viewName) {
+            this._viewHistory.push(this._currentView);
+            this._forwardHistory = []; // Clear forward on new navigation
+        }
+        this._currentView = viewName;
+
         // Hide all views
         const views = ['calculatorView', 'offerView', 'pipelineView', 'crmView', 'dashboardView'];
         views.forEach(v => {
