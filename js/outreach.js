@@ -105,25 +105,47 @@ const Outreach = {
             const stageTraced = traced > 0;
             const stageCadenced = cadenced > 0;
 
+            // Build mini contact table
+            const deals = Store.getListDeals(list.id);
+            const previewDeals = deals.slice(0, 8);
+            const contactRows = previewDeals.map(deal => {
+                const contacts = deal.contacts || [];
+                const owner = contacts.find(c => c.role === 'seller' || c.role === 'owner');
+                const agent = contacts.find(c => c.role === 'agent');
+                const mc = (val) => val ? esc(val) : '<span class="cell-missing-inline">--</span>';
+                return `<tr>
+                    <td class="cell-address">${esc(deal.propertyAddress)}</td>
+                    <td>${mc(owner?.name)}</td>
+                    <td>${mc(owner?.phone)}</td>
+                    <td>${mc(agent?.name)}</td>
+                    <td>${mc(agent?.phone)}</td>
+                </tr>`;
+            }).join('');
+
+            const moreCount = deals.length - previewDeals.length;
+
             return `
                 <div class="card list-card" data-list-id="${list.id}">
                     <div class="list-card-header">
                         <h3>${esc(list.name || 'Untitled List')}</h3>
-                        <div class="list-stage-tracker">
-                            <div class="list-stage ${stageImported ? 'stage-done' : ''}">
-                                <span class="list-stage-dot"></span>
-                                <span class="list-stage-label">Imported</span>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="list-stage-tracker">
+                                <div class="list-stage ${stageImported ? 'stage-done' : ''}">
+                                    <span class="list-stage-dot"></span>
+                                    <span class="list-stage-label">Imported</span>
+                                </div>
+                                <div class="list-stage-line ${stageTraced ? 'line-done' : ''}"></div>
+                                <div class="list-stage ${stageTraced ? 'stage-done' : ''}">
+                                    <span class="list-stage-dot"></span>
+                                    <span class="list-stage-label">Skip Traced</span>
+                                </div>
+                                <div class="list-stage-line ${stageCadenced ? 'line-done' : ''}"></div>
+                                <div class="list-stage ${stageCadenced ? 'stage-done' : ''}">
+                                    <span class="list-stage-dot"></span>
+                                    <span class="list-stage-label">In Cadence</span>
+                                </div>
                             </div>
-                            <div class="list-stage-line ${stageTraced ? 'line-done' : ''}"></div>
-                            <div class="list-stage ${stageTraced ? 'stage-done' : ''}">
-                                <span class="list-stage-dot"></span>
-                                <span class="list-stage-label">Skip Traced</span>
-                            </div>
-                            <div class="list-stage-line ${stageCadenced ? 'line-done' : ''}"></div>
-                            <div class="list-stage ${stageCadenced ? 'stage-done' : ''}">
-                                <span class="list-stage-dot"></span>
-                                <span class="list-stage-label">In Cadence</span>
-                            </div>
+                            <button class="btn-icon delete-list-btn" data-list-id="${list.id}" title="Delete list">&times;</button>
                         </div>
                     </div>
                     <div class="list-card-meta">
@@ -140,9 +162,18 @@ const Outreach = {
                         <div class="pipeline-stat"><h4>Interested</h4><div class="stat-num" style="color: var(--accent-green);">${s.interested || 0}</div></div>
                         <div class="pipeline-stat"><h4>Dead</h4><div class="stat-num" style="color: var(--accent-red);">${s.dead || 0}</div></div>
                     </div>
+                    <div class="list-contact-preview">
+                        <table class="list-preview-table">
+                            <thead>
+                                <tr><th>Address</th><th>Owner</th><th>Owner Phone</th><th>Agent</th><th>Agent Phone</th></tr>
+                            </thead>
+                            <tbody>${contactRows}</tbody>
+                        </table>
+                        ${moreCount > 0 ? `<div class="list-preview-more">+ ${moreCount} more leads</div>` : ''}
+                    </div>
                     <div class="list-card-actions">
                         <button class="btn-primary start-cadences-btn" data-list-id="${list.id}">Start Cadences</button>
-                        <button class="btn-secondary view-list-btn" data-list-id="${list.id}">View Deals</button>
+                        <button class="btn-secondary view-list-btn" data-list-id="${list.id}">View All</button>
                         <button class="btn-secondary paste-back-btn" data-list-id="${list.id}">Paste Back</button>
                         <button class="btn-ghost assign-va-btn" data-list-id="${list.id}">Assign VA</button>
                     </div>
@@ -194,6 +225,25 @@ const Outreach = {
             btn.addEventListener('click', (e) => {
                 this._currentListId = parseInt(e.currentTarget.dataset.listId);
                 this.openAssignVAModal();
+            });
+        });
+
+        document.querySelectorAll('.delete-list-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const listId = parseInt(e.currentTarget.dataset.listId);
+                const list = Store.getList(listId);
+                const name = list ? list.name : 'this list';
+                if (!confirm(`Delete "${name}" and all its leads? This cannot be undone.`)) return;
+                // Remove cadences for this list
+                const cadences = Store.getCadences().filter(c => c.listId !== listId);
+                Store.saveCadences(cadences);
+                // Remove deals for this list
+                const deals = Store.getDeals().filter(d => d.listId !== listId);
+                Store.saveDeals(deals);
+                // Remove the list itself
+                Store.deleteList(listId);
+                this.renderListsView();
             });
         });
     },

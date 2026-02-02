@@ -3597,6 +3597,78 @@ body {
     padding: 6px 12px;
 }
 
+/* List contact preview table */
+.list-contact-preview {
+    padding: 0 20px 12px;
+    overflow-x: auto;
+}
+
+.list-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+}
+
+.list-preview-table th {
+    text-align: left;
+    padding: 4px 8px;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-preview-table td {
+    padding: 3px 8px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+}
+
+.list-preview-table .cell-address {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.cell-missing-inline {
+    color: var(--accent-red);
+    font-weight: 500;
+}
+
+.list-preview-more {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 4px 8px 0;
+}
+
+/* Delete list button */
+.btn-icon {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.btn-icon:hover {
+    background: rgba(255, 82, 82, 0.15);
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
 /* ============================================
    OUTREACH: List Detail — Missing Data
    ============================================ */
