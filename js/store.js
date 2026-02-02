@@ -45,7 +45,7 @@ export const Store = {
         const existingIndex = deals.findIndex(d => this._idEq(d.id, dealData.id));
 
         if (!dealData.id) {
-            dealData.id = Date.now();
+            dealData.id = this._uniqueId();
         }
 
         dealData.savedAt = new Date().toISOString();
@@ -156,7 +156,7 @@ export const Store = {
         const existingIndex = contacts.findIndex(c => this._idEq(c.id, contactData.id));
 
         if (!contactData.id) {
-            contactData.id = Date.now();
+            contactData.id = this._uniqueId();
         }
         if (!contactData.createdAt) {
             contactData.createdAt = new Date().toISOString();
@@ -263,7 +263,7 @@ export const Store = {
         const existingIndex = tasks.findIndex(t => this._idEq(t.id, taskData.id));
 
         if (!taskData.id) {
-            taskData.id = Date.now();
+            taskData.id = this._uniqueId();
         }
         if (!taskData.createdAt) {
             taskData.createdAt = new Date().toISOString();
@@ -610,7 +610,7 @@ export const Store = {
         const templates = this.getTemplates();
         const existingIndex = templates.findIndex(t => this._idEq(t.id, templateData.id));
 
-        if (!templateData.id) templateData.id = Date.now();
+        if (!templateData.id) templateData.id = this._uniqueId();
 
         if (existingIndex >= 0) {
             templates[existingIndex] = templateData;
@@ -788,7 +788,7 @@ export const Store = {
             }
 
             const dealData = {
-                id: Date.now() + imported,
+                id: this._uniqueId(),
                 propertyAddress: address,
                 status: 'lead',
                 contacts,
@@ -832,7 +832,7 @@ export const Store = {
 
     saveList(listData) {
         const lists = this.getLists();
-        if (!listData.id) listData.id = Date.now();
+        if (!listData.id) listData.id = this._uniqueId();
         if (!listData.createdAt) listData.createdAt = new Date().toISOString();
         if (!listData.status) listData.status = 'imported';
         if (!listData.dealIds) listData.dealIds = [];
@@ -890,9 +890,16 @@ export const Store = {
         return this.getCadences().find(c => this._idEq(c.dealId, dealId) && c.status === 'active');
     },
 
+    _nextId: 0,
+    _uniqueId() {
+        const ts = Date.now();
+        if (ts <= this._nextId) { this._nextId++; } else { this._nextId = ts; }
+        return this._nextId;
+    },
+
     saveCadence(cadenceData) {
         const cadences = this.getCadences();
-        if (!cadenceData.id) cadenceData.id = Date.now();
+        if (!cadenceData.id) cadenceData.id = this._uniqueId();
         if (!cadenceData.touches) cadenceData.touches = [];
         if (!cadenceData.status) cadenceData.status = 'active';
         const idx = cadences.findIndex(c => this._idEq(c.id, cadenceData.id));
@@ -1052,7 +1059,7 @@ export const Store = {
             const hasSkipData = !!((row.ownerName && row.ownerPhone) || (row.agentName && row.agentPhone));
 
             const dealData = {
-                id: Date.now() + imported,
+                id: this._uniqueId(),
                 propertyAddress: address,
                 mailingAddress: row.mailingAddress || '',
                 status: 'lead',
@@ -1180,7 +1187,7 @@ export const Store = {
             if (existingAddresses.has(address.toLowerCase())) { skipped++; return; }
 
             const dealData = {
-                id: Date.now() + imported,
+                id: this._uniqueId(),
                 propertyAddress: address,
                 status: 'lead',
                 contacts: [],
