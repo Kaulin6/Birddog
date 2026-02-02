@@ -211,39 +211,82 @@ const Outreach = {
         const deals = Store.getListDeals(this._currentListId);
         const cadences = Store.getCadences().filter(c => c.listId === this._currentListId);
         const statsContainer = document.getElementById('listDetailStats');
+
+        // Count missing data
+        let missingOwnerName = 0, missingOwnerPhone = 0, missingOwnerEmail = 0;
+        let missingAgentName = 0, missingAgentPhone = 0;
+        let noContactAtAll = 0;
+
+        deals.forEach(deal => {
+            const contacts = deal.contacts || [];
+            const owner = contacts.find(c => c.role === 'seller' || c.role === 'owner');
+            const agent = contacts.find(c => c.role === 'agent');
+            if (!owner?.name) missingOwnerName++;
+            if (!owner?.phone) missingOwnerPhone++;
+            if (!owner?.email) missingOwnerEmail++;
+            if (!agent?.name) missingAgentName++;
+            if (!agent?.phone) missingAgentPhone++;
+            const hasAnyPhone = contacts.some(c => c.phone);
+            if (!hasAnyPhone) noContactAtAll++;
+        });
+
         statsContainer.innerHTML = `
             <div class="pipeline-stat"><h4>Total</h4><div class="stat-num">${deals.length}</div></div>
-            <div class="pipeline-stat"><h4>Skip Traced</h4><div class="stat-num">${deals.filter(d => d.skipTraced).length}</div></div>
+            <div class="pipeline-stat"><h4>Has Phone</h4><div class="stat-num" style="color: var(--accent-green);">${deals.length - noContactAtAll}</div></div>
+            <div class="pipeline-stat"><h4>No Phone</h4><div class="stat-num" style="color: ${noContactAtAll > 0 ? 'var(--accent-red)' : 'var(--text-primary)'};">${noContactAtAll}</div></div>
             <div class="pipeline-stat"><h4>In Cadence</h4><div class="stat-num">${cadences.filter(c => c.status === 'active').length}</div></div>
             <div class="pipeline-stat"><h4>Interested</h4><div class="stat-num" style="color: var(--accent-green);">${cadences.filter(c => c.status === 'responded').length}</div></div>
             <div class="pipeline-stat"><h4>Dead</h4><div class="stat-num" style="color: var(--accent-red);">${cadences.filter(c => c.status === 'dead').length}</div></div>
         `;
 
+        // Missing data summary
+        const summaryEl = document.getElementById('listMissingSummary');
+        const gaps = [];
+        if (missingOwnerPhone > 0) gaps.push(`<span class="missing-gap-tag gap-critical">${missingOwnerPhone} missing owner phone</span>`);
+        if (missingOwnerName > 0) gaps.push(`<span class="missing-gap-tag gap-warn">${missingOwnerName} missing owner name</span>`);
+        if (missingOwnerEmail > 0) gaps.push(`<span class="missing-gap-tag gap-info">${missingOwnerEmail} missing owner email</span>`);
+        if (missingAgentPhone > 0) gaps.push(`<span class="missing-gap-tag gap-warn">${missingAgentPhone} missing agent phone</span>`);
+        if (missingAgentName > 0) gaps.push(`<span class="missing-gap-tag gap-info">${missingAgentName} missing agent name</span>`);
+
+        if (gaps.length > 0) {
+            summaryEl.innerHTML = `<div class="missing-data-bar"><span class="missing-data-label">Data gaps:</span>${gaps.join('')}</div>`;
+        } else {
+            summaryEl.innerHTML = `<div class="missing-data-bar" style="border-color: var(--accent-green);"><span class="missing-data-label" style="color: var(--accent-green);">All contact data complete</span></div>`;
+        }
+
         // Deals table
         const tbody = document.getElementById('listDealsTableBody');
         tbody.innerHTML = deals.map(deal => {
-            const owner = (deal.contacts || []).find(c => c.role === 'seller' || c.role === 'owner');
-            const agent = (deal.contacts || []).find(c => c.role === 'agent');
+            const contacts = deal.contacts || [];
+            const owner = contacts.find(c => c.role === 'seller' || c.role === 'owner');
+            const agent = contacts.find(c => c.role === 'agent');
             const cadence = cadences.find(c => c.dealId === deal.id);
 
-            let cadenceStatus = '--';
+            const cell = (val) => {
+                if (!val) return `<td class="cell-missing">--</td>`;
+                return `<td>${esc(val)}</td>`;
+            };
+
+            let cadenceStatus = '<td class="cell-muted">--</td>';
             if (cadence) {
                 if (cadence.status === 'active') {
-                    cadenceStatus = `Step ${cadence.currentStep + 1}/7`;
+                    cadenceStatus = `<td>Step ${cadence.currentStep + 1}/7</td>`;
+                } else if (cadence.status === 'responded') {
+                    cadenceStatus = `<td><span class="list-status-pill status-active">Interested</span></td>`;
                 } else {
-                    cadenceStatus = `<span class="list-status-pill status-${cadence.status === 'responded' ? 'active' : 'completed'}">${cadence.status}</span>`;
+                    cadenceStatus = `<td><span class="list-status-pill status-completed">${cadence.status}</span></td>`;
                 }
             }
 
             return `
                 <tr>
-                    <td>${esc(deal.propertyAddress)}</td>
-                    <td>${owner ? esc(owner.name) : '--'}</td>
-                    <td>${owner && owner.phone ? esc(owner.phone) : '--'}</td>
-                    <td>${agent ? esc(agent.name) : '--'}</td>
-                    <td>${agent && agent.email ? esc(agent.email) : '--'}</td>
-                    <td><span class="skip-status ${deal.skipTraced ? 'traced' : 'pending'}">${deal.skipTraced ? 'Done' : 'Pending'}</span></td>
-                    <td>${cadenceStatus}</td>
+                    <td class="cell-address">${esc(deal.propertyAddress)}</td>
+                    ${cell(owner?.name)}
+                    ${cell(owner?.phone)}
+                    ${cell(owner?.email)}
+                    ${cell(agent?.name)}
+                    ${cell(agent?.phone)}
+                    ${cadenceStatus}
                 </tr>
             `;
         }).join('');
@@ -251,11 +294,11 @@ const Outreach = {
 
     exportListToSheets(listId) {
         const deals = Store.getListDeals(listId);
-        const header = ['Address', 'Owner Name', 'Owner Phone', 'Agent Name', 'Agent Email'].join('\t');
+        const header = ['Address', 'Owner Name', 'Owner Phone', 'Owner Email', 'Agent Name', 'Agent Phone'].join('\t');
         const rows = deals.map(d => {
             const owner = (d.contacts || []).find(c => c.role === 'seller' || c.role === 'owner') || {};
             const agent = (d.contacts || []).find(c => c.role === 'agent') || {};
-            return [d.propertyAddress || '', owner.name || '', owner.phone || '', agent.name || '', agent.email || ''].join('\t');
+            return [d.propertyAddress || '', owner.name || '', owner.phone || '', owner.email || '', agent.name || '', agent.phone || ''].join('\t');
         });
         const text = [header, ...rows].join('\n');
         navigator.clipboard.writeText(text).then(() => {

@@ -3598,6 +3598,66 @@ body {
 }
 
 /* ============================================
+   OUTREACH: List Detail — Missing Data
+   ============================================ */
+.missing-data-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 82, 82, 0.2);
+    border-radius: 8px;
+}
+
+.missing-data-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.missing-gap-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.missing-gap-tag.gap-critical {
+    background: rgba(255, 82, 82, 0.15);
+    color: var(--accent-red);
+}
+
+.missing-gap-tag.gap-warn {
+    background: rgba(255, 171, 64, 0.15);
+    color: var(--accent-orange);
+}
+
+.missing-gap-tag.gap-info {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+}
+
+/* Table cells — missing data highlight */
+.cell-missing {
+    color: var(--accent-red) !important;
+    background: rgba(255, 82, 82, 0.06);
+    font-weight: 500;
+}
+
+.cell-muted {
+    color: var(--text-muted);
+}
+
+.cell-address {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ============================================
    OUTREACH: List Status Pills
    ============================================ */
 .list-status-pill {
