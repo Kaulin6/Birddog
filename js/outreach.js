@@ -119,7 +119,7 @@ const Outreach = {
                         <div class="pipeline-stat"><h4>Dead</h4><div class="stat-num" style="color: var(--accent-red);">${s.dead || 0}</div></div>
                     </div>
                     <div class="list-card-actions">
-                        ${list.status === 'imported' || list.status === 'skip_tracing' || list.status === 'ready' ? `<button class="btn-primary start-cadences-btn" data-list-id="${list.id}">Start Cadences</button>` : ''}
+                        <button class="btn-primary start-cadences-btn" data-list-id="${list.id}">Start Cadences</button>
                         <button class="btn-secondary view-list-btn" data-list-id="${list.id}">View Deals</button>
                         <button class="btn-secondary paste-back-btn" data-list-id="${list.id}">Paste Back</button>
                         <button class="btn-ghost assign-va-btn" data-list-id="${list.id}">Assign VA</button>
@@ -142,13 +142,19 @@ const Outreach = {
         document.querySelectorAll('.start-cadences-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const listId = parseInt(e.currentTarget.dataset.listId);
-                const list = Store.getList(listId);
-                const skipCount = (list.stats || {}).skipTraced || 0;
-                if (skipCount === 0) {
-                    alert('No skip-traced leads to start cadences for. Paste back skip trace data first.');
+                const deals = Store.getListDeals(listId);
+                const withPhone = deals.filter(d => (d.contacts || []).some(c => c.phone));
+                const alreadyCadenced = deals.filter(d => Store.getCadenceByDeal(d.id));
+                const eligible = withPhone.length - alreadyCadenced.length;
+                if (withPhone.length === 0) {
+                    alert('No leads with phone numbers found. Import or paste back skip trace data first.');
                     return;
                 }
-                if (!confirm(`Start 7-touch cadences for ${skipCount} skip-traced leads?`)) return;
+                if (eligible <= 0) {
+                    alert('All leads with phone numbers already have active cadences.');
+                    return;
+                }
+                if (!confirm(`Start 7-touch cadences for ${eligible} leads with phone numbers?`)) return;
                 const started = Store.startCadencesForList(listId);
                 alert(`Started ${started} cadences.`);
                 this.renderListsView();
@@ -1178,10 +1184,19 @@ const Outreach = {
         document.getElementById('listPasteBackBtn').addEventListener('click', () => this.openPasteBackModal());
         document.getElementById('listStartCadencesBtn').addEventListener('click', () => {
             if (!this._currentListId) return;
-            const list = Store.getList(this._currentListId);
-            const skipCount = Store.getListDeals(this._currentListId).filter(d => d.skipTraced).length;
-            if (skipCount === 0) { alert('No skip-traced leads.'); return; }
-            if (!confirm(`Start cadences for ${skipCount} skip-traced leads?`)) return;
+            const deals = Store.getListDeals(this._currentListId);
+            const withPhone = deals.filter(d => (d.contacts || []).some(c => c.phone));
+            const alreadyCadenced = deals.filter(d => Store.getCadenceByDeal(d.id));
+            const eligible = withPhone.length - alreadyCadenced.length;
+            if (withPhone.length === 0) {
+                alert('No leads with phone numbers. Import or paste back skip trace data first.');
+                return;
+            }
+            if (eligible <= 0) {
+                alert('All leads with phone numbers already have cadences.');
+                return;
+            }
+            if (!confirm(`Start 7-touch cadences for ${eligible} leads with phone numbers?`)) return;
             const started = Store.startCadencesForList(this._currentListId);
             alert(`Started ${started} cadences.`);
             this.renderListDetail();

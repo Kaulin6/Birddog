@@ -1009,7 +1009,9 @@ export const Store = {
         const deals = this.getListDeals(listId);
         let started = 0;
         deals.forEach(deal => {
-            if (!deal.skipTraced) return;
+            // Allow cadence for any lead with at least one phone number
+            const hasPhone = (deal.contacts || []).some(c => c.phone);
+            if (!hasPhone && !deal.skipTraced) return;
             const existing = this.getCadenceByDeal(deal.id);
             if (existing) return;
             this.startCadence(deal.id, listId);
@@ -1044,7 +1046,7 @@ export const Store = {
                 contacts.push({ name: row.agentName, role: 'agent', phone: row.agentPhone || '', email: row.agentEmail || '' });
             }
 
-            const hasSkipData = !!(row.ownerName && row.ownerPhone);
+            const hasSkipData = !!((row.ownerName && row.ownerPhone) || (row.agentName && row.agentPhone));
 
             const dealData = {
                 id: Date.now() + imported,
