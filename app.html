@@ -40,6 +40,7 @@
                             <select id="dealFilterStatus">
                                 <option value="all">All Status</option>
                                 <option value="lead">Lead</option>
+                                <option value="interested">Interested</option>
                                 <option value="analyzed">Analyzed</option>
                                 <option value="offer_sent">Offer Sent</option>
                                 <option value="under_contract">Under Contract</option>
@@ -165,6 +166,7 @@
                         <h2>Deal Overview</h2>
                         <div class="status-actions" id="calcStatusActions">
                             <button class="btn-status" data-status="lead">Lead</button>
+                            <button class="btn-status" data-status="interested">Interested</button>
                             <button class="btn-status" data-status="analyzed">Analyzed</button>
                             <button class="btn-status" data-status="offer_sent">Offer Sent</button>
                             <button class="btn-status" data-status="under_contract">Under Contract</button>
@@ -612,6 +614,10 @@
                                 <h3>Leads</h3>
                                 <div class="kanban-list" id="col-lead"></div>
                             </div>
+                            <div class="kanban-column" data-status="interested">
+                                <h3>Interested</h3>
+                                <div class="kanban-list" id="col-interested"></div>
+                            </div>
                             <div class="kanban-column" data-status="analyzed">
                                 <h3>Analyzed</h3>
                                 <div class="kanban-list" id="col-analyzed"></div>
@@ -656,6 +662,7 @@
                         <div style="flex: 1;">
                             <div class="status-actions" id="statusActions">
                                 <button class="btn-status" data-status="lead">Lead</button>
+                                <button class="btn-status" data-status="interested">Interested</button>
                                 <button class="btn-status" data-status="analyzed">Analyzed</button>
                                 <button class="btn-status" data-status="offer_sent">Offer Sent</button>
                                 <button class="btn-status" data-status="under_contract">Under Contract</button>

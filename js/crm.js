@@ -588,7 +588,7 @@ export const CRM = {
         const deals = Store.getDeals();
         let queue = [];
 
-        const activeDeals = deals.filter(d => d.status === 'lead' || d.status === 'analyzed' || d.status === 'offer_sent');
+        const activeDeals = deals.filter(d => d.status === 'lead' || d.status === 'interested' || d.status === 'analyzed' || d.status === 'offer_sent');
 
         if (filterVal === 'fresh_leads') {
             const sevenDaysAgo = new Date();

@@ -16,6 +16,7 @@ export const Pipeline = {
         const deals = Store.getDeals();
         const columns = {
             'lead': document.getElementById('col-lead'),
+            'interested': document.getElementById('col-interested'),
             'analyzed': document.getElementById('col-analyzed'),
             'offer_sent': document.getElementById('col-offer_sent'),
             'under_contract': document.getElementById('col-under_contract'),

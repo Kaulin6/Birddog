@@ -296,6 +296,7 @@ export const Dashboard = {
         const analytics = Store.getAnalytics();
         const stageLabels = {
             lead: 'Lead',
+            interested: 'Interested',
             analyzed: 'Analyzed',
             offer_sent: 'Offer Sent',
             under_contract: 'Under Contract',

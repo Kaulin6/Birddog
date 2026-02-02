@@ -3005,6 +3005,7 @@ body {
    STATUS PILL COLORS
    ======================================== */
 .status-pill.status-lead { background: rgba(59, 158, 255, 0.15); color: var(--accent-blue); }
+.status-pill.status-interested { background: rgba(255, 214, 0, 0.18); color: #ffd600; }
 .status-pill.status-analyzed { background: rgba(178, 107, 245, 0.15); color: var(--accent-purple); }
 .status-pill.status-offer_sent { background: rgba(255, 171, 64, 0.15); color: var(--accent-orange); }
 .status-pill.status-under_contract { background: rgba(0, 242, 170, 0.15); color: var(--accent-green); }

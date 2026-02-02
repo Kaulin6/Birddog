@@ -844,7 +844,9 @@ const Outreach = {
         const notes = document.getElementById('quickLogNotes').value;
         const justLoggedId = this._currentCadenceId;
 
-        // Snapshot the due queue BEFORE logging (so we know who's next)
+        // Snapshot BEFORE logging: current step index and the due queue
+        const cadenceBefore = Store.getCadence(justLoggedId);
+        const stepBefore = cadenceBefore ? cadenceBefore.currentStep : -1;
         const dueQueueBefore = Store.getDueCadences().map(c => c.id);
 
         Store.logCadenceTouch(justLoggedId, { type, outcome, notes });
@@ -860,11 +862,12 @@ const Outreach = {
         // Don't auto-advance on exit outcomes
         if (outcome === 'interested' || outcome === 'not_interested') return;
 
-        // Check if this lead still has remaining touches for the current step
+        // Check if this lead still has remaining touches for the ORIGINAL step
         const updated = Store.getCadence(justLoggedId);
-        if (updated && updated.status === 'active') {
-            const currentStep = CADENCE_STEPS[updated.currentStep];
-            const doneTouches = (updated.touches || []).filter(t => t.step === updated.currentStep);
+        if (updated && updated.status === 'active' && updated.currentStep === stepBefore) {
+            // Step didn't advance — still has remaining touches on the same step
+            const currentStep = CADENCE_STEPS[stepBefore];
+            const doneTouches = (updated.touches || []).filter(t => t.step === stepBefore);
             const doneTypes = new Set(doneTouches.map(t => t.type));
             const remaining = currentStep.types.filter(t => !doneTypes.has(t));
 
@@ -875,7 +878,7 @@ const Outreach = {
             }
         }
 
-        // This lead's step is complete — move to next lead in queue
+        // Step completed (advanced) or cadence exited — move to next lead in queue
         const nextId = dueQueueBefore.find(id => id !== justLoggedId);
         if (nextId) {
             const next = Store.getCadence(nextId);

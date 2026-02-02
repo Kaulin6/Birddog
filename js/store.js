@@ -509,7 +509,7 @@ export const Store = {
     // ========================================
     getAnalytics() {
         const deals = this.getDeals();
-        const stages = ['lead', 'analyzed', 'offer_sent', 'under_contract', 'closed', 'dead'];
+        const stages = ['lead', 'interested', 'analyzed', 'offer_sent', 'under_contract', 'closed', 'dead'];
         const stageCounts = {};
         const stageValues = {};
 
@@ -524,6 +524,7 @@ export const Store = {
 
         // Conversion rates
         const totalLeadsEver = deals.length;
+        const interested = deals.filter(d => ['interested', 'analyzed', 'offer_sent', 'under_contract', 'closed'].includes(d.status)).length;
         const analyzed = deals.filter(d => ['analyzed', 'offer_sent', 'under_contract', 'closed'].includes(d.status)).length;
         const offersSent = deals.filter(d => ['offer_sent', 'under_contract', 'closed'].includes(d.status)).length;
         const underContract = deals.filter(d => ['under_contract', 'closed'].includes(d.status)).length;
@@ -532,6 +533,7 @@ export const Store = {
 
         const conversionFunnel = [
             { stage: 'Leads', count: totalLeadsEver, pct: 100 },
+            { stage: 'Interested', count: interested, pct: totalLeadsEver ? Math.round((interested / totalLeadsEver) * 100) : 0 },
             { stage: 'Analyzed', count: analyzed, pct: totalLeadsEver ? Math.round((analyzed / totalLeadsEver) * 100) : 0 },
             { stage: 'Offer Sent', count: offersSent, pct: totalLeadsEver ? Math.round((offersSent / totalLeadsEver) * 100) : 0 },
             { stage: 'Under Contract', count: underContract, pct: totalLeadsEver ? Math.round((underContract / totalLeadsEver) * 100) : 0 },
@@ -939,6 +941,7 @@ export const Store = {
                 cadence.status = 'responded';
                 cadence.exitReason = 'responded_interested';
                 cadence.completedAt = new Date().toISOString();
+                this.updateDealStatus(cadence.dealId, 'interested');
             } else if (touchData.outcome === 'not_interested') {
                 cadence.status = 'dead';
                 cadence.exitReason = 'marked_dead';
