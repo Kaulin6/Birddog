@@ -95,14 +95,36 @@ const Outreach = {
         container.innerHTML = lists.map(list => {
             const s = list.stats || {};
             const sourceLabel = SOURCE_LABELS[list.source] || list.source || 'Unknown';
-            const statusLabel = (list.status || 'imported').replace(/_/g, ' ');
             const createdDate = list.createdAt ? new Date(list.createdAt).toLocaleDateString() : '';
+
+            // Stage progress: imported → skip traced → in cadence
+            const total = s.total || 0;
+            const traced = s.skipTraced || 0;
+            const cadenced = s.cadenceStarted || 0;
+            const stageImported = total > 0;
+            const stageTraced = traced > 0;
+            const stageCadenced = cadenced > 0;
 
             return `
                 <div class="card list-card" data-list-id="${list.id}">
                     <div class="list-card-header">
                         <h3>${esc(list.name || 'Untitled List')}</h3>
-                        <span class="list-status-pill status-${list.status}">${esc(statusLabel)}</span>
+                        <div class="list-stage-tracker">
+                            <div class="list-stage ${stageImported ? 'stage-done' : ''}">
+                                <span class="list-stage-dot"></span>
+                                <span class="list-stage-label">Imported</span>
+                            </div>
+                            <div class="list-stage-line ${stageTraced ? 'line-done' : ''}"></div>
+                            <div class="list-stage ${stageTraced ? 'stage-done' : ''}">
+                                <span class="list-stage-dot"></span>
+                                <span class="list-stage-label">Skip Traced</span>
+                            </div>
+                            <div class="list-stage-line ${stageCadenced ? 'line-done' : ''}"></div>
+                            <div class="list-stage ${stageCadenced ? 'stage-done' : ''}">
+                                <span class="list-stage-dot"></span>
+                                <span class="list-stage-label">In Cadence</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="list-card-meta">
                         <span>Source: ${esc(sourceLabel)}</span>
@@ -112,9 +134,9 @@ const Outreach = {
                         <span>${createdDate}</span>
                     </div>
                     <div class="pipeline-stats-bar list-card-stats">
-                        <div class="pipeline-stat"><h4>Total</h4><div class="stat-num">${s.total || 0}</div></div>
-                        <div class="pipeline-stat"><h4>Skip Traced</h4><div class="stat-num">${s.skipTraced || 0}</div></div>
-                        <div class="pipeline-stat"><h4>In Cadence</h4><div class="stat-num">${s.cadenceStarted || 0}</div></div>
+                        <div class="pipeline-stat"><h4>Total</h4><div class="stat-num">${total}</div></div>
+                        <div class="pipeline-stat"><h4>Skip Traced</h4><div class="stat-num">${traced}</div></div>
+                        <div class="pipeline-stat"><h4>In Cadence</h4><div class="stat-num">${cadenced}</div></div>
                         <div class="pipeline-stat"><h4>Interested</h4><div class="stat-num" style="color: var(--accent-green);">${s.interested || 0}</div></div>
                         <div class="pipeline-stat"><h4>Dead</h4><div class="stat-num" style="color: var(--accent-red);">${s.dead || 0}</div></div>
                     </div>
