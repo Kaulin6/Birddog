@@ -699,14 +699,18 @@ const Outreach = {
                 break;
         }
 
-        // Search
+        // Search — matches address, contact name, phone, email, and list name
         if (searchVal) {
             cadences = cadences.filter(c => {
                 const deal = Store.getDeal(c.dealId);
                 if (!deal) return false;
                 const addr = (deal.propertyAddress || '').toLowerCase();
-                const name = (deal.contacts || []).map(ct => (ct.name || '').toLowerCase()).join(' ');
-                return addr.includes(searchVal) || name.includes(searchVal);
+                const contactStrs = (deal.contacts || []).map(ct =>
+                    [ct.name, ct.phone, ct.email].filter(Boolean).join(' ').toLowerCase()
+                ).join(' ');
+                const list = c.listId ? Store.getList(c.listId) : null;
+                const listName = list ? (list.name || '').toLowerCase() : '';
+                return addr.includes(searchVal) || contactStrs.includes(searchVal) || listName.includes(searchVal);
             });
         }
 
@@ -737,6 +741,21 @@ const Outreach = {
         this.bindCadenceEvents();
     },
 
+    _roleLabel(contact) {
+        if (!contact) return '';
+        const r = contact.role || '';
+        if (r === 'agent') return 'Agent';
+        if (r === 'seller' || r === 'owner') return 'Owner';
+        return r || 'Contact';
+    },
+
+    _daysOverdue(nextTouchDate, today) {
+        if (!nextTouchDate || nextTouchDate >= today) return 0;
+        const d1 = new Date(nextTouchDate + 'T00:00:00');
+        const d2 = new Date(today + 'T00:00:00');
+        return Math.floor((d2 - d1) / 86400000);
+    },
+
     renderCadenceCard(cadence, deal, today) {
         const contacts = deal.contacts || [];
         const owner = contacts.find(c => c.role === 'seller' || c.role === 'owner');
@@ -746,9 +765,23 @@ const Outreach = {
 
         const isOverdue = cadence.nextTouchDate < today;
         const isDueToday = cadence.nextTouchDate === today;
+        const daysOver = this._daysOverdue(cadence.nextTouchDate, today);
         let urgencyClass = '';
         if (isOverdue) urgencyClass = 'priority-overdue';
         else if (isDueToday) urgencyClass = 'priority-today';
+
+        // Due date display
+        let dueDateDisplay = '';
+        if (cadence.status === 'active') {
+            if (isOverdue) {
+                dueDateDisplay = `<span class="cadence-due-badge overdue">${daysOver}d overdue</span>`;
+            } else if (isDueToday) {
+                dueDateDisplay = `<span class="cadence-due-badge due-today">Due today</span>`;
+            } else {
+                const d = new Date(cadence.nextTouchDate + 'T00:00:00');
+                dueDateDisplay = `<span class="cadence-due-badge upcoming">Due ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>`;
+            }
+        }
 
         // Step progress dots
         const dots = CADENCE_STEPS.map((s, i) => {
@@ -781,35 +814,48 @@ const Outreach = {
             actions = `<span class="list-status-pill status-${cadence.status === 'responded' ? 'active' : 'completed'}">${exitLabel}</span>`;
         }
 
-        const roleLabel = primary
-            ? (primary.role === 'agent' ? 'Agent' : primary.role === 'seller' || primary.role === 'owner' ? 'Owner' : primary.role || 'Contact')
-            : '';
-        const phoneBlock = primary && primary.phone
-            ? `<div class="cadence-card-phone-block">
-                    <span class="cadence-card-phone">${esc(primary.phone)}</span>
-                    <span class="cadence-card-contact-role">${esc(primary.name)} &middot; ${roleLabel}</span>
-               </div>`
-            : `<div class="cadence-card-phone-block">
-                    <span class="cadence-card-phone" style="color: var(--text-muted); font-size: 0.85rem;">No phone</span>
-                    <span class="cadence-card-contact-role">${primary ? esc(primary.name) : 'No contact'}</span>
-               </div>`;
+        // Build contacts list — show ALL contacts, not just primary
+        const contactRows = contacts.map(ct => {
+            const role = this._roleLabel(ct);
+            const phone = ct.phone
+                ? `<a href="tel:${esc(ct.phone)}" class="cadence-contact-phone">${esc(ct.phone)}</a>`
+                : '<span class="cadence-contact-no-phone">No phone</span>';
+            const email = ct.email ? `<span class="cadence-contact-email">${esc(ct.email)}</span>` : '';
+            return `
+                <div class="cadence-contact-row">
+                    <span class="cadence-contact-name">${esc(ct.name || 'Unknown')}</span>
+                    <span class="cadence-contact-role-tag">${role}</span>
+                    ${phone}
+                    ${email}
+                </div>
+            `;
+        }).join('');
+
+        const contactsBlock = contacts.length > 0
+            ? `<div class="cadence-contacts-list">${contactRows}</div>`
+            : '<div class="cadence-contacts-list"><span style="color: var(--text-muted); font-size: 0.8rem;">No contacts</span></div>';
 
         return `
-            <div class="card outreach-card ${urgencyClass}">
-                <div style="flex: 1; min-width: 0;">
-                    <div class="cadence-card-top">
-                        <h3>${esc(deal.propertyAddress)}</h3>
-                        ${phoneBlock}
+            <div class="card outreach-card ${urgencyClass}" data-cadence-id="${cadence.id}">
+                <div class="cadence-card-body">
+                    <div class="cadence-card-header">
+                        <div class="cadence-card-title-row">
+                            <h3 class="cadence-card-address" data-deal-id="${deal.id}">${esc(deal.propertyAddress)}</h3>
+                            ${dueDateDisplay}
+                        </div>
+                        <div class="cadence-card-meta">
+                            <span class="cadence-step-label">${step.label}</span>
+                            ${list ? `<span class="list-pill">${esc(list.name)}</span>` : ''}
+                            ${list && list.market ? `<span class="cadence-market-tag">${esc(list.market)}</span>` : ''}
+                        </div>
                     </div>
-                    <div class="card-info">
-                        ${step.label}
-                        ${list ? ` &bull; <span class="list-pill">${esc(list.name)}</span>` : ''}
-                        ${isOverdue ? ' &bull; <span style="color: var(--accent-red); font-weight: 600;">OVERDUE</span>' : ''}
+                    ${contactsBlock}
+                    <div class="cadence-card-footer">
+                        <div class="cadence-progress">${dots}</div>
+                        <div class="cadence-card-actions">
+                            ${actions}
+                        </div>
                     </div>
-                    <div class="cadence-progress">${dots}</div>
-                </div>
-                <div class="card-actions">
-                    ${actions}
                 </div>
             </div>
         `;
@@ -830,6 +876,14 @@ const Outreach = {
                 if (!confirm('Exit this cadence? The lead will stop receiving touches.')) return;
                 Store.exitCadence(cadenceId, 'manual');
                 this.renderCadenceQueue();
+            });
+        });
+
+        // Navigate to deal in main app
+        document.querySelectorAll('.cadence-card-address').forEach(el => {
+            el.addEventListener('click', () => {
+                const dealId = el.dataset.dealId;
+                if (dealId) window.location.href = `app.html?deal=${dealId}`;
             });
         });
     },

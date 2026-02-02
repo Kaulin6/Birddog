@@ -3356,16 +3356,6 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-.outreach-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    margin-bottom: 0;
-    border-left: 3px solid transparent;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
 .outreach-card:hover {
     box-shadow: var(--shadow-card);
 }
@@ -3375,25 +3365,6 @@ body {
 .outreach-card.priority-today { border-left-color: var(--accent-orange); }
 .outreach-card.priority-stale { border-left-color: var(--accent-orange); }
 .outreach-card.priority-upcoming { border-left-color: var(--accent-purple); }
-
-.outreach-card h3 {
-    margin: 0 0 4px 0;
-    font-size: 1rem;
-    border: none;
-    padding: 0;
-}
-
-.outreach-card .card-info {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-}
-
-.outreach-card .card-actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-shrink: 0;
-}
 
 .urgency-badge.outreach-priority-new {
     background: rgba(59, 158, 255, 0.15);
@@ -3783,39 +3754,164 @@ body {
 /* ============================================
    OUTREACH: Cadence Card — Top Row (Address + Phone)
    ============================================ */
-.cadence-card-top {
+/* Cadence Card — Redesigned Layout */
+.outreach-card {
+    padding: 0;
+    margin-bottom: 0;
+    border-left: 3px solid transparent;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cadence-card-body {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    margin-bottom: 4px;
+    gap: 10px;
+    padding: 14px 16px;
+    width: 100%;
 }
 
-.cadence-card-top h3 {
+.cadence-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cadence-card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.cadence-card-address {
     margin: 0;
     font-size: 1rem;
+    font-weight: 600;
     border: none;
     padding: 0;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
 }
 
-.cadence-card-phone-block {
+.cadence-card-address:hover {
+    color: var(--accent-blue);
+}
+
+.cadence-card-meta {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
 }
 
-.cadence-card-phone {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--accent-blue);
-    letter-spacing: 0.5px;
-    font-variant-numeric: tabular-nums;
+.cadence-step-label {
+    font-weight: 500;
 }
 
-.cadence-card-contact-role {
-    font-size: 0.7rem;
+.cadence-market-tag {
     color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Due date badges */
+.cadence-due-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.cadence-due-badge.overdue {
+    background: rgba(255, 82, 82, 0.15);
+    color: var(--accent-red);
+}
+
+.cadence-due-badge.due-today {
+    background: rgba(255, 171, 64, 0.15);
+    color: var(--accent-orange);
+}
+
+.cadence-due-badge.upcoming {
+    background: rgba(178, 107, 245, 0.1);
+    color: var(--accent-purple);
+}
+
+/* Contacts list on card */
+.cadence-contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cadence-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.cadence-contact-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.cadence-contact-role-tag {
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+}
+
+.cadence-contact-phone {
+    color: var(--accent-blue);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+}
+
+.cadence-contact-phone:hover {
+    text-decoration: underline;
+}
+
+.cadence-contact-no-phone {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.cadence-contact-email {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Card footer with progress + actions */
+.cadence-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cadence-card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 /* ============================================
