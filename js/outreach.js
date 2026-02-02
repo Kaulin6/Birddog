@@ -809,10 +809,12 @@ const Outreach = {
         allDeals.forEach(d => { dealMap[d.id] = d; dealMap[String(d.id)] = d; });
 
         // Pair cadences with their deals, skip orphans
-        let paired = allCadences.map(c => {
+        const allPaired = allCadences.map(c => {
             const deal = dealMap[c.dealId] || dealMap[String(c.dealId)];
             return deal ? { cadence: c, deal } : null;
-        }).filter(Boolean);
+        });
+        const orphanCount = allPaired.filter(p => !p).length;
+        let paired = allPaired.filter(Boolean);
 
         // Filter
         switch (filterVal) {
@@ -874,7 +876,8 @@ const Outreach = {
 
         // Count summary for the filter bar
         const filterLabel = filterVal.replace(/_/g, ' ');
-        const countText = `<div class="cadence-queue-count">${paired.length} result${paired.length !== 1 ? 's' : ''} for "${filterLabel}"${searchVal ? ` matching "${searchVal}"` : ''}</div>`;
+        const orphanNote = orphanCount > 0 ? ` (${orphanCount} orphaned)` : '';
+        const countText = `<div class="cadence-queue-count">Showing ${paired.length} of ${allCadences.length} cadences${orphanNote}${searchVal ? ` matching "${searchVal}"` : ''}</div>`;
 
         if (paired.length === 0) {
             const activeCount = allCadences.filter(c => c.status === 'active').length;

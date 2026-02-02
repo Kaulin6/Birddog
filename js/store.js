@@ -21,6 +21,9 @@ export const CADENCE_STEPS = [
 ];
 
 export const Store = {
+    // Loose ID comparison — handles number/string mismatches after JSON round-trip
+    _idEq(a, b) { return a == b; },
+
     // ========================================
     // DEALS
     // ========================================
@@ -34,12 +37,12 @@ export const Store = {
 
     getDeal(id) {
         const deals = this.getDeals();
-        return deals.find(d => d.id === id);
+        return deals.find(d => this._idEq(d.id, id));
     },
 
     saveDeal(dealData) {
         const deals = this.getDeals();
-        const existingIndex = deals.findIndex(d => d.id === dealData.id);
+        const existingIndex = deals.findIndex(d => this._idEq(d.id, dealData.id));
 
         if (!dealData.id) {
             dealData.id = Date.now();
@@ -71,13 +74,13 @@ export const Store = {
     },
 
     deleteDeal(id) {
-        const deals = this.getDeals().filter(d => d.id !== id);
+        const deals = this.getDeals().filter(d => !this._idEq(d.id, id));
         this.saveDeals(deals);
     },
 
     updateDealStatus(id, newStatus) {
         const deals = this.getDeals();
-        const deal = deals.find(d => d.id === id);
+        const deal = deals.find(d => this._idEq(d.id, id));
         if (deal) {
             deal.status = newStatus;
             this.saveDeals(deals);
@@ -88,7 +91,7 @@ export const Store = {
 
     addContactToDeal(dealId, contact) {
         const deals = this.getDeals();
-        const deal = deals.find(d => d.id === dealId);
+        const deal = deals.find(d => this._idEq(d.id, dealId));
         if (deal) {
             if (!deal.contacts) deal.contacts = [];
             deal.contacts.push(contact);
@@ -100,7 +103,7 @@ export const Store = {
 
     addLogToDeal(dealId, logEntry) {
         const deals = this.getDeals();
-        const deal = deals.find(d => d.id === dealId);
+        const deal = deals.find(d => this._idEq(d.id, dealId));
         if (deal) {
             if (!deal.timeline) deal.timeline = [];
             deal.timeline.unshift({
@@ -145,12 +148,12 @@ export const Store = {
     },
 
     getContact(id) {
-        return this.getContacts().find(c => c.id === id);
+        return this.getContacts().find(c => this._idEq(c.id, id));
     },
 
     saveContact(contactData) {
         const contacts = this.getContacts();
-        const existingIndex = contacts.findIndex(c => c.id === contactData.id);
+        const existingIndex = contacts.findIndex(c => this._idEq(c.id, contactData.id));
 
         if (!contactData.id) {
             contactData.id = Date.now();
@@ -171,7 +174,7 @@ export const Store = {
     },
 
     deleteGlobalContact(id) {
-        const contacts = this.getContacts().filter(c => c.id !== id);
+        const contacts = this.getContacts().filter(c => !this._idEq(c.id, id));
         this.saveContacts(contacts);
     },
 
@@ -189,7 +192,7 @@ export const Store = {
 
     linkContactToDeal(contactId, dealId) {
         const contacts = this.getContacts();
-        const contact = contacts.find(c => c.id === contactId);
+        const contact = contacts.find(c => this._idEq(c.id, contactId));
         if (contact) {
             if (!contact.dealIds) contact.dealIds = [];
             if (!contact.dealIds.includes(dealId)) {
@@ -257,7 +260,7 @@ export const Store = {
 
     saveTask(taskData) {
         const tasks = this.getTasks();
-        const existingIndex = tasks.findIndex(t => t.id === taskData.id);
+        const existingIndex = tasks.findIndex(t => this._idEq(t.id, taskData.id));
 
         if (!taskData.id) {
             taskData.id = Date.now();
@@ -279,7 +282,7 @@ export const Store = {
 
     completeTask(id) {
         const tasks = this.getTasks();
-        const task = tasks.find(t => t.id === id);
+        const task = tasks.find(t => this._idEq(t.id, id));
         if (task) {
             task.completed = true;
             task.completedAt = new Date().toISOString();
@@ -290,12 +293,12 @@ export const Store = {
     },
 
     deleteTask(id) {
-        const tasks = this.getTasks().filter(t => t.id !== id);
+        const tasks = this.getTasks().filter(t => !this._idEq(t.id, id));
         this.saveTasks(tasks);
     },
 
     getTasksByDeal(dealId) {
-        return this.getTasks().filter(t => t.dealId === dealId && !t.completed);
+        return this.getTasks().filter(t => this._idEq(t.dealId, dealId) && !t.completed);
     },
 
     getOverdueTasks() {
@@ -605,7 +608,7 @@ export const Store = {
 
     saveTemplate(templateData) {
         const templates = this.getTemplates();
-        const existingIndex = templates.findIndex(t => t.id === templateData.id);
+        const existingIndex = templates.findIndex(t => this._idEq(t.id, templateData.id));
 
         if (!templateData.id) templateData.id = Date.now();
 
@@ -620,7 +623,7 @@ export const Store = {
     },
 
     deleteTemplate(id) {
-        const templates = this.getTemplates().filter(t => t.id !== id);
+        const templates = this.getTemplates().filter(t => !this._idEq(t.id, id));
         this.saveTemplates(templates);
     },
 
@@ -721,7 +724,7 @@ export const Store = {
                 const daysSinceContact = lastContact ? Math.floor((now - lastContact) / 86400000) : null;
 
                 // Follow-up date from tasks
-                const dealTask = tasks.find(t => t.dealId === deal.id && t.dueDate && !t.completed);
+                const dealTask = tasks.find(t => this._idEq(t.dealId, deal.id) && t.dueDate && !t.completed);
                 const followUpDate = dealTask ? new Date(dealTask.dueDate) : null;
 
                 const isOverdue = followUpDate && followUpDate < today;
@@ -824,7 +827,7 @@ export const Store = {
     },
 
     getList(id) {
-        return this.getLists().find(l => l.id === id);
+        return this.getLists().find(l => this._idEq(l.id, id));
     },
 
     saveList(listData) {
@@ -834,28 +837,28 @@ export const Store = {
         if (!listData.status) listData.status = 'imported';
         if (!listData.dealIds) listData.dealIds = [];
         if (!listData.stats) listData.stats = { total: 0, skipTraced: 0, cadenceStarted: 0, cadenceCompleted: 0, interested: 0, dead: 0 };
-        const idx = lists.findIndex(l => l.id === listData.id);
+        const idx = lists.findIndex(l => this._idEq(l.id, listData.id));
         if (idx >= 0) { lists[idx] = listData; } else { lists.unshift(listData); }
         this.saveLists(lists);
         return listData;
     },
 
     deleteList(id) {
-        this.saveLists(this.getLists().filter(l => l.id !== id));
+        this.saveLists(this.getLists().filter(l => !this._idEq(l.id, id)));
     },
 
     getListDeals(listId) {
         const list = this.getList(listId);
         if (!list) return [];
         const deals = this.getDeals();
-        return list.dealIds.map(did => deals.find(d => d.id === did)).filter(Boolean);
+        return list.dealIds.map(did => deals.find(d => this._idEq(d.id, did))).filter(Boolean);
     },
 
     recalcListStats(listId) {
         const list = this.getList(listId);
         if (!list) return;
         const deals = this.getListDeals(listId);
-        const cadences = this.getCadences().filter(c => c.listId === listId);
+        const cadences = this.getCadences().filter(c => this._idEq(c.listId, listId));
         list.stats = {
             total: deals.length,
             skipTraced: deals.filter(d => d.skipTraced).length,
@@ -880,11 +883,11 @@ export const Store = {
     },
 
     getCadence(id) {
-        return this.getCadences().find(c => c.id === id);
+        return this.getCadences().find(c => this._idEq(c.id, id));
     },
 
     getCadenceByDeal(dealId) {
-        return this.getCadences().find(c => c.dealId === dealId && c.status === 'active');
+        return this.getCadences().find(c => this._idEq(c.dealId, dealId) && c.status === 'active');
     },
 
     saveCadence(cadenceData) {
@@ -892,7 +895,7 @@ export const Store = {
         if (!cadenceData.id) cadenceData.id = Date.now();
         if (!cadenceData.touches) cadenceData.touches = [];
         if (!cadenceData.status) cadenceData.status = 'active';
-        const idx = cadences.findIndex(c => c.id === cadenceData.id);
+        const idx = cadences.findIndex(c => this._idEq(c.id, cadenceData.id));
         if (idx >= 0) { cadences[idx] = cadenceData; } else { cadences.unshift(cadenceData); }
         this.saveCadences(cadences);
         return cadenceData;
@@ -1128,7 +1131,7 @@ export const Store = {
 
         // Per-list breakdown
         const listBreakdowns = lists.map(list => {
-            const lc = cadences.filter(c => c.listId === list.id);
+            const lc = cadences.filter(c => this._idEq(c.listId, list.id));
             const ld = this.getListDeals(list.id);
             return {
                 listId: list.id, listName: list.name, source: list.source,
