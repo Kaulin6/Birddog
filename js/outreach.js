@@ -760,9 +760,9 @@ const Outreach = {
         const cadences = Store.getCadences();
         const today = new Date().toISOString().split('T')[0];
 
-        const overdue = cadences.filter(c => c.status === 'active' && c.nextTouchDate < today).length;
+        const overdue = cadences.filter(c => c.status === 'active' && c.nextTouchDate && c.nextTouchDate < today).length;
         const dueToday = cadences.filter(c => c.status === 'active' && c.nextTouchDate === today).length;
-        const upcoming = cadences.filter(c => c.status === 'active' && c.nextTouchDate > today).length;
+        const upcoming = cadences.filter(c => c.status === 'active' && (!c.nextTouchDate || c.nextTouchDate > today)).length;
         const active = cadences.filter(c => c.status === 'active').length;
         const completed = cadences.filter(c => c.status === 'completed').length;
         const responded = cadences.filter(c => c.status === 'responded').length;
@@ -809,13 +809,13 @@ const Outreach = {
                 cadences = cadences.filter(c => c.status === 'active');
                 break;
             case 'due_today':
-                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate <= today);
+                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate === today);
                 break;
             case 'overdue':
-                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate < today);
+                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate && c.nextTouchDate < today);
                 break;
             case 'upcoming':
-                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate > today);
+                cadences = cadences.filter(c => c.status === 'active' && (!c.nextTouchDate || c.nextTouchDate > today));
                 break;
             case 'completed':
                 cadences = cadences.filter(c => c.status === 'completed' || c.status === 'dead');
@@ -913,7 +913,7 @@ const Outreach = {
         const step = CADENCE_STEPS[cadence.currentStep] || CADENCE_STEPS[0];
         const list = cadence.listId ? Store.getList(cadence.listId) : null;
 
-        const isOverdue = cadence.nextTouchDate < today;
+        const isOverdue = cadence.nextTouchDate && cadence.nextTouchDate < today;
         const isDueToday = cadence.nextTouchDate === today;
         const daysOver = this._daysOverdue(cadence.nextTouchDate, today);
         let urgencyClass = '';
