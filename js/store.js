@@ -1049,6 +1049,7 @@ export const Store = {
             const dealData = {
                 id: Date.now() + imported,
                 propertyAddress: address,
+                mailingAddress: row.mailingAddress || '',
                 status: 'lead',
                 contacts,
                 timeline: [{ type: 'system', text: 'Imported via lead list', timestamp: new Date().toISOString() }],
@@ -1056,7 +1057,14 @@ export const Store = {
                 source: row.source || 'import',
                 listId: listId || null,
                 skipTraced: hasSkipData,
-                cadenceId: null
+                cadenceId: null,
+                propertyType: row.propertyType || '',
+                beds: row.beds || '',
+                baths: row.baths || '',
+                sqft: row.sqft || '',
+                lotSize: row.lotSize || '',
+                yearBuilt: row.yearBuilt || '',
+                dealSummary: row.notes || ''
             };
 
             deals.unshift(dealData);

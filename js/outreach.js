@@ -106,6 +106,8 @@ const Outreach = {
                     </div>
                     <div class="list-card-meta">
                         <span>Source: ${esc(sourceLabel)}</span>
+                        ${list.listType ? `<span>Type: ${list.listType === 'owner' ? 'Owner' : list.listType === 'agent' ? 'Agent' : 'Mixed'}</span>` : ''}
+                        ${list.market ? `<span>Market: ${esc(list.market)}</span>` : ''}
                         ${list.assignedTo ? `<span>VA: ${esc(list.assignedTo)}</span>` : ''}
                         <span>${createdDate}</span>
                     </div>
@@ -243,7 +245,9 @@ const Outreach = {
         document.getElementById('importModal').classList.remove('hidden');
         document.getElementById('importListName').value = '';
         document.getElementById('importSource').value = 'driving_dollars';
+        document.getElementById('importListType').value = 'owner';
         document.getElementById('importAssignVA').value = '';
+        document.getElementById('importMarket').value = '';
         document.getElementById('importData').value = '';
         document.getElementById('importColMap').classList.add('hidden');
         document.getElementById('importPreview').classList.add('hidden');
@@ -255,13 +259,36 @@ const Outreach = {
         const lines = rawText.trim().split('\n').filter(l => l.trim());
         if (lines.length === 0) return { headers: [], rows: [] };
 
-        const allRows = lines.map(line => line.split('\t').map(c => c.trim()));
+        // Detect delimiter: if tabs exist use tabs, else use commas
+        const hasTab = lines[0].includes('\t');
+        const delimiter = hasTab ? '\t' : ',';
+
+        const allRows = lines.map(line => {
+            if (delimiter === ',') {
+                // Simple CSV parse handling quoted fields
+                const row = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const ch = line[i];
+                    if (ch === '"') { inQuotes = !inQuotes; continue; }
+                    if (ch === ',' && !inQuotes) { row.push(current.trim()); current = ''; continue; }
+                    current += ch;
+                }
+                row.push(current.trim());
+                return row;
+            }
+            return line.split('\t').map(c => c.trim());
+        });
+
         const firstRow = allRows[0];
         const isHeader = firstRow.some(cell => {
             const lower = cell.toLowerCase();
             return lower.includes('address') || lower.includes('name') || lower.includes('phone')
                 || lower.includes('email') || lower.includes('owner') || lower.includes('agent')
-                || lower.includes('property') || lower.includes('street');
+                || lower.includes('property') || lower.includes('street') || lower.includes('mail')
+                || lower.includes('bed') || lower.includes('bath') || lower.includes('sqft')
+                || lower.includes('type') || lower.includes('lot') || lower.includes('zip');
         });
 
         if (isHeader) {
@@ -273,13 +300,39 @@ const Outreach = {
 
     _renderColMapping(containerId, headers, prefix) {
         const container = document.getElementById(containerId);
+        const listType = document.getElementById('importListType')?.value || 'owner';
+
+        // Build fields based on list type
         const fields = [
-            { key: 'address', label: 'Address', required: true },
-            { key: 'ownerName', label: 'Owner Name' },
-            { key: 'ownerPhone', label: 'Owner Phone' },
-            { key: 'agentName', label: 'Agent Name' },
-            { key: 'agentEmail', label: 'Agent Email' }
+            { key: 'address', label: 'Property Address', required: true },
+            { key: 'mailingAddress', label: 'Mailing Address' }
         ];
+
+        if (listType === 'owner' || listType === 'mixed') {
+            fields.push({ key: 'ownerName', label: 'Owner/Seller Name' });
+            fields.push({ key: 'ownerPhone', label: 'Owner Phone' });
+            fields.push({ key: 'ownerEmail', label: 'Owner Email' });
+        }
+        if (listType === 'agent' || listType === 'mixed') {
+            fields.push({ key: 'agentName', label: 'Agent Name' });
+            fields.push({ key: 'agentPhone', label: 'Agent Phone' });
+            fields.push({ key: 'agentEmail', label: 'Agent Email' });
+        }
+        if (listType === 'agent') {
+            // For agent lists, also allow mapping a generic contact name/phone
+            fields.push({ key: 'ownerName', label: 'Property Owner (if available)' });
+            fields.push({ key: 'ownerPhone', label: 'Owner Phone (if available)' });
+        }
+
+        fields.push(
+            { key: 'propertyType', label: 'Property Type' },
+            { key: 'beds', label: 'Beds' },
+            { key: 'baths', label: 'Baths' },
+            { key: 'sqft', label: 'Sq Ft' },
+            { key: 'lotSize', label: 'Lot Size' },
+            { key: 'yearBuilt', label: 'Year Built' },
+            { key: 'notes', label: 'Notes' }
+        );
 
         container.innerHTML = `
             <h4 style="margin-bottom: 8px;">Map Columns</h4>
@@ -287,11 +340,29 @@ const Outreach = {
                 ${fields.map(f => {
                     const autoIdx = headers.findIndex(h => {
                         const lower = h.toLowerCase();
-                        if (f.key === 'address') return lower.includes('address') || lower.includes('property') || lower.includes('street');
-                        if (f.key === 'ownerName') return (lower.includes('owner') && lower.includes('name')) || lower === 'owner' || lower === 'name' || lower === 'seller';
-                        if (f.key === 'ownerPhone') return lower.includes('phone') || lower.includes('cell') || lower.includes('mobile');
+                        if (f.key === 'address') return (lower.includes('property') && lower.includes('address')) || lower === 'address' || lower.includes('street address') || (lower.includes('address') && !lower.includes('mail'));
+                        if (f.key === 'mailingAddress') return lower.includes('mail') && lower.includes('address');
+                        if (f.key === 'ownerName') return (lower.includes('owner') && lower.includes('name')) || lower === 'owner' || lower === 'owner name' || lower === 'seller';
+                        if (f.key === 'ownerPhone') return (lower.includes('owner') || lower.includes('seller')) && (lower.includes('phone') || lower.includes('cell'));
+                        if (f.key === 'ownerEmail') return (lower.includes('owner') || lower.includes('seller')) && lower.includes('email');
                         if (f.key === 'agentName') return lower.includes('agent') && (lower.includes('name') || lower === 'agent');
-                        if (f.key === 'agentEmail') return lower.includes('email') || lower.includes('e-mail');
+                        if (f.key === 'agentPhone') return lower.includes('agent') && lower.includes('phone');
+                        if (f.key === 'agentEmail') return lower.includes('agent') && lower.includes('email');
+                        if (f.key === 'propertyType') return lower.includes('type') || lower.includes('prop type') || lower === 'property type';
+                        if (f.key === 'beds') return lower.includes('bed') || lower === 'br';
+                        if (f.key === 'baths') return lower.includes('bath') || lower === 'ba';
+                        if (f.key === 'sqft') return lower.includes('sqft') || lower.includes('sq ft') || lower.includes('square');
+                        if (f.key === 'lotSize') return lower.includes('lot');
+                        if (f.key === 'yearBuilt') return lower.includes('year') && lower.includes('built');
+                        if (f.key === 'notes') return lower.includes('note') || lower.includes('comment');
+                        return false;
+                    });
+                    // Fallback: for phone/email without owner/agent prefix, match generic
+                    const fallbackIdx = autoIdx >= 0 ? autoIdx : headers.findIndex(h => {
+                        const lower = h.toLowerCase();
+                        if (f.key === 'ownerPhone') return lower.includes('phone') || lower.includes('cell') || lower.includes('mobile');
+                        if (f.key === 'ownerEmail') return lower === 'email' || lower === 'e-mail';
+                        if (f.key === 'address') return lower.includes('address');
                         return false;
                     });
                     return `
@@ -299,7 +370,7 @@ const Outreach = {
                             <label style="font-size: 0.8rem;">${f.label}${f.required ? ' *' : ''}</label>
                             <select id="${prefix}_${f.key}" class="filter-select" style="font-size: 0.8rem;">
                                 <option value="-1">-- Skip --</option>
-                                ${headers.map((h, i) => `<option value="${i}" ${i === autoIdx ? 'selected' : ''}>${esc(h)}</option>`).join('')}
+                                ${headers.map((h, i) => `<option value="${i}" ${i === fallbackIdx ? 'selected' : ''}>${esc(h)}</option>`).join('')}
                             </select>
                         </div>
                     `;
@@ -359,32 +430,46 @@ const Outreach = {
 
         const listName = document.getElementById('importListName').value.trim() || `List ${new Date().toLocaleDateString()}`;
         const source = document.getElementById('importSource').value;
+        const listType = document.getElementById('importListType').value;
         const assignVA = document.getElementById('importAssignVA').value.trim();
+        const market = document.getElementById('importMarket').value.trim();
 
         const addrCol = this._getColVal('colMap', 'address');
         if (addrCol < 0) { alert('Please map the Address column.'); return; }
 
-        const ownerNameCol = this._getColVal('colMap', 'ownerName');
-        const ownerPhoneCol = this._getColVal('colMap', 'ownerPhone');
-        const agentNameCol = this._getColVal('colMap', 'agentName');
-        const agentEmailCol = this._getColVal('colMap', 'agentEmail');
+        const col = (key) => this._getColVal('colMap', key);
 
         // Create the list first
         const list = Store.saveList({
             name: listName,
             source,
+            listType,
+            market: market || '',
             assignedTo: assignVA || '',
             status: assignVA ? 'skip_tracing' : 'imported'
         });
 
-        const rows = this._parsedImport.map(r => ({
-            address: r[addrCol] || '',
-            ownerName: ownerNameCol >= 0 ? (r[ownerNameCol] || '') : '',
-            ownerPhone: ownerPhoneCol >= 0 ? (r[ownerPhoneCol] || '') : '',
-            agentName: agentNameCol >= 0 ? (r[agentNameCol] || '') : '',
-            agentEmail: agentEmailCol >= 0 ? (r[agentEmailCol] || '') : '',
-            source: SOURCE_LABELS[source] || source
-        }));
+        const rows = this._parsedImport.map(r => {
+            const val = (idx) => idx >= 0 ? (r[idx] || '') : '';
+            return {
+                address: r[addrCol] || '',
+                mailingAddress: val(col('mailingAddress')),
+                ownerName: val(col('ownerName')),
+                ownerPhone: val(col('ownerPhone')),
+                ownerEmail: val(col('ownerEmail')),
+                agentName: val(col('agentName')),
+                agentPhone: val(col('agentPhone')),
+                agentEmail: val(col('agentEmail')),
+                propertyType: val(col('propertyType')),
+                beds: val(col('beds')),
+                baths: val(col('baths')),
+                sqft: val(col('sqft')),
+                lotSize: val(col('lotSize')),
+                yearBuilt: val(col('yearBuilt')),
+                notes: val(col('notes')),
+                source: SOURCE_LABELS[source] || source
+            };
+        });
 
         const result = Store.addDealsToList(rows, list.id);
         alert(`Imported ${result.imported} leads into "${listName}". ${result.skipped} skipped (duplicate/empty).`);
@@ -1040,6 +1125,31 @@ const Outreach = {
         document.getElementById('importCancelBtn').addEventListener('click', () => {
             document.getElementById('importModal').classList.add('hidden');
             this._parsedImport = null;
+        });
+        document.getElementById('importListType').addEventListener('change', () => {
+            // Re-render column mapping if it's already visible
+            const colMap = document.getElementById('importColMap');
+            if (colMap && !colMap.classList.contains('hidden') && this._parsedImport) {
+                const rawText = document.getElementById('importData').value;
+                const { headers } = this.parseSheetData(rawText);
+                this._renderColMapping('importColMap', headers, 'colMap');
+            }
+        });
+        document.getElementById('importFileUpload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                document.getElementById('importData').value = ev.target.result;
+                // Auto-fill list name from filename
+                const nameInput = document.getElementById('importListName');
+                if (!nameInput.value.trim()) {
+                    nameInput.value = file.name.replace(/\.(csv|tsv|txt)$/i, '');
+                }
+                this.previewImport();
+            };
+            reader.readAsText(file);
+            e.target.value = '';
         });
 
         // Paste back modal

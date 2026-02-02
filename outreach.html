@@ -156,13 +156,13 @@
             <!-- MODAL: IMPORT -->
             <!-- ============================================ -->
             <div id="importModal" class="modal hidden">
-                <div class="modal-content" style="max-width: 700px;">
+                <div class="modal-content" style="max-width: 900px; width: 95%;">
                     <h3>Import New Lead List</h3>
-                    <div class="input-group">
-                        <label>List Name</label>
-                        <input type="text" id="importListName" placeholder="e.g. D4D Tampa Jan 2026">
-                    </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="input-group">
+                            <label>List Name</label>
+                            <input type="text" id="importListName" placeholder="e.g. D4D Tampa Jan 2026">
+                        </div>
                         <div class="input-group">
                             <label>Lead Source</label>
                             <select id="importSource">
@@ -174,22 +174,43 @@
                                 <option value="other">Other</option>
                             </select>
                         </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                        <div class="input-group">
+                            <label>List Type</label>
+                            <select id="importListType">
+                                <option value="owner">Owner/Seller List</option>
+                                <option value="agent">Agent List</option>
+                                <option value="mixed">Mixed (both)</option>
+                            </select>
+                        </div>
                         <div class="input-group">
                             <label>Assign to VA (optional)</label>
                             <input type="text" id="importAssignVA" placeholder="e.g. Maria">
                         </div>
+                        <div class="input-group">
+                            <label>Market / Area (optional)</label>
+                            <input type="text" id="importMarket" placeholder="e.g. Tampa, FL">
+                        </div>
                     </div>
                     <div class="input-group">
-                        <label>Lead Data (paste from Google Sheets)</label>
-                        <textarea id="importData" rows="10" placeholder="Copy rows from Google Sheets and paste here. Headers auto-detected."></textarea>
+                        <label>Lead Data</label>
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                            <label class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin: 0;">
+                                Upload CSV
+                                <input type="file" id="importFileUpload" accept=".csv,.tsv,.txt" style="display: none;">
+                            </label>
+                            <span style="color: var(--text-muted); font-size: 0.8rem; align-self: center;">or paste tab/comma-separated data below</span>
+                        </div>
+                        <textarea id="importData" rows="8" placeholder="Paste from Google Sheets, or upload a CSV file above. Any column layout works — you'll map columns in the next step."></textarea>
                     </div>
-                    <div id="importColMap" class="hidden" style="margin-top: 12px;"></div>
-                    <div id="importPreview" class="hidden" style="margin-top: 12px;">
+                    <div id="importColMap" class="hidden" style="margin-top: 16px;"></div>
+                    <div id="importPreview" class="hidden" style="margin-top: 16px;">
                         <h4 style="margin-bottom: 8px;">Preview</h4>
-                        <div id="importPreviewTable" style="max-height: 200px; overflow-y: auto;"></div>
+                        <div id="importPreviewTable" style="max-height: 240px; overflow-y: auto;"></div>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 16px;">
-                        <button id="importPreviewBtn" class="btn-secondary">Preview</button>
+                        <button id="importPreviewBtn" class="btn-secondary">Preview & Map Columns</button>
                         <button id="importExecuteBtn" class="btn-primary hidden">Import Leads</button>
                         <button id="importCancelBtn" class="btn-ghost">Cancel</button>
                     </div>
