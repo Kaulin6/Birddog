@@ -1040,6 +1040,8 @@ body {
     display: flex;
     flex-direction: column;
     max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
 }
 
 .modal-header {
