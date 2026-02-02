@@ -764,7 +764,7 @@ const Outreach = {
         const dueToday = cadences.filter(c => c.status === 'active' && c.nextTouchDate === today).length;
         const upcoming = cadences.filter(c => c.status === 'active' && (!c.nextTouchDate || c.nextTouchDate > today)).length;
         const active = cadences.filter(c => c.status === 'active').length;
-        const completed = cadences.filter(c => c.status === 'completed').length;
+        const completed = cadences.filter(c => c.status === 'completed' || c.status === 'dead').length;
         const responded = cadences.filter(c => c.status === 'responded').length;
 
         const currentFilter = document.getElementById('cadenceFilter').value;
@@ -800,41 +800,53 @@ const Outreach = {
         const sortVal = document.getElementById('cadenceSort').value;
         const searchVal = (document.getElementById('cadenceSearch').value || '').toLowerCase().trim();
 
-        let cadences = Store.getCadences();
+        const allCadences = Store.getCadences();
+        const allDeals = Store.getDeals();
         const today = new Date().toISOString().split('T')[0];
+
+        // Build a deal lookup map (handle both number and string IDs)
+        const dealMap = {};
+        allDeals.forEach(d => { dealMap[d.id] = d; dealMap[String(d.id)] = d; });
+
+        // Pair cadences with their deals, skip orphans
+        let paired = allCadences.map(c => {
+            const deal = dealMap[c.dealId] || dealMap[String(c.dealId)];
+            return deal ? { cadence: c, deal } : null;
+        }).filter(Boolean);
 
         // Filter
         switch (filterVal) {
             case 'all_active':
-                cadences = cadences.filter(c => c.status === 'active');
+                paired = paired.filter(p => p.cadence.status === 'active');
                 break;
             case 'due_today':
-                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate === today);
+                paired = paired.filter(p => p.cadence.status === 'active' && p.cadence.nextTouchDate === today);
                 break;
             case 'overdue':
-                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate && c.nextTouchDate < today);
+                paired = paired.filter(p => p.cadence.status === 'active' && p.cadence.nextTouchDate && p.cadence.nextTouchDate < today);
                 break;
             case 'upcoming':
-                cadences = cadences.filter(c => c.status === 'active' && (!c.nextTouchDate || c.nextTouchDate > today));
+                paired = paired.filter(p => p.cadence.status === 'active' && (!p.cadence.nextTouchDate || p.cadence.nextTouchDate > today));
                 break;
             case 'completed':
-                cadences = cadences.filter(c => c.status === 'completed' || c.status === 'dead');
+                paired = paired.filter(p => p.cadence.status === 'completed' || p.cadence.status === 'dead');
                 break;
             case 'responded':
-                cadences = cadences.filter(c => c.status === 'responded');
+                paired = paired.filter(p => p.cadence.status === 'responded');
+                break;
+            default:
+                // No filter restriction — show everything
                 break;
         }
 
-        // Search — matches address, contact name, phone, email, and list name
+        // Search
         if (searchVal) {
-            cadences = cadences.filter(c => {
-                const deal = Store.getDeal(c.dealId);
-                if (!deal) return false;
-                const addr = (deal.propertyAddress || '').toLowerCase();
-                const contactStrs = (deal.contacts || []).map(ct =>
+            paired = paired.filter(p => {
+                const addr = (p.deal.propertyAddress || '').toLowerCase();
+                const contactStrs = (p.deal.contacts || []).map(ct =>
                     [ct.name, ct.phone, ct.email].filter(Boolean).join(' ').toLowerCase()
                 ).join(' ');
-                const list = c.listId ? Store.getList(c.listId) : null;
+                const list = p.cadence.listId ? Store.getList(p.cadence.listId) : null;
                 const listName = list ? (list.name || '').toLowerCase() : '';
                 return addr.includes(searchVal) || contactStrs.includes(searchVal) || listName.includes(searchVal);
             });
@@ -843,50 +855,54 @@ const Outreach = {
         // Sort
         switch (sortVal) {
             case 'due_date':
-                cadences.sort((a, b) => (a.nextTouchDate || '').localeCompare(b.nextTouchDate || ''));
+                paired.sort((a, b) => (a.cadence.nextTouchDate || '9999').localeCompare(b.cadence.nextTouchDate || '9999'));
                 break;
             case 'step':
-                cadences.sort((a, b) => a.currentStep - b.currentStep);
+                paired.sort((a, b) => (a.cadence.currentStep || 0) - (b.cadence.currentStep || 0));
                 break;
             case 'list':
-                cadences.sort((a, b) => {
-                    const listA = a.listId ? Store.getList(a.listId) : null;
-                    const listB = b.listId ? Store.getList(b.listId) : null;
+                paired.sort((a, b) => {
+                    const listA = a.cadence.listId ? Store.getList(a.cadence.listId) : null;
+                    const listB = b.cadence.listId ? Store.getList(b.cadence.listId) : null;
                     return (listA?.name || '').localeCompare(listB?.name || '');
                 });
                 break;
             case 'address':
-                cadences.sort((a, b) => {
-                    const dealA = Store.getDeal(a.dealId);
-                    const dealB = Store.getDeal(b.dealId);
-                    return (dealA?.propertyAddress || '').localeCompare(dealB?.propertyAddress || '');
-                });
+                paired.sort((a, b) => (a.deal.propertyAddress || '').localeCompare(b.deal.propertyAddress || ''));
                 break;
         }
 
-        if (cadences.length === 0) {
-            const totalCadences = Store.getCadences();
-            const activeCount = totalCadences.filter(c => c.status === 'active').length;
+        // Count summary for the filter bar
+        const filterLabel = filterVal.replace(/_/g, ' ');
+        const countText = `<div class="cadence-queue-count">${paired.length} result${paired.length !== 1 ? 's' : ''} for "${filterLabel}"${searchVal ? ` matching "${searchVal}"` : ''}</div>`;
+
+        if (paired.length === 0) {
+            const activeCount = allCadences.filter(c => c.status === 'active').length;
+            const totalCount = allCadences.length;
             let hint = '';
-            if (totalCadences.length === 0) {
+            if (totalCount === 0) {
                 hint = 'No cadences started yet. Go to a list and click "Start Cadences" to begin outreach.';
-            } else if (activeCount > 0) {
-                hint = `No cadences match "${filterVal.replace(/_/g, ' ')}". Try switching to "All Active" (${activeCount} active).`;
             } else {
-                hint = `All ${totalCadences.length} cadences are completed or exited. No active cadences remaining.`;
+                const counts = [];
+                const ov = allCadences.filter(c => c.status === 'active' && c.nextTouchDate && c.nextTouchDate < today).length;
+                const dt = allCadences.filter(c => c.status === 'active' && c.nextTouchDate === today).length;
+                const up = allCadences.filter(c => c.status === 'active' && (!c.nextTouchDate || c.nextTouchDate > today)).length;
+                const co = allCadences.filter(c => c.status === 'completed' || c.status === 'dead').length;
+                const re = allCadences.filter(c => c.status === 'responded').length;
+                if (ov > 0) counts.push(`${ov} overdue`);
+                if (dt > 0) counts.push(`${dt} due today`);
+                if (up > 0) counts.push(`${up} upcoming`);
+                if (co > 0) counts.push(`${co} completed`);
+                if (re > 0) counts.push(`${re} responded`);
+                hint = `Nothing in "${filterLabel}". Total cadences: ${counts.join(', ') || 'none'}.`;
             }
-            container.innerHTML = `<div class="empty-state" style="padding: 40px; text-align: center;">
-                <p style="margin-bottom: 8px; font-weight: 500;">No results</p>
+            container.innerHTML = `${countText}<div class="empty-state" style="padding: 40px; text-align: center;">
                 <p style="color: var(--text-secondary); font-size: 0.85rem;">${hint}</p>
             </div>`;
             return;
         }
 
-        container.innerHTML = cadences.map(cadence => {
-            const deal = Store.getDeal(cadence.dealId);
-            if (!deal) return '';
-            return this.renderCadenceCard(cadence, deal, today);
-        }).join('');
+        container.innerHTML = countText + paired.map(p => this.renderCadenceCard(p.cadence, p.deal, today)).join('');
 
         this.bindCadenceEvents();
     },

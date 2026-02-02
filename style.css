@@ -3956,6 +3956,12 @@ body {
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.cadence-queue-count {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding: 4px 0 8px 0;
+}
+
 .cadence-card-body {
     display: flex;
     flex-direction: column;
