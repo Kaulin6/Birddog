@@ -641,31 +641,33 @@ const Outreach = {
 
         const overdue = cadences.filter(c => c.status === 'active' && c.nextTouchDate < today).length;
         const dueToday = cadences.filter(c => c.status === 'active' && c.nextTouchDate === today).length;
+        const upcoming = cadences.filter(c => c.status === 'active' && c.nextTouchDate > today).length;
         const active = cadences.filter(c => c.status === 'active').length;
         const completed = cadences.filter(c => c.status === 'completed').length;
         const responded = cadences.filter(c => c.status === 'responded').length;
 
-        container.innerHTML = `
-            <div class="pipeline-stat clickable-stat" data-filter="overdue" style="cursor:pointer;">
-                <h4>Overdue</h4><div class="stat-num" style="color: var(--accent-red);">${overdue}</div>
-            </div>
-            <div class="pipeline-stat clickable-stat" data-filter="due_today" style="cursor:pointer;">
-                <h4>Due Today</h4><div class="stat-num" style="color: var(--accent-orange);">${dueToday}</div>
-            </div>
-            <div class="pipeline-stat clickable-stat" data-filter="all_active" style="cursor:pointer;">
-                <h4>Active</h4><div class="stat-num" style="color: var(--accent-blue);">${active}</div>
-            </div>
-            <div class="pipeline-stat clickable-stat" data-filter="completed" style="cursor:pointer;">
-                <h4>Completed</h4><div class="stat-num">${completed}</div>
-            </div>
-            <div class="pipeline-stat clickable-stat" data-filter="responded" style="cursor:pointer;">
-                <h4>Interested</h4><div class="stat-num" style="color: var(--accent-green);">${responded}</div>
-            </div>
-        `;
+        const currentFilter = document.getElementById('cadenceFilter').value;
+
+        const statBtn = (filter, label, count, color) => {
+            const isActive = currentFilter === filter;
+            const style = `cursor:pointer;${isActive ? ' outline: 2px solid ' + color + '; outline-offset: -2px; border-radius: 8px;' : ''}`;
+            return `<div class="pipeline-stat clickable-stat" data-filter="${filter}" style="${style}">
+                <h4>${label}</h4><div class="stat-num" style="color: ${color};">${count}</div>
+            </div>`;
+        };
+
+        container.innerHTML =
+            statBtn('overdue', 'Overdue', overdue, 'var(--accent-red)') +
+            statBtn('due_today', 'Due Today', dueToday, 'var(--accent-orange)') +
+            statBtn('upcoming', 'Upcoming', upcoming, 'var(--accent-purple)') +
+            statBtn('all_active', 'All Active', active, 'var(--accent-blue)') +
+            statBtn('completed', 'Completed', completed, 'var(--text-secondary)') +
+            statBtn('responded', 'Interested', responded, 'var(--accent-green)');
 
         container.querySelectorAll('.clickable-stat').forEach(stat => {
             stat.addEventListener('click', () => {
                 document.getElementById('cadenceFilter').value = stat.dataset.filter;
+                this.renderCadenceStats();
                 this.renderCadenceCards();
             });
         });
@@ -682,14 +684,17 @@ const Outreach = {
 
         // Filter
         switch (filterVal) {
+            case 'all_active':
+                cadences = cadences.filter(c => c.status === 'active');
+                break;
             case 'due_today':
                 cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate <= today);
                 break;
             case 'overdue':
                 cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate < today);
                 break;
-            case 'all_active':
-                cadences = cadences.filter(c => c.status === 'active');
+            case 'upcoming':
+                cadences = cadences.filter(c => c.status === 'active' && c.nextTouchDate > today);
                 break;
             case 'completed':
                 cadences = cadences.filter(c => c.status === 'completed' || c.status === 'dead');
@@ -723,12 +728,36 @@ const Outreach = {
                 cadences.sort((a, b) => a.currentStep - b.currentStep);
                 break;
             case 'list':
-                cadences.sort((a, b) => (a.listId || 0) - (b.listId || 0));
+                cadences.sort((a, b) => {
+                    const listA = a.listId ? Store.getList(a.listId) : null;
+                    const listB = b.listId ? Store.getList(b.listId) : null;
+                    return (listA?.name || '').localeCompare(listB?.name || '');
+                });
+                break;
+            case 'address':
+                cadences.sort((a, b) => {
+                    const dealA = Store.getDeal(a.dealId);
+                    const dealB = Store.getDeal(b.dealId);
+                    return (dealA?.propertyAddress || '').localeCompare(dealB?.propertyAddress || '');
+                });
                 break;
         }
 
         if (cadences.length === 0) {
-            container.innerHTML = '<p class="empty-state" style="padding: 40px; text-align: center;">No cadences match this filter.</p>';
+            const totalCadences = Store.getCadences();
+            const activeCount = totalCadences.filter(c => c.status === 'active').length;
+            let hint = '';
+            if (totalCadences.length === 0) {
+                hint = 'No cadences started yet. Go to a list and click "Start Cadences" to begin outreach.';
+            } else if (activeCount > 0) {
+                hint = `No cadences match "${filterVal.replace(/_/g, ' ')}". Try switching to "All Active" (${activeCount} active).`;
+            } else {
+                hint = `All ${totalCadences.length} cadences are completed or exited. No active cadences remaining.`;
+            }
+            container.innerHTML = `<div class="empty-state" style="padding: 40px; text-align: center;">
+                <p style="margin-bottom: 8px; font-weight: 500;">No results</p>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">${hint}</p>
+            </div>`;
             return;
         }
 
@@ -1162,7 +1191,7 @@ const Outreach = {
         });
 
         // Cadence queue
-        document.getElementById('cadenceFilter').addEventListener('change', () => this.renderCadenceCards());
+        document.getElementById('cadenceFilter').addEventListener('change', () => { this.renderCadenceStats(); this.renderCadenceCards(); });
         document.getElementById('cadenceSort').addEventListener('change', () => this.renderCadenceCards());
         let searchTimeout;
         document.getElementById('cadenceSearch').addEventListener('input', () => {
